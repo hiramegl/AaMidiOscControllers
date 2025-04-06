@@ -92,10 +92,13 @@ class Selected(Base):
     self.send_msg('/clip/sel/warp', nWarp)
 
   def update_sends(self):
-    oTrack = self.sel_track()
+    oTrack  = self.sel_track()
     lBundle = []
+    lSends  = oTrack.mixer_device.sends
     for nIdx in range(self.cfg('nReturns')):
-      oSend = oTrack.mixer_device.sends[nIdx]
+      if nIdx == len(lSends):
+        break
+      oSend = lSends[nIdx]
       nSend = 1.0 if oSend.value > 0.5 else 0.0
       lBundle.append([
         '/clip/sel/sends/%d' % (nIdx),

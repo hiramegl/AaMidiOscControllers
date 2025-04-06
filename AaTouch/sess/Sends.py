@@ -36,6 +36,8 @@ class Sends(Base):
       oTrack = self.get_track(nTrackIdxAbs)
       lSends = oTrack.mixer_device.sends
       for nSendIdx in range(self.cfg('nReturns')):
+        if nSendIdx == len(lSends):
+          break
         oSend = lSends[nSendIdx]
         if oSend.value > 0.5:
           nCellId = nSendIdx * self.cfg('nTracks') + nTrackIdxRel

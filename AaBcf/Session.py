@@ -70,7 +70,8 @@ class Session():
   # track ------------------------------
   def add_track_handlers(self, pnTrackIdxRel):
     nTrackIdxAbs = self.get_track_idx_abs(pnTrackIdxRel)
-    if self.is_track_available(nTrackIdxAbs) == False: next
+    if self.is_track_available(nTrackIdxAbs) == False:
+      return
     oTrack = self.get_track(nTrackIdxAbs)
 
     fTrkRxCb = lambda ptKey, pnValue: self.handle_track_rx_msg(ptKey, oTrack, pnTrackIdxRel, pnValue)
@@ -345,7 +346,8 @@ class Session():
   def disconnect_track_ctrls(self):
     for nTrackIdxRel in range(self.cfg('nTracks')):
       nTrackIdxAbs = self.get_track_idx_abs(nTrackIdxRel)
-      if self.is_track_available(nTrackIdxAbs) == False: next
+      if self.is_track_available(nTrackIdxAbs) == False:
+        break
       oTrack   = self.get_track(nTrackIdxAbs)
       oVolume  = oTrack.mixer_device.volume
 
