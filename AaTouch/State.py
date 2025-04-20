@@ -115,6 +115,7 @@ class State(Base):
       lSlots = self.get_track(nTrackIdxAbs).clip_slots
       for nSceneIdxRel in range(self.cfg('nScenes')):
         nSceneIdxAbs = self.scene_idx_abs(nSceneIdxRel)
+        if nSceneIdxAbs >= len(lSlots): next
         oSlot = lSlots[nSceneIdxAbs]
         self.add_slot_listener(oSlot, nTrackIdxAbs, nSceneIdxAbs)
         if oSlot.has_clip:
