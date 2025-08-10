@@ -256,8 +256,10 @@ class Tracks(Base):
 
   def update_sel_track(self):
     nSelTrackIdxAbs = self.sel_track_idx_abs()
-    nSelTrackIdxRel = self.state().get_track_idx_rel_or_none(nSelTrackIdxAbs)
-
+    if nSelTrackIdxAbs == 'MASTER':
+      nSelTrackIdxRel = None
+    else:
+      nSelTrackIdxRel = self.state().get_track_idx_rel_or_none(nSelTrackIdxAbs)
     if nSelTrackIdxRel == self.m_nSelTrackIdxRel:
       return # same track! nothing else to do here!
 

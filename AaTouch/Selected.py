@@ -61,18 +61,19 @@ class Selected(Base):
       oAudioClip.add_gain_listener(self.on_gain_change)
     self.m_oAudioClip = oAudioClip
 
-    # check if new track is not return or master
     oTrack = self.sel_track()
     if oTrack in self.returns():
       self.disconnect()
+
     if oTrack == self.master():
       self.disconnect()
+    else:
+      # audio or return track -> update GUI controls
+      nMute = 0.0 if oTrack.mute else 1.0
+      nSolo = 1.0 if oTrack.solo else 0.0
+      self.send_msg('/track/sel/mute', nMute)
+      self.send_msg('/track/sel/solo', nSolo)
 
-    # update GUI controls
-    nMute = 0.0 if oTrack.mute else 1.0
-    nSolo = 1.0 if oTrack.solo else 0.0
-    self.send_msg('/track/sel/mute', nMute)
-    self.send_msg('/track/sel/solo', nSolo)
     self.update_warp()
     self.update_sends()
 

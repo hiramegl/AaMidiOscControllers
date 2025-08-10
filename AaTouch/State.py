@@ -97,6 +97,7 @@ class State(Base):
         break # no more tracks to scan
       oTrack = self.get_track(nTrackIdxAbs)
       lSends = oTrack.mixer_device.sends
+      if len(lSends) == 0: return
       for nSendIdx in range(self.cfg('nReturns')):
         oSend   = lSends[nSendIdx]
         oSendId = hash(oSend)

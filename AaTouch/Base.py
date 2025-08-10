@@ -101,8 +101,10 @@ class Base():
     return self.song().view.selected_track
 
   def sel_track_idx_abs(self):
+    oSelTrack = self.sel_track()
+    if oSelTrack == self.master():
+      return 'MASTER'
     lAllTracks = self.tracks_and_returns()
-    oSelTrack  = self.sel_track()
     return list(lAllTracks).index(oSelTrack)
 
   # ------------------------------------
