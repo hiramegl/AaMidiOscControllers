@@ -62,11 +62,11 @@ class Track():
     # update current panning parameter
     try:
       self.m_oCurrPan.remove_value_listener(self.handle_trkpan_tx_msg)
+      self.m_oCurrPan = oSelTrack.mixer_device.panning
+      self.m_oCurrPan.add_value_listener(self.handle_trkpan_tx_msg)
     except:
       Live.Base.log('-> Could not remove value listener from panning parameter')
 
-    self.m_oCurrPan = oSelTrack.mixer_device.panning
-    self.m_oCurrPan.add_value_listener(self.handle_trkpan_tx_msg)
     self.handle_trkpan_tx_msg()
 
     # update clip parameters
