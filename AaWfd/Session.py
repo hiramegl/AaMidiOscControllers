@@ -45,7 +45,8 @@ class Session():
   # sysex ------------------------------
   def handle_sysex_rx_msg(self, pnByte, paMsg):
     nModeId = paMsg[11]
-    self.log('----> In mode: %d' % (nModeId))
+    lModes  = ['SELECT', 'RESET', 'MUTE', 'SOLO']
+    self.alert('WFD MODE: %s' % (lModes[nModeId]))
 
   # program change ---------------------
   def handle_prch_rx_msg(self, pnProgId, pnValue):
