@@ -3,37 +3,6 @@
 * Script in Macos to detect IP address and setup raspberry pi address
 * Script in Raspberry pi to detct ip addres and setup macos address
 
-CLIPS:
-* Clips mode
-* zoom map
-* Sends mode
-* grid   mode: SELECT / FIRE
-* launch mode: FIRE / FIRE & SELECT
-* clips listeners
-* when adding/removing tracks
-* when adding/removing scenes
-  * stop
-  * mute
-  * solo
-  * monitoring
-  * arm
-  * select
-  * pan reset
-  * A/B cross
-  * vol 0 dB
-  * vol -inf dB
-  * sends off
-  * select
-* Volumes
-* Loop Extra
-* Coarse detune + reset
-* Fine detune + reset
-* Audio gain
-* reset detunes & gain
-* Audio gain selected clip listener
-* Faders picker
-* Sync volumes (fix track listeners for volumes)
-
 SEQ:
 * grid
 * Update GUI when notes change
@@ -94,6 +63,37 @@ SEQ:
 * Master Encoder
 * Encoder Modes
 * sel track sends
+
+CLIPS:
+* Clips mode
+* zoom map
+* Sends mode
+* grid   mode: SELECT / FIRE
+* launch mode: FIRE / FIRE & SELECT
+* clips listeners
+* when adding/removing tracks
+* when adding/removing scenes
+  * stop
+  * mute
+  * solo
+  * monitoring
+  * arm
+  * select
+  * pan reset
+  * A/B cross
+  * vol 0 dB
+  * vol -inf dB
+  * sends off
+  * select
+* Volumes
+* Loop Extra
+* Coarse detune + reset
+* Fine detune + reset
+* Audio gain
+* reset detunes & gain
+* Audio gain selected clip listener
+* Faders picker
+* Sync volumes (fix track listeners for volumes)
 
 ============================================================
 
