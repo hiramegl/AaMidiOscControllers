@@ -79,7 +79,7 @@ class Dev():
 
   # ********************************************************
 
-  def bind_dev(self, poDev):
+  def bind_dev(self, poDev, psTrack, psDevName):
     self.m_oDev = poDev
     for oParam in poDev.parameters:
       sParam = oParam.original_name if self.m_bUseOrig else oParam.name
@@ -96,10 +96,12 @@ class Dev():
             'oParam': oParam,
             'nMin'  : oParam.min,
             'nMax'  : oParam.max,
+            'sTrack': psTrack,
+            'sDev'  : psDevName,
           }
           self.customize_param(self.m_hBankIdMap[tAddr])
           self.dlog('-> Dev: Adding value listener for "%s"' % (sParam))
-          self.add_param_listener(oParam, tAddr)
+          self.add_param_listener(oParam, tAddr, sParam)
       else:
         self.dlog('-> PARAM NOT MAPPED: "%s"' % (sParam))
 
@@ -110,10 +112,11 @@ class Dev():
   def customize_param(self, phParamCfg):
     pass # should be overriden by subclasses
 
-  def add_param_listener(self, poParam, ptAddr):
-    fTxCb = lambda :self.handle_param_tx_msg(ptAddr)
-    poParam.add_value_listener(fTxCb)
-    self.m_hBankIdMap[ptAddr]['fTxCb'] = fTxCb
+  def add_param_listener(self, poParam, ptAddr, psParam):
+    if psParam == "Device On":
+      fTxCb = lambda :self.handle_param_tx_msg(ptAddr)
+      poParam.add_value_listener(fTxCb)
+      self.m_hBankIdMap[ptAddr]['fTxCb'] = fTxCb
 
   def handle_param_tx_msg(self, ptAddr):
     hParamCfg = self.m_hBankIdMap[ptAddr]
@@ -157,9 +160,11 @@ class Dev():
     sType = phParamCfg['sType']
     if sType == 'param':
       oParam = phParamCfg['oParam']
-      fTxCb  = phParamCfg['fTxCb']
-      self.dlog('-> Removing value listener for "%s"' % (phParamCfg['sName']))
-      oParam.remove_value_listener(fTxCb)
+      if 'fTxCb' in phParamCfg:
+        fTxCb  = phParamCfg['fTxCb']
+        self.dlog('-> Removing value listener for "%s"' % (phParamCfg['sName']))
+        if oParam.value_has_listener(fTxCb):
+          oParam.remove_value_listener(fTxCb)
     elif sType == 'extra':
       self.remove_extra_param_bindings(phParamCfg)
     elif sType == 'panel':
@@ -183,6 +188,7 @@ class Dev():
       self.handle_rx_value(hParamCfg, pnValue)
     else:
       self.log('-> Dev "%s" has no parameter mapped to [0x%02X %3d], dropping message' % (nBankRel, nIdRel))
+      self.alert('Device "%s" has no parameter mapped to [0x%02X %3d]' % (nBankRel, nIdRel))
 
   def handle_rx_value(self, phParamCfg, pnValue):
     sType = phParamCfg['sType']
@@ -191,6 +197,8 @@ class Dev():
       self.dlog('-> Handling panel function %s' % (phParamCfg['sName']))
       self.tx_msg(phParamCfg['tAddr'], 127) # panel functions always ON!
       self.handle_panel_cmd(phParamCfg['sName'])
+      self.alert('Track: %s, Dev: %s, Panel function %s' %
+        (phParamCfg['sTrack'], phParamCfg['sDev'], phParamCfg['sName']))
 
     elif sType == 'extra':
       self.handle_rx_msg_extra_cmd(phParamCfg, pnValue)
@@ -214,6 +222,8 @@ class Dev():
       oParam.value = nValue
 
     self.dlog('-> Updating "%s": %d -> %f' % (phParamCfg['sName'], pnValue, nValue))
+    self.alert('Track: %s, Dev: %s, Param: %s -> %d (%f)' %
+      (phParamCfg['sTrack'], phParamCfg['sDev'], phParamCfg['sName'], pnValue, nValue))
 
   def get_scaled_rx_value(self, phParamCfg, pnValue):
     nValue = float(pnValue) / 127.0

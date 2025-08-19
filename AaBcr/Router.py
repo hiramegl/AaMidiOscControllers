@@ -106,8 +106,9 @@ class Router():
       self.log('-> No track to bind the router to')
       return
 
+    sTrack = poTrack.name
     if len(poTrack.devices) == 0:
-      self.log('-> Track "%s" has no devices' % (poTrack.name))
+      self.log('-> Track "%s" has no devices' % (sTrack))
       return
 
     for oDev in poTrack.devices:
@@ -121,13 +122,13 @@ class Router():
         sName = sQualAll
 
       if sName != None:
-        self.add_routes_for_dev(oDev, sName, plRootIds)
+        self.add_routes_for_dev(sTrack, oDev, sName, plRootIds)
       else:
         if self.cfg('bUnknown'):
           self.dump_device(oDev)
 
-  def add_routes_for_dev(self, poDev, psName, plRootIds):
-    oDevProc = self.m_hDevs[psName]
+  def add_routes_for_dev(self, psTrack, poDev, psDevName, plRootIds):
+    oDevProc = self.m_hDevs[psDevName]
     nBanks   = oDevProc.get_banks()
     nStrips  = oDevProc.get_strips()
 
@@ -160,12 +161,12 @@ class Router():
 
     self.dlog('=====> Binding Device Processor "%s", banks: %d strips: %d' % (oDevProc.get_qual_name(), nBanks, nStrips))
 
-    oDevProc.bind_dev(poDev)
+    oDevProc.bind_dev(poDev, psTrack, psDevName)
     oDevProc.set_offsets(self.m_nCurrBank, self.m_nCurrStrip)
     self.m_lDevProcs.append(oDevProc)
 
     # create routes to use the Device Processor
-    self.dlog('=====> Router: adding physical routes for "%s"' % (psName))
+    self.dlog('=====> Router: adding physical routes for "%s"' % (psDevName))
     for nBankIdx in range(nBanks):
       for nStripIdx in range(nStrips):
         self.dlog('-> Router: "%s", strip: %d' % (oDevProc.get_qual_name(), nStripIdx))

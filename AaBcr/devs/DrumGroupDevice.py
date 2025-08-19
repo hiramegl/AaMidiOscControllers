@@ -20,10 +20,10 @@ class DrumGroupDevice(Dev):
     self.reg('DrumGroupDevice')
     self.parse_cfg()
 
-  def bind_dev(self, poDev):
+  def bind_dev(self, poDev, psTrack, psDevName):
     # execute normal bind_dev for 'Device On',
     # macro params and extra params
-    Dev.bind_dev(self, poDev)
+    Dev.bind_dev(self, poDev, psTrack, psDevName)
 
     if len(poDev.drum_pads) < 1:
       self.log('-> Device "%s / %s" has no drum pads!' % (poDev.class_name, poDev.name))
@@ -43,11 +43,11 @@ class DrumGroupDevice(Dev):
           oChain2 = oChainDev.chains[0] # check the first chain only (Kick 606)
           for oDev in oChain2.devices:
             if oDev.class_name == 'OriginalSimpler':
-              nDrumId = self.add_volume_bindings(oDev, nDrumId, sDrum)
+              nDrumId = self.add_volume_bindings(oDev, nDrumId, sDrum, psTrack, psDevName)
         elif oChainDev.class_name == 'OriginalSimpler':
-          nDrumId = self.add_volume_bindings(oChainDev, nDrumId, sDrum)
+          nDrumId = self.add_volume_bindings(oChainDev, nDrumId, sDrum, psTrack, psDevName)
 
-  def add_volume_bindings(self, poDev, pnDrumId, psDrum):
+  def add_volume_bindings(self, poDev, pnDrumId, psDrum, psTrack, psDevName):
     for oParam in poDev.parameters:
       if oParam.name != 'Volume': continue
       sParam    = 'Drum %d' % (pnDrumId)
@@ -57,8 +57,10 @@ class DrumGroupDevice(Dev):
       hParamCfg['sDrum']  = psDrum
       hParamCfg['nMin']   = oParam.min
       hParamCfg['nMax']   = oParam.max
+      hParamCfg['sTrack'] = psTrack
+      hParamCfg['sDev']   = psDevName
       self.dlog('-> Adding value listener for drum "%s"' % (psDrum))
-      self.add_param_listener(oParam, tAddr)
+      self.add_param_listener(oParam, tAddr, psDrum)
       self.dlog('-> Mapping [0x%02X %3d] -> "%s", drum "%7s"' % (tAddr[0], tAddr[1], sParam, psDrum))
       return pnDrumId + 1
 
@@ -72,9 +74,11 @@ class DrumGroupDevice(Dev):
   def remove_extra_param_bindings(self, phParamCfg):
     if 'oParam' in phParamCfg:
       oParam = phParamCfg['oParam']
-      fTxCb  = phParamCfg['fTxCb']
-      self.dlog('-> Removing value listener for drum "%s"' % (phParamCfg['sDrum']))
-      oParam.remove_value_listener(fTxCb)
+      if 'fTxCb' in phParamCfg:
+        fTxCb = phParamCfg['fTxCb']
+        self.dlog('-> Removing value listener for drum "%s"' % (phParamCfg['sDrum']))
+        if oParam.value_has_listener(fTxCb):
+          oParam.remove_value_listener(fTxCb)
       phParamCfg['oParam'] = None
 
   def handle_rx_msg_extra_cmd(self, phParamCfg, pnValue):
@@ -82,11 +86,15 @@ class DrumGroupDevice(Dev):
       sDrum  = phParamCfg['sDrum']
       oParam = phParamCfg['oParam']
       nValue = self.get_scaled_rx_value(phParamCfg, pnValue)
-      self.dlog('-> updating "%s/%s" with value %f' % (sDrum, oParam.name, nValue))
       oParam.value = nValue
+      self.dlog('-> updating "%s/%s" with value %f' % (sDrum, oParam.name, nValue))
+      self.alert('Track: %s, Dev: %s, Drum: %s -> %d (%f)' %
+        (phParamCfg['sTrack'], phParamCfg['sDev'], sDrum, pnValue, nValue))
     else:
       tAddr = phParamCfg['tAddr']
-      self.dlog('-> address [0x%02X %3d] has no drum assinged!' % (tAddr[0], tAddr[1]))
+      self.dlog('-> address [0x%02X %3d] has no drum assigned!' % (tAddr[0], tAddr[1]))
+      self.alert('Track: %s, Dev: %s, Addr: [0x%02X %3d] has NO DRUM!' %
+        (phParamCfg['sTrack'], phParamCfg['sDev'], tAddr[0], tAddr[1]))
 
 # DrumGroupDevice
 # - Params(8)
