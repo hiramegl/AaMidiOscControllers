@@ -16,10 +16,12 @@ With these scripts you can control 4 different types of MIDI controllers:
    * With 9 volume faders, 1 channels fader, 9 buttons and 4 banks
 4) AaMatrix: Novation Launchpad Mini MK3
    * With 8 x 8 pad, 8 top and 8 side RGB buttons
+5) AaGrid: AKAI APC Mini MK2
+   * With 8 x 8 pad, 8 bottom and 8 side buttons, 1 shift button and 9 non-motorized faders
 
 A new Open Stage Control touch-screen application is also available:
 
-5) AaTouch:
+6) AaTouch:
    * 32 x 12 beat grid buttons - MIDI piano roll
    * 32 x 8  (tracks x scenes) for playing clips
 
