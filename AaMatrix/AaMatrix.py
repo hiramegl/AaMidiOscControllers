@@ -218,7 +218,7 @@ class AaMatrix(ControlSurface):
       self.m_oSelector.name = 'Selector'
       for oControl in self.controls:
         if isinstance(oControl, ConfigurableButtonElement):
-          oControl.add_value_listener(self._button_value, identify_sender = True)
+          oControl.add_value_listener(self._on_button_value, identify_sender = True)
 
       self.m_bSuppressSessionHighlight = False
       self.set_highlighting_session_component(self.m_oSelector.session_component())
@@ -253,7 +253,7 @@ class AaMatrix(ControlSurface):
     self.m_bSuppressSendMidi = True
     for oControl in self.controls:
       if isinstance(oControl, ConfigurableButtonElement):
-        oControl.remove_value_listener(self._button_value)
+        oControl.remove_value_listener(self._on_button_value)
     if self.m_oSelector != None:
       self.m_oUserByteWriteButton.remove_value_listener(self._user_byte_value)
       self.m_oConfigButton.remove_value_listener(self._config_value)
@@ -290,16 +290,16 @@ class AaMatrix(ControlSurface):
       bSentSuccessfully = ControlSurface._send_midi(self, midi_bytes, optimized=optimized)
     return bSentSuccessfully
 
+  def _config_value(self, value):
+    assert value in range(128)
+
   def _set_session_highlight(self, track_offset, scene_offset, width, height, include_return_tracks):
     if not self.m_bSuppressSessionHighlight:
       ControlSurface._set_session_highlight(self, track_offset, scene_offset, width, height, include_return_tracks)
 
-  def _button_value(self, pnValue, poSender):
+  def _on_button_value(self, pnValue, poSender):
     assert pnValue in range(128)
     self.m_oSelector.route(poSender.m_hAttr, pnValue)
-
-  def _config_value(self, value):
-    assert value in range(128)
 
   # ********************************************************
 
