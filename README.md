@@ -6,7 +6,7 @@ The scripts in AaMidiControllers were not compatible with the new series of MacB
 with Max chips. Therefore I developed these new scripts that use a raspberry-pi as a bridge
 to convert MIDI to OSC and (controllers -> MacBook) and OSC to MIDI (MacBook -> controllers).
 
-With these scripts you can control 4 different types of MIDI controllers:
+With these scripts you can control 6 different types of MIDI controllers:
 
 1) AaBCF: Behringer BCF2000 B-Control Fader MIDI Control Surface
    * With 8 motorized faders, 16 buttons, 8 encoder-buttons, 4 modes and 16 banks
