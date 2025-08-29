@@ -670,7 +670,7 @@
                 "top": 0,
                 "left": 1275,
                 "lock": false,
-                "id": "clip/sel/crop",
+                "id": "clip/focus",
                 "visible": true,
                 "interaction": true,
                 "comments": "",

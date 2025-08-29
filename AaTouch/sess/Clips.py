@@ -88,7 +88,8 @@ class Clips(Base):
         lCells))
       self.send_bundle(lBundle)
 
-    self.highlight_session()
+    if self.state().view_mode() == 'SESS':
+      self.highlight_session()
 
   def deactivate(self):
     lAddrs = self.m_hCache.keys()

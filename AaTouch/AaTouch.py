@@ -3,6 +3,7 @@ import Live
 
 from .Comm         import Comm
 from .State        import State
+from .Root         import Root
 from .Tempo        import Tempo
 from .Shift        import Shift
 from .Selected     import Selected
@@ -42,6 +43,7 @@ class AaTouch:
 
     Comm    (self.m_hCfg, self.m_hObj)
     State   (self.m_hCfg, self.m_hObj)
+    Root    (self.m_hCfg, self.m_hObj)
     Tempo   (self.m_hCfg, self.m_hObj)
     Shift   (self.m_hCfg, self.m_hObj)
     Selected(self.m_hCfg, self.m_hObj)

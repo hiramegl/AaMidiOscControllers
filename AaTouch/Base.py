@@ -51,6 +51,12 @@ class Base():
 
   # ********************************************************
 
+  def col_offset(self):
+    return self.state().col_offset()
+
+  def row_offset(self):
+    return self.state().row_offset()
+
   def track_offset(self):
     return self.state().track_offset()
 
@@ -147,13 +153,13 @@ class Base():
 
   # ********************************************************
 
-  def log(self, _sMessage):
-    Live.Base.log(_sMessage)
+  def log(self, psMsg):
+    Live.Base.log(psMsg)
 
-  def dlog(self, psMessage):
+  def dlog(self, psMsg):
     if self.cfg('bDebug'):
-      self.log(psMessage)
+      self.log(psMsg)
 
-  def alert(self, sMessage):
-    self.obj('oCtrlInst').show_message(sMessage)
+  def alert(self, psMsg):
+    self.obj('oCtrlInst').show_message(psMsg)
 

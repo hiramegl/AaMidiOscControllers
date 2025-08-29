@@ -89,6 +89,9 @@ class Seq(Base):
     elif self.m_nCurrMode == 'AUDIO':
       self.obj('oPatt').send_pattern('unav', 1.0)
 
+    if self.state().view_mode() == 'SEQ':
+      self.highlight_session()
+
   def deactivate(self):
     if self.m_nCurrMode == 'MIDI':
       self.grid().deactivate()
@@ -139,6 +142,16 @@ class Seq(Base):
     self.obj('oSeqMap'  ).activate()
     self.obj('oBitOp'   ).activate()
     self.obj('oBitOpSel').activate()
+
+  # ********************************************************
+
+  def highlight_session(self):
+    self.obj('oCtrlInst').set_session_highlight(
+      self.col_offset(),
+      self.row_offset(),
+      1, # 1 track
+      1, # 1 scene
+      False) # do not include return tracks
 
   # ********************************************************
 

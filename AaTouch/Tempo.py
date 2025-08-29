@@ -16,7 +16,6 @@ class Tempo(Base):
       'tempo/dlt/neg', 4, self.on_dlt_neg)
     self.reg_idx_cb(
       'tempo/dlt/pos', 4, self.on_dlt_pos)
-    self.reg_cb('root_panel', self.on_root)
 
   # ********************************************************
 
@@ -41,7 +40,4 @@ class Tempo(Base):
     nTempo = self.song().tempo
     nDelta = self.m_lDeltasPos[nIdx]
     self.song().tempo = nTempo + nDelta
-
-  def on_root(self, plSegs, plMsg):
-    pass # nothing to do for root panel click
 

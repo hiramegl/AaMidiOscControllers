@@ -155,7 +155,7 @@ class Zoom(Base):
     self.m_nSelCell = nIdx
     self.m_nSelCol  = nColIdx
     self.m_nSelRow  = nRowIdx + (self.m_nBank * self.m_nZoomRows)
-    self.obj('oState').set_offsets(
+    self.obj('oState').set_session_offsets(
       self.m_nSelCol * self.m_nTracks,
       self.m_nSelRow * self.m_nScenes)
 

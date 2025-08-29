@@ -5,19 +5,23 @@ class State(Base):
     Base.__init__(self, phCfg, phObj)
 
     # state
-    self.m_nTrackOff  = 0
-    self.m_nSceneOff  = 0
-    self.m_sMode      = 'UNKNOWN'
+    self.m_nColOff    = 0         # for SEQ  view mode
+    self.m_nRowOff    = 0         # for SEQ  view mode
+    self.m_nTrackOff  = 0         # for SESS view mode
+    self.m_nSceneOff  = 0         # for SESS view mode
+    self.m_sViewMode  = 'SEQ'     # view mode: SEQ, SESS
+    self.m_sMode      = 'UNKNOWN' # clip mode: MIDI, AUDIO, EMPTY(MIDI)
     self.m_oMidiTrack = None
     self.m_oClip      = None
     self.m_oMidiClip  = None
     self.m_oAudioClip = None
     self.m_hLimits    = None
-    self.m_bPauseList = False # pause notes listener?
+    self.m_bPauseList = False # pause notes listener flag
     self.m_hSendsCbs  = []
     self.m_hSlotsCbs  = {}
     self.m_hClipsCbs  = {}
     self.m_hTracksCbs = {}
+    self.m_bFollowSel = False # follow selected clip
 
     self.connect()
     self.update()
@@ -29,8 +33,9 @@ class State(Base):
   def connect(self):
     self.song().add_scenes_listener(self.on_scenes_changed)
     self.song().add_tracks_listener(self.on_tracks_changed)
-    self.song().view.add_selected_scene_listener(self.on_sel_clip_changed)
-    self.song().view.add_selected_track_listener(self.on_sel_clip_changed)
+    if self.m_bFollowSel:
+      self.song().view.add_selected_scene_listener(self.on_sel_clip_changed)
+      self.song().view.add_selected_track_listener(self.on_sel_clip_changed)
     self.add_tracks_listeners()
     self.add_sends_listeners()
     self.add_clips_listeners()
@@ -39,8 +44,9 @@ class State(Base):
     oSong = self.song()
     oSong.remove_scenes_listener(self.on_scenes_changed)
     oSong.remove_tracks_listener(self.on_tracks_changed)
-    oSong.view.remove_selected_scene_listener(self.on_sel_clip_changed)
-    oSong.view.remove_selected_track_listener(self.on_sel_clip_changed)
+    if self.m_bFollowSel:
+      oSong.view.remove_selected_scene_listener(self.on_sel_clip_changed)
+      oSong.view.remove_selected_track_listener(self.on_sel_clip_changed)
     self.remove_tracks_listeners()
     self.remove_sends_listeners()
     self.remove_clips_listeners()
@@ -289,6 +295,12 @@ class State(Base):
   def mode(self):
     return self.m_sMode
 
+  def view_mode(self):
+    return self.m_sViewMode
+
+  def set_view_mode(self, psViewMode):
+    self.m_sViewMode = psViewMode
+
   def limits_or_none(self):
     return self.m_hLimits
 
@@ -306,13 +318,24 @@ class State(Base):
 
   # ********************************************************
 
+  def col_offset(self):
+    return self.m_nColOff
+
+  def row_offset(self):
+    return self.m_nRowOff
+
+  def set_clip_offsets(self, pnColOff, pnRowOff):
+    self.m_nColOff = pnColOff
+    self.m_nRowOff = pnRowOff
+    self.on_sel_clip_changed()
+
   def track_offset(self):
     return self.m_nTrackOff
 
   def scene_offset(self):
     return self.m_nSceneOff
 
-  def set_offsets(self, pnTrackOff, pnSceneOff):
+  def set_session_offsets(self, pnTrackOff, pnSceneOff):
     self.remove_tracks_listeners()
     self.remove_sends_listeners()
     self.remove_clips_listeners()
@@ -337,25 +360,59 @@ class State(Base):
   # ********************************************************
 
   def get_midi_track_or_none(self):
-    oTrack = self.sel_track()
-    if (oTrack.has_midi_input): return oTrack
+    if self.is_track_available(self.m_nColOff) == False:
+      return None
+
+    oTrack = self.get_track(self.m_nColOff)
+    if oTrack.has_midi_input:
+      return oTrack
     return None
 
   def get_clip_or_none(self):
-    oSlot = self.sel_clip_slot()
-    if (oSlot == None): return None
-    if (oSlot.has_clip): return oSlot.clip
+    if self.is_track_available(self.m_nColOff) == False:
+      return None
+    if self.is_scene_available(self.m_nRowOff) == False:
+      return None
+
+    oTrack     = self.get_track(self.m_nColOff)
+    lClipSlots = oTrack.clip_slots
+    oClipSlot  = lClipSlots[self.m_nRowOff]
+    if oClipSlot == None:
+      return None
+    if oClipSlot.has_clip:
+      return oClipSlot.clip
     return None
 
   def get_midi_clip_or_none(self):
     oClip = self.get_clip_or_none()
-    if (oClip == None): return None
-    if (oClip.is_midi_clip): return oClip
+    if oClip == None:
+      return None
+    if oClip.is_midi_clip:
+      return oClip
     return None
 
   def get_audio_clip_or_none(self):
     oClip = self.get_clip_or_none()
-    if (oClip == None): return None
-    if (oClip.is_audio_clip): return oClip
+    if oClip == None:
+      return None
+    if oClip.is_audio_clip:
+      return oClip
     return None
+
+  def focused_clip_slot_or_none(self):
+    if self.is_track_available(self.m_nColOff) == False:
+      return None
+    if self.is_scene_available(self.m_nRowOff) == False:
+      return None
+
+    oTrack     = self.get_track(self.m_nColOff)
+    lClipSlots = oTrack.clip_slots
+    oClipSlot  = lClipSlots[self.m_nRowOff]
+    return oClipSlot
+
+  def focused_track_or_none(self):
+    if self.is_track_available(self.m_nColOff) == False:
+      return None
+
+    return self.get_track(self.m_nColOff)
 

@@ -127,6 +127,7 @@ class Selected(Base):
     oAudioClip = self.state().get_audio_clip_or_none()
     if oAudioClip == None:
       self.send_msg('/clip/sel/warp' , 0.0)
+      self.alert('Warp only available on Audio clips')
       return
 
     nValue = plMsg[2]
@@ -136,28 +137,42 @@ class Selected(Base):
     self.obj('oLoop').update()
 
   def on_sel_clip_play(self, plSegs, plMsg):
-    oClipSlot = self.sel_clip_slot()
-    oClipSlot.fire()
+    oClipSlot = self.state().focused_clip_slot_or_none()
+    if oClipSlot != None:
+      oClipSlot.fire()
+      self.alert('Focused clip-slot fire')
 
   def on_sel_track_stop(self, plSegs, plMsg):
-    oTrack = self.sel_track()
+    oTrack = self.state().focused_track_or_none()
+    if oTrack == None:
+      return
     bQuantizedStop = True
     oTrack.stop_all_clips(bQuantizedStop)
+    self.alert('Focused track stop')
 
   def on_sel_track_mute(self, plSegs, plMsg):
-    oTrack = self.sel_track()
+    oTrack = self.state().focused_track_or_none()
+    if oTrack == None:
+      return
     oTrack.mute = not oTrack.mute
+    self.alert('Focused track mute')
 
   def on_sel_track_solo(self, plSegs, plMsg):
-    oTrack = self.sel_track()
+    oTrack = self.state().focused_track_or_none()
+    if oTrack == None:
+      return
     oTrack.solo = not oTrack.solo
+    self.alert('Focused track solo')
 
   def on_send(self, plSegs, plMsg):
     nIdx   = int  (plSegs[4])
     nValue = float(plMsg[2])
-    oTrack = self.sel_track()
+    oTrack = self.state().focused_track_or_none()
+    if oTrack == None:
+      return
     oSend  = oTrack.mixer_device.sends[nIdx]
     oSend.value = nValue
+    self.alert('Focused track send updated')
 
   def on_audio_det_coa(self, plSegs, plMsg):
     sAddr = plMsg[0]

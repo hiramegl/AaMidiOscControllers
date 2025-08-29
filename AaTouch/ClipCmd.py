@@ -52,6 +52,7 @@ class ClipCmd(Base):
       oSelTrack       = self.sel_track()
       oSelTrack.duplicate_clip_slot(nSelSceneIdxAbs)
       self.sel_scene(oScene)
+      self.obj('oRoot').on_focus([],[])
       self.alert('> DUPLICATED CLIP at track "%s", scene: %d' %
         (oSelTrack.name, nSelSceneIdxAbs))
 
