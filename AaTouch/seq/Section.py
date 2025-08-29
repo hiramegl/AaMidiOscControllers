@@ -5,8 +5,8 @@ class Section(Base):
     Base.__init__(self, phCfg, phObj)
 
     # state
-    self.m_nSection  = 1 # BAR
     self.m_lSections = ['1/2', '1', '2', '4']
+    self.m_nSection  = 1 # BAR
     self.connect()
 
     phObj['oSection'] = self
@@ -43,7 +43,8 @@ class Section(Base):
       self.send_msg('/seq/sec/sel/%d' % self.m_nSection, 0)
       self.m_nSection = nIdx
       self.obj('oBitOp').update()
-      self.alert('SECTION: %s' % (self.m_lSections[nIdx]))
+
+    self.alert('SECTION: %s' % (self.m_lSections[nIdx]))
 
   # ********************************************************
 

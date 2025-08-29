@@ -48,7 +48,8 @@ class TimeMode(Base):
       self.obj('oSeqMap').update(True)
       self.obj('oGrid'  ).update()
       self.obj('oBitOp' ).update()
-      self.alert('TIME MODE: %s' % (self.m_lModes[nIdx]))
+
+    self.alert('TIME MODE: %s' % (self.m_lModes[nIdx]))
 
   # ********************************************************
 

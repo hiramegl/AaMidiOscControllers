@@ -55,15 +55,19 @@ class SeqCmd(Base):
 
   def operate_notes(self, psType, psCmd):
     hVisSpan  = self.obj('oSeqMap').get_visible_span()
-    sTimeMode = self.obj('oTimeMode').time_mode()   # BAR, PHRASE
-    sHalfSel  = self.obj('oHalfSel' ).half_sel()    # LEFT, RIGHT
-    sSection  = self.obj('oSection' ).section()     # 1/2, 1, 2, 4
+    sTimeMode = self.obj('oTimeMode').time_mode()   # 'BAR', 'PHRASE'
+    sHalfSel  = self.obj('oHalfSel' ).half_sel()    # 'LEFT', 'RIGHT'
+    sSection  = self.obj('oSection' ).section()     # '1/2', '1', '2', '4'
     nSectLen  = 4.0 if sTimeMode == 'BAR' else 16.0 # time length for one section
 
     # compute start time and time span to apply command
     nTimeStart = hVisSpan['nTimeStart']
-    if sSection == '1' or sSection == '2' or sSection == '4':
+    if sSection == '2' or sSection == '4':
       nSectSpan = (nSectLen * int(sSection))
+    elif sSection == '1':
+      nSectSpan = nSectLen
+      if sHalfSel == 'RIGHT':
+        nTimeStart = nTimeStart + nSectLen
     else: # sSection = '1/2'
       nSectSpan = nSectLen / 2.0
       if sHalfSel == 'RIGHT':

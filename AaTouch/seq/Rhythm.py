@@ -13,7 +13,7 @@ class Rhythm(Base):
       ['REAGGETON', 2.0, 0.25, [0.0, 0.75, 1.0, 1.5]],
       ['CLAVE'    , 4.0, 0.25, [0.5, 1.0, 2.0, 2.75, 3.5]],
       ['HEART'    , 2.0, 0.25, [0.0, 0.5]],
-      ['4/7'      , 4.0, 0.57, [0.0, 0.57, 1.14, 1.71, 2.28, 2.86, 4.74]],
+      ['4/7'      , 4.0, 0.57, [0.0, 0.57, 1.14, 1.71, 2.28, 2.86, 3.43]],
       ['5/4'      , 4.0, 0.20, [0.0, 0.8 , 1.6, 2.4, 3.2]],
       ['AMEN_S'   , 4.0, 0.25, [1.0, 1.75, 2.25, 3.0, 3.75]],
       ['FILL ALL' , 1.0, 0.25, [0.0, 0.25, 0.5, 0.75]],
@@ -26,7 +26,6 @@ class Rhythm(Base):
       ['12/8'     , 4.0, 0.33, [0.0, 0.66, 1.33, 1.66, 2.33, 3.0, 3.66]],
       ['AMEN_D'   , 4.0, 0.25, [0.0, 0.5, 1.5, 2.0, 2.5, 2.75]],
       ['TRIPLET'  , 1.0, 0.33, [0.0, 0.33, 0.66]],
-
     ]
     phObj['oRhythm'] = self
     self.connect()
@@ -51,9 +50,27 @@ class Rhythm(Base):
 
     nIdx    = int(plSegs[3])
     lRhythm = self.m_lRhythms[nIdx]
-    hLimits = self.state().limits_or_none()
-    nStart  = hLimits['nStart'] # Clip/Loop start
-    nSpan   = self.obj('oSection').section_len()
+
+    hVisSpan  = self.obj('oSeqMap').get_visible_span()
+    sTimeMode = self.obj('oTimeMode').time_mode()   # 'BAR', 'PHRASE'
+    sHalfSel  = self.obj('oHalfSel' ).half_sel()    # 'LEFT', 'RIGHT'
+    sSection  = self.obj('oSection' ).section()     # '1/2', '1', '2', '4'
+    nSectLen  = 4.0 if sTimeMode == 'BAR' else 16.0 # time length for one section
+    if sSection == '1/2':
+      nSpan = nSectLen / 2.0
+    elif sSection == '1':
+      nSpan = nSectLen
+    elif sSection == '2':
+      nSpan = nSectLen * 2.0
+    elif sSection == '4':
+      nSpan = nSectLen * 4.0
+
+    nStart = hVisSpan['nTimeStart']
+    if sSection == '1/2' and sHalfSel == 'RIGHT':
+      nStart += (nSectLen / 2.0)
+    elif sSection == '1' and sHalfSel == 'RIGHT':
+      nStart += nSectLen
+    # for sSection = '2' and '4' always start in nTimeStart
 
     lNotes  = []
     sName   = lRhythm[0]
@@ -61,6 +78,9 @@ class Rhythm(Base):
     nBitLen = lRhythm[2]
     lPatt   = lRhythm[3]
     nVel    = self.obj('oLenVel').get_attr('VEL')
+
+    # is possible that we write notes after the loop's end,
+    # that is totally fine, all depends in the selected section
     nTimes  = int(nSpan / nPatLen)
 
     for nIdx in range(nTimes):

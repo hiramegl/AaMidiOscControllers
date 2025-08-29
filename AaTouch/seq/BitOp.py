@@ -50,18 +50,20 @@ class BitOp(Base):
 
   def activate(self):
     oMidiClip = self.state().get_midi_clip_or_none()
-    if oMidiClip == None: return
+    if oMidiClip == None:
+      return
 
     hLimits  = self.state().limits_or_none()
-    nBitTime = self.obj('oTimeMode').bit_time()
-    nTimeOff = self.obj('oSeqMap'  ).get_time_off_abs()
-    sHalfSel = self.obj('oHalfSel' ).half_sel() # LEFT, RIGHT
-    sSection = self.obj('oSection' ).section()  # 1/2, 1, 2, 4
+    nBitTime = self.obj('oTimeMode').bit_time()         # in beats (0.25 or 1.0)
+    nTimeOff = self.obj('oSeqMap'  ).get_time_off_abs() # in beats
+    sHalfSel = self.obj('oHalfSel' ).half_sel()         # 'LEFT', 'RIGHT'
+    sSection = self.obj('oSection' ).section()          # '1/2', '1', '2', '4'
 
-    nSectLen = nBitTime * 16.0     # one section length
-    nSectEnd = nTimeOff + nSectLen # section end (1 section mode)
+    nSectLen = nBitTime * 16.0                          # one section length (in beats)
+    nSectFac = 1.0 if sSection == '1/2' else 2.0        # section factor
+    nSectEnd = nTimeOff + (nSectFac * nSectLen)         # section end
 
-    nHalfLen = nBitTime * 8.0      # half section length
+    nHalfLen = nBitTime * 8.0 * nSectFac                # half section length
     nHalfSta = nTimeOff + (0.0      if sHalfSel == 'LEFT' else nHalfLen)
     nHalfEnd = nTimeOff + (nHalfLen if sHalfSel == 'LEFT' else nSectEnd)
 
@@ -109,19 +111,13 @@ class BitOp(Base):
               lBitClr.append([nBit, sInClr])
 
           else:
-            if sSection == '1':
-              # all bits selected!
+            # select only bits inside the selected half section
+            if nTime >= nHalfSta and nTime < nHalfEnd:
               lBitVal.append([nBit, 1])
               lBitClr.append([nBit, sSelClr])
-
             else:
-              # select only bits inside the selected half section
-              if nTime >= nHalfSta and nTime < nHalfEnd:
-                lBitVal.append([nBit, 1])
-                lBitClr.append([nBit, sSelClr])
-              else:
-                lBitVal.append([nBit, 1])
-                lBitClr.append([nBit, sUnsClr])
+              lBitVal.append([nBit, 1])
+              lBitClr.append([nBit, sUnsClr])
 
     sAddr   = '/seq/bit/op/%d'
     lBundle = list(map(lambda x: [sAddr % (x[0]), x[1]], lBitVal))
@@ -250,8 +246,12 @@ class BitOp(Base):
 
     # compute start time and time span to apply command
     nTimeStart = hVisSpan['nTimeStart']
-    if sSection == '1' or sSection == '2' or sSection == '4':
+    if sSection == '2' or sSection == '4':
       nSectSpan = (nSectLen * int(sSection))
+    elif sSection == '1':
+      nSectSpan = nSectLen
+      if sHalfSel == 'RIGHT':
+        nTimeStart = nTimeStart + nSectLen
     else: # sSection = '1/2'
       nSectSpan = nSectLen / 2.0
       if sHalfSel == 'RIGHT':

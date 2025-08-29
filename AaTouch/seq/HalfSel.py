@@ -5,8 +5,8 @@ class HalfSel(Base):
     Base.__init__(self, phCfg, phObj)
 
     # state
-    self.m_nHalf  = 0 # 0: Left half, 1: right half
     self.m_lSides = ['LEFT', 'RIGHT']
+    self.m_nHalf  = 0 # 0: Left half, 1: right half
     self.connect()
 
     phObj['oHalfSel'] = self
