@@ -37,12 +37,11 @@ class Roll(Base):
     nValue = plMsg[2]
 
     if nValue < 0.5:
-      # turning roll off
+      # reseting roll
       if self.m_lBeatIdx != -1:
-        # there was actually a beat rolling, turn loop off!
+        self.send_msg('/roll/beat/%d' % (self.m_lBeatIdx), 0)
         self.m_lBeatIdx = -1
-        oClip.looping = False
-        self.send_msg('/loop/ext/0', 0) # loop-toggle
+      self.roll(0.0, 4.0)
       return
 
     # turning roll on
@@ -71,10 +70,9 @@ class Roll(Base):
     if nValue < 0.5:
       # turning roll off
       if self.m_lSemiIdx != -1:
-        # there was actually a semi-beat rolling, turn loop off!
+        self.send_msg('/roll/beat/%d' % (self.m_lBeatIdx), 0)
         self.m_lSemiIdx = -1
-        oClip.looping = False
-        self.send_msg('/loop/ext/0', 0) # loop-toggle
+      self.roll(0.0, 4.0)
       return
 
     if self.m_lBeatIdx != -1:
