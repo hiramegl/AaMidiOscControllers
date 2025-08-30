@@ -1,6 +1,6 @@
 from .Base import Base
 
-class Selected(Base):
+class Focused(Base):
   def __init__(self, phCfg, phObj):
     Base.__init__(self, phCfg, phObj)
 
@@ -10,7 +10,7 @@ class Selected(Base):
     self.connect()
     self.update()
 
-    phObj['oSelected'] = self
+    phObj['oFocused'] = self
 
   # ********************************************************
 

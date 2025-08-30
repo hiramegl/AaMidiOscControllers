@@ -21,7 +21,6 @@ class State(Base):
     self.m_hSlotsCbs  = {}
     self.m_hClipsCbs  = {}
     self.m_hTracksCbs = {}
-    self.m_bFollowSel = False # follow selected clip
 
     self.connect()
     self.update()
@@ -33,9 +32,8 @@ class State(Base):
   def connect(self):
     self.song().add_scenes_listener(self.on_scenes_changed)
     self.song().add_tracks_listener(self.on_tracks_changed)
-    if self.m_bFollowSel:
-      self.song().view.add_selected_scene_listener(self.on_sel_clip_changed)
-      self.song().view.add_selected_track_listener(self.on_sel_clip_changed)
+    #self.song().view.add_selected_scene_listener(self.on_sel_clip_changed)
+    self.song().view.add_selected_track_listener(self.on_sel_clip_changed)
     self.add_tracks_listeners()
     self.add_sends_listeners()
     self.add_clips_listeners()
@@ -44,9 +42,8 @@ class State(Base):
     oSong = self.song()
     oSong.remove_scenes_listener(self.on_scenes_changed)
     oSong.remove_tracks_listener(self.on_tracks_changed)
-    if self.m_bFollowSel:
-      oSong.view.remove_selected_scene_listener(self.on_sel_clip_changed)
-      oSong.view.remove_selected_track_listener(self.on_sel_clip_changed)
+    #oSong.view.remove_selected_scene_listener(self.on_sel_clip_changed)
+    oSong.view.remove_selected_track_listener(self.on_sel_clip_changed)
     self.remove_tracks_listeners()
     self.remove_sends_listeners()
     self.remove_clips_listeners()
@@ -206,10 +203,10 @@ class State(Base):
 
   def on_scenes_changed(self):
     self.update()
-    self.obj('oClips'   ).update()
-    self.obj('oZoom'    ).update()
-    self.obj('oSeq'     ).update()
-    self.obj('oSelected').update()
+    self.obj('oClips'  ).update()
+    self.obj('oZoom'   ).update()
+    self.obj('oSeq'    ).update()
+    self.obj('oFocused').update()
 
     # re-bind clips again since there are changes
     # in the scenes
@@ -218,11 +215,11 @@ class State(Base):
 
   def on_tracks_changed(self):
     self.update()
-    self.obj('oSends'   ).update()
-    self.obj('oClips'   ).update()
-    self.obj('oZoom'    ).update()
-    self.obj('oSeq'     ).update()
-    self.obj('oSelected').update()
+    self.obj('oSends'  ).update()
+    self.obj('oClips'  ).update()
+    self.obj('oZoom'   ).update()
+    self.obj('oSeq'    ).update()
+    self.obj('oFocused').update()
 
     # re-bind sends and clips again since there
     # are changes in the tracks
@@ -233,12 +230,14 @@ class State(Base):
     self.add_sends_listeners()
     self.add_clips_listeners()
 
-  def on_sel_clip_changed(self):
+  def on_focus_clip_changed(self):
     self.update()
-    self.obj('oSeq'     ).update()
-    self.obj('oLoop'    ).update()
-    self.obj('oSelected').update()
-    self.obj('oTracks'  ).update_sel_track()
+    self.obj('oSeq'    ).update()
+    self.obj('oLoop'   ).update()
+    self.obj('oFocused').update()
+
+  def on_sel_clip_changed(self):
+    self.obj('oTracks').update_sel_track()
 
   def on_clip_length_changed(self):
     self.update_limits()
@@ -254,7 +253,7 @@ class State(Base):
     # update selected track sends (if necessary)
     oSelTrack = self.sel_track()
     if poTrack == oSelTrack:
-      self.obj('oSelected').update_sends()
+      self.obj('oFocused').update_sends()
 
     # update track sends
     self.obj('oSends').update_track_send(pnTrackIdxRel, poTrack, pnSendIdx)
@@ -327,7 +326,7 @@ class State(Base):
   def set_clip_offsets(self, pnColOff, pnRowOff):
     self.m_nColOff = pnColOff
     self.m_nRowOff = pnRowOff
-    self.on_sel_clip_changed()
+    self.on_focus_clip_changed()
 
   def track_offset(self):
     return self.m_nTrackOff

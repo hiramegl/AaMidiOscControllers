@@ -6,7 +6,7 @@ from .State        import State
 from .Root         import Root
 from .Tempo        import Tempo
 from .Shift        import Shift
-from .Selected     import Selected
+from .Focused      import Focused
 from .ClipNav      import ClipNav
 from .ClipCmd      import ClipCmd
 from .loop.Loop    import Loop
@@ -41,34 +41,34 @@ class AaTouch:
       'oSong'    : poCtrlInstance.song(),
     }
 
-    Comm    (self.m_hCfg, self.m_hObj)
-    State   (self.m_hCfg, self.m_hObj)
-    Root    (self.m_hCfg, self.m_hObj)
-    Tempo   (self.m_hCfg, self.m_hObj)
-    Shift   (self.m_hCfg, self.m_hObj)
-    Selected(self.m_hCfg, self.m_hObj)
-    ClipNav (self.m_hCfg, self.m_hObj)
-    ClipCmd (self.m_hCfg, self.m_hObj)
-    Loop    (self.m_hCfg, self.m_hObj)
-    Seq     (self.m_hCfg, self.m_hObj)
-    Session (self.m_hCfg, self.m_hObj)
+    Comm   (self.m_hCfg, self.m_hObj)
+    State  (self.m_hCfg, self.m_hObj)
+    Root   (self.m_hCfg, self.m_hObj)
+    Tempo  (self.m_hCfg, self.m_hObj)
+    Shift  (self.m_hCfg, self.m_hObj)
+    Focused(self.m_hCfg, self.m_hObj)
+    ClipNav(self.m_hCfg, self.m_hObj)
+    ClipCmd(self.m_hCfg, self.m_hObj)
+    Loop   (self.m_hCfg, self.m_hObj)
+    Seq    (self.m_hCfg, self.m_hObj)
+    Session(self.m_hCfg, self.m_hObj)
 
   # Ableton ************************************************
 
   def disconnect(self):
     self.log('> %s: disconnecting ...' % (self.cfg('sProdName')))
-    self.obj('oShift'   ).disconnect()
-    self.obj('oSelected').disconnect()
-    self.obj('oClipCmd' ).disconnect()
-    self.obj('oLoop'    ).disconnect()
-    self.obj('oSeq'     ).disconnect()
-    self.obj('oSess'    ).disconnect()
+    self.obj('oShift'  ).disconnect()
+    self.obj('oFocused').disconnect()
+    self.obj('oClipCmd').disconnect()
+    self.obj('oLoop'   ).disconnect()
+    self.obj('oSeq'    ).disconnect()
+    self.obj('oSess'   ).disconnect()
     self.log('> %s: disconnected' % (self.cfg('sProdName')))
 
   def refresh_state(self):
-    self.obj('oSelected').update_sends()
-    self.obj('oSends'   ).activate()
-    self.obj('oTracks'  ).update_volumes()
+    self.obj('oFocused').update_sends()
+    self.obj('oSends'  ).activate()
+    self.obj('oTracks' ).update_volumes()
 
   def update_display(self):
     """
