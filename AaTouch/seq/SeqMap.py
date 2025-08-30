@@ -32,7 +32,8 @@ class SeqMap(Base):
     self.activate(pbResetSel)
 
   def activate(self, pbResetSel = False):
-    if self.mode() != 'MIDI': return
+    if self.mode() != 'MIDI':
+      return
 
     oMidiClip = self.state().midi_clip_or_none()
     nClipId   = hash(oMidiClip)
@@ -59,7 +60,6 @@ class SeqMap(Base):
     self.m_nPitxOffIdx = 7 - nRow # 0..7
 
     # compute span variables
-    sTimeMode = self.time_mode()
     nHalfSpan = self.time_span()
     nTimeSpan = nHalfSpan * 2 # 2 time intervals
     hLimits   = self.state().limits_or_none()

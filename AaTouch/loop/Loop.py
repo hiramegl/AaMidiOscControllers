@@ -133,7 +133,10 @@ class Loop(Base):
       if nIdx == 0:
         oClip.loop_end = nLoopEnd - (nLoopLen / 2.0)
       else:
-        oClip.loop_end = nLoopEnd + nLoopLen
+        oClip.loop_end   = nLoopEnd + nLoopLen
+        # update end marker on loop extension (if necessary)
+        if oClip.end_marker < oClip.loop_end:
+          oClip.end_marker = oClip.loop_end
 
   def on_ext(self, plSegs, plMsg):
     nIdx   = int(plSegs[3])
