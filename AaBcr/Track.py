@@ -99,6 +99,7 @@ class Track():
     bSyncOk = self.obj('oRouter').sync_track_devs(pnBankChn)
     if bSyncOk == False:
       self.clear()
+    self.alert('Syncing bank %d' % (pnBankChn))
 
   # ********************************************************
 
@@ -142,4 +143,7 @@ class Track():
   def dlog(self, psMessage):
     if self.cfg('bDebug'):
       self.log(psMessage)
+
+  def alert(self, psMsg):
+    self.obj('oCtrlInst').show_message(psMsg)
 

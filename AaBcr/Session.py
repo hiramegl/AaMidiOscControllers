@@ -37,27 +37,54 @@ class Session():
 
     nId = ptKey[1]
     if nId == self.cfg('nSessLeft'):
-      if self.m_nTrackOff != 0:
-        self.handle_new_track_offset(self.m_nTrackOff - self.cfg('nTracks'))
+      nFirstReturnOffset = self.get_first_return_offset()
+      nLastReturnOffset  = len(self.tracks_and_returns()) - 1
+
+      if self.m_nTrackOff < nFirstReturnOffset:
+        nTrackOff = nFirstReturnOffset
+      elif self.m_nTrackOff == nFirstReturnOffset:
+        nTrackOff = nLastReturnOffset
+      else:
+        nTrackOff = self.m_nTrackOff - self.cfg('nTracks')
+      self.handle_new_track_offset(nTrackOff)
       self.update_nav_ctrls()
 
     elif nId == self.cfg('nSessRight'):
-      if self.m_nTrackOff + self.cfg('nTracks') < len(self.tracks_and_returns()):
-        self.handle_new_track_offset(self.m_nTrackOff + self.cfg('nTracks'))
+      nFirstReturnOffset = self.get_first_return_offset()
+      nLastReturnOffset  = len(self.tracks_and_returns()) - 1
+
+      if self.m_nTrackOff < nFirstReturnOffset:
+        nTrackOff = nFirstReturnOffset
+      elif self.m_nTrackOff == nLastReturnOffset:
+        nTrackOff = nFirstReturnOffset
+      else:
+        nTrackOff = self.m_nTrackOff + self.cfg('nTracks')
+      self.handle_new_track_offset(nTrackOff)
       self.update_nav_ctrls()
 
     elif nId == self.cfg('nGoToSel'):
-      if pnValue == 0: return
+      if pnValue == 0:
+        return # ignore 'key-up' events
       nTrackIdxAbs = self.sel_track_idx_abs()
       self.handle_new_track_offset(nTrackIdxAbs)
       self.update_nav_ctrls()
+      self.alert('Focusing on selected track')
 
     else:
+      if pnValue == 0:
+        return # ignore 'key-up' events
       # bank sync
-      if pnValue == 0: return
       self.update_nav_ctrls()
       nBankChn = nId - self.cfg('nBank1Sync')
       self.obj('oTrack').sync_track(nBankChn)
+
+  def get_first_return_offset(self):
+    nTrackOff = 0
+    for oTrack in list(self.tracks_and_returns()):
+      if oTrack in list(self.returns()):
+        return nTrackOff
+      nTrackOff += 1
+    return 0
 
   def handle_new_track_offset(self, pnTrackOff):
     self.m_nTrackOff = pnTrackOff
@@ -134,13 +161,13 @@ class Session():
     nId      = self.cfg(psId) + pnIdx
     self.obj('oComm').send_msg([nBankChn, nId, pnValue])
 
-  def log(self, _sMessage):
-    Live.Base.log(_sMessage)
+  def log(self, psMsg):
+    Live.Base.log(psMsg)
 
-  def dlog(self, psMessage):
+  def dlog(self, psMsg):
     if self.cfg('bDebug'):
-      self.log(psMessage)
+      self.log(psMsg)
 
-  def alert(self, sMessage):
-    self.obj('oCtrlInst').show_message(sMessage)
+  def alert(self, psMsg):
+    self.obj('oCtrlInst').show_message(psMsg)
 
