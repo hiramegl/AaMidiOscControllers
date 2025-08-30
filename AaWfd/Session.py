@@ -69,7 +69,10 @@ class Session():
     nTrackIdxAbs = self.get_track_idx_abs(pnTrackIdxRel)
     if self.is_track_available(nTrackIdxAbs) == False:
       return
-    oVolume = self.get_track(nTrackIdxAbs).mixer_device.volume
+    oTrack = self.get_track_or_none(nTrackIdxAbs)
+    if oTrack == None:
+      return
+    oVolume = oTrack.mixer_device.volume
 
     nBank0Chn = self.cfg('nBank0Chn')
     nVolOff   = self.cfg('nVolOff')
@@ -81,7 +84,9 @@ class Session():
     nTrackIdxAbs = self.get_track_idx_abs(pnTrackIdxRel)
     if self.is_track_available(nTrackIdxAbs) == False:
       return
-    oTrack = self.get_track(nTrackIdxAbs)
+    oTrack = self.get_track_or_none(nTrackIdxAbs)
+    if oTrack == None:
+      return
 
     fTrkRxCb = lambda ptKey, pnValue: self.handle_track_rx_msg(ptKey, oTrack, pnTrackIdxRel, pnValue)
     nBank0Chn = self.cfg('nBank0Chn')
@@ -246,8 +251,11 @@ class Session():
   def is_track_available(self, pnTrackIdxAbs):
     return (pnTrackIdxAbs < len(self.tracks_and_returns()))
 
-  def get_track(self, pnTrackIdxAbs):
-    return self.tracks_and_returns()[pnTrackIdxAbs]
+  def get_track_or_none(self, pnTrackIdxAbs):
+    try:
+      return self.tracks_and_returns()[pnTrackIdxAbs]
+    except:
+      return None
 
   def get_track_idx_abs(self, pnTrackIdxRel):
     return self.m_nTrackOff + pnTrackIdxRel
