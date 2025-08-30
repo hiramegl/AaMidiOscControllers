@@ -8,7 +8,7 @@ class BitOpSel(Base):
     self.m_lButOps   = ['DIV', 'MUL', 'CHOP2', 'CHOP3']
     self.m_nButSelOp = 1 # MUL by default
     self.m_lEncOps   = ['LEN', 'VEL', 'SHIFT', 'RESET']
-    self.m_nEncSelOp = 2 # SHIFT by default
+    self.m_nEncSelOp = 1 # VEL by default
     self.connect()
 
     phObj['oBitOpSel'] = self
