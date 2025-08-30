@@ -5,7 +5,7 @@ class LenVel(Base):
     Base.__init__(self, phCfg, phObj)
 
     # state
-    self.m_lLens    = [0.125, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0]
+    self.m_lLens    = [0.125, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0, 16.0] # in beats
     self.m_lVels    = [   10,   20,  40,  60,  80, 100, 120,  127]
     self.m_nLenIdx  = 1  # current bit length   index
     self.m_nVelIdx  = 7  # current bit velocity index
@@ -46,8 +46,10 @@ class LenVel(Base):
       if self.mode() == 'MIDI':
         if sCmd == 'LEN' and self.m_nLenIdx == nColIdx:
           self.send_msg(sAddr, 1) # prevent from turning off
+          self.alert('> BIT LEN: %0.3f [beats]' % (self.m_lLens[nColIdx]))
         elif sCmd == 'VEL' and self.m_nVelIdx == nColIdx:
           self.send_msg(sAddr, 1) # prevent from turning off
+          self.alert('> BIT VEL: %d' % (self.m_lVels[nColIdx]))
       return
 
     if sCmd == 'LEN':
@@ -56,7 +58,7 @@ class LenVel(Base):
       else:
         self.send_msg('/seq/bit/lenvel/%d' % (self.m_nLenIdx), 0)
         self.m_nLenIdx = nColIdx
-        self.alert('> BIT LEN: %0.3f' % (self.m_lLens[nColIdx]))
+        self.alert('> BIT LEN: %0.3f [beats]' % (self.m_lLens[nColIdx]))
 
     elif sCmd == 'VEL':
       if nColIdx == self.m_nVelIdx:

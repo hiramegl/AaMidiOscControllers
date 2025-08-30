@@ -40,6 +40,7 @@ class TimeMode(Base):
     if nValue < 0.5:
       if nIdx == self.m_nMode:
         self.send_msg(sAddr, 1) # prevent from turning off
+      self.alert('TIME MODE: %s' % (self.m_lModes[nIdx]))
       return
 
     if nIdx != self.m_nMode:

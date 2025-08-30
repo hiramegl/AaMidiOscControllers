@@ -122,9 +122,6 @@ class Seq(Base):
         self.send_msg(sAddr, 0.0) # prevent from turning on
       self.obj('oPatt').send_pattern('add', 0.0)
       self.create_empty_midi_clip()
-      self.state().update()
-      self.obj('oSeqMap').activate()
-      self.grid().activate()
 
     elif self.mode() == 'AUDIO':
       if nValue < 0.5:
@@ -145,6 +142,8 @@ class Seq(Base):
     self.obj('oSeqMap'  ).activate()
     self.obj('oBitOp'   ).activate()
     self.obj('oBitOpSel').activate()
+    self.grid().activate() # maybe not necessary since the grid is empty
+    self.m_nCurrMode = self.mode() # update mode to MIDI
 
   # ********************************************************
 
