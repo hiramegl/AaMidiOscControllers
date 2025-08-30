@@ -133,9 +133,12 @@ class Seq(Base):
         self.send_msg(sAddr, 0.0) # prevent from turning on
 
   def create_empty_midi_clip(self):
-    oClipSlot = self.sel_clip_slot()
-    if (oClipSlot == None): return
-    if (oClipSlot.has_clip): return # it should be an empty clip
+    oClipSlot = self.state().focused_clip_slot_or_none()
+    if (oClipSlot == None):
+      return
+    if (oClipSlot.has_clip):
+      return # it should be an empty clip
+
     nLength = self.get_section_length()
     oClipSlot.create_clip(nLength)
     self.state().update()
