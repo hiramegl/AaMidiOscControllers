@@ -9,7 +9,8 @@ class Session():
     self.m_hObj = phObj
 
     # state
-    self.m_nTrackOff = 0
+    # track offset => Move to the rightmost group of 'nTracks' tracks (which should be the return tracks)
+    self.m_nTrackOff = (int(len(self.tracks_and_returns()) / self.cfg('nTracks')) - 1) * self.cfg('nTracks')
     self.m_nSceneOff = 0
     self.m_nTempoVal = 0 # tempo value to compute tempo increment
     self.m_lCtrls = [
