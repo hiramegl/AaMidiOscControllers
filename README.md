@@ -2,11 +2,13 @@
 
 MIDI-OSC controller scripts for Ableton Live 12.
 
-The scripts in AaMidiControllers were not compatible with the new series of MacBook Pro computers
-with Max chips. Therefore I developed these new scripts that use a raspberry-pi as a bridge
-to convert MIDI to OSC and (controllers -> MacBook) and OSC to MIDI (MacBook -> controllers).
+The scripts in AaMidiControllers were not compatible with the new series of MacBook Pro
+computers with Max chips.
 
-With these scripts you can control 6 different types of MIDI controllers:
+Therefore I developed these new scripts that use a raspberry-pi as a bridge to convert
+MIDI to OSC (controllers -> MacBook) and OSC to MIDI (MacBook -> controllers).
+
+With these scripts you can control 5 different types of MIDI controllers:
 
 1) AaBCF: Behringer BCF2000 B-Control Fader MIDI Control Surface
    * With 8 motorized faders, 16 buttons, 8 encoder-buttons, 4 modes and 16 banks
@@ -19,7 +21,7 @@ With these scripts you can control 6 different types of MIDI controllers:
 5) AaGrid: AKAI APC Mini MK2
    * With 8 x 8 pad, 8 bottom and 8 side buttons, 1 shift button and 9 non-motorized faders
 
-A new Open Stage Control touch-screen application is also available:
+A new Open Stage Control touch-screen application (OSC based) is also available:
 
 6) AaTouch:
    * 32 x 12 beat grid buttons - MIDI piano roll
@@ -30,6 +32,8 @@ sync the tracks' faders.
 
 The BCR2000 is programmed to support up to 6 MIDI channels with 56 encoders (32 + 24),
 giving you the possibility to change 336 parameters quickly!
+Bank 7 is used to controll all EQ3 equalizers of return tracks at once
+(low, mid, high filter mode).
 
 # Instructions
 
