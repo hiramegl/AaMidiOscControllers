@@ -34,19 +34,18 @@ class Operator(Dev):
        'Bank3 | nMR1Off | D Fix Freq  | D Fix Freq Mul         | De Attack    | De Decay    | De Release  | De R < Vel      | Osc-D Feedb  | -'          ,
        'Bank3 | nMR2Off | De Mode     | Osc-D Lev < Key        | De Init      | De Peak     | De Sustain  | Osc-D Lev < Vel | Osc-D Phase  | -'          ,
        #==================================================================================================================================================
+       'Bank4 | nGR0Off | Fe A Slope  | Fe D Slope             | Fe R Slope'                                                                             ,
+       #--------------------------------------------------------------------------------------------------------------------------------------------------
+       'Bank4 | nGR0Off | Filter Type | Filter Circuit - LP/HP | Filter Freq  | Filter Res  | Filter Drive | Fe Loop        | Fe Retrig'                 ,
+       'Bank4 | nGR1Off | Fe Attack   | Fe Decay               | Fe Release   | Fe R < Vel  | Fe Init      | Fe Peak        | Fe Sustain   | Fe Amount  ',
+       'Bank4 | nGR2Off | Fe Mode     | Fe End                 | Filter Morph | Filt < Vel  | Filt < Key   | Shaper Type    | Shaper Drive | Shaper Mix' ,
+       #--------------------------------------------------------------------------------------------------------------------------------------------------
        'Bank4 | nMB0Off | LFO On      | LFO Retrigger          | Osc-A < LFO  | Osc-B < LFO | Osc-C < LFO | Osc-D < LFO'                                 ,
+       'Bank4 | nMB1Off | Filter On   | Filter Slope           | Filt < LFO   | Filter Circuit - BP/NO/Morph'                                            ,
        #--------------------------------------------------------------------------------------------------------------------------------------------------
        'Bank4 | nMR0Off | LFO Type    | LFO Range              | LFO Rate     | LFO Sync    | LFO Amt     | Le Loop         | Le Retrig    | -'          ,
        'Bank4 | nMR1Off | Le Attack   | Le Decay               | Le Release   | Le R < Vel  | Le Init     | Le Peak         | Le Sustain   | -'          ,
        'Bank4 | nMR2Off | Le Mode     | Le End                 | LFO Amt A    | LFO Amt B   | LFO Dst B   | LFO R < K       | LFO < Vel    | -'          ,
-       #==================================================================================================================================================
-       'Bank5 | nGR0Off | Fe A Slope  | Fe D Slope             | Fe R Slope'                                                                             ,
-       #--------------------------------------------------------------------------------------------------------------------------------------------------
-       'Bank5 | nMB0Off | Filter On   | Filter Slope           | Filt < LFO   | Filter Circuit - BP/NO/Morph'                                            ,
-       #--------------------------------------------------------------------------------------------------------------------------------------------------
-       'Bank5 | nMR0Off | Filter Type | Filter Circuit - LP/HP | Filter Freq  | Filter Res  | Filter Drive | Fe Loop        | Fe Retrig'                 ,
-       'Bank5 | nMR1Off | Fe Attack   | Fe Decay               | Fe Release   | Fe R < Vel  | Fe Init      | Fe Peak        | Fe Sustain   | Fe Amount  ',
-       'Bank5 | nMR2Off | Fe Mode     | Fe End                 | Filter Morph | Filt < Vel  | Filt < Key   | Shaper Type    | Shaper Drive | Shaper Mix' ,
     ]
     self.reg('Operator')
     self.parse_cfg()
