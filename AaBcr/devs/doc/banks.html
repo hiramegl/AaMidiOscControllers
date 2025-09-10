@@ -3,8 +3,8 @@
 <style>
 body   {font-family: monospace; font-size: 12px; background-color: #333366}
 table  {border-spacing: 0px}
-td     {border-radius: 10px; font-weight: bold; height: 48px; width: 200px; border: solid 1px; font-size: 18px; text-align: center;}
-button {border-radius: 10px; font-weight: bold; height: 40px; margin: 2px; padding: 1px 20px;}
+td     {border-radius: 10px; font-weight: bold; font-size: 22px; height: 60px; width: 250px; border: solid 1px; text-align: center;}
+button {border-radius: 10px; font-weight: bold; font-size: 22px; height: 60px; width: 130px;}
 .Effects               {background-color: #666666; color: white;}
 .Group-header          {background-color: #cccccc; height: 10px;}
 .Main-header           {background-color: #cccccc; height: 10px;}
@@ -14,7 +14,7 @@ button {border-radius: 10px; font-weight: bold; height: 40px; margin: 2px; paddi
 .preset-prev           {background-color: #db7093 !important; color: #00ccff !important;}
 .preset-next           {background-color: #db7093 !important; color: #00ffcc !important;}
 .extra                 {                                      color: #ffffff !important; font-style: italic; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;}
-.dry-wet               {background-color: #99ff99 !important; color: #990000 !important;}
+.dry-wet               {background-color: #99ff99 !important; color: #339933 !important; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 2px 0 #000, 1px 1px 0 #000;}
 .empty                 {background-color: #999999 !important; color: #ffffff !important;}
 .Vocoder               {background-color: #cc9999}
 .Overdrive             {background-color: #cc6666}
@@ -48,28 +48,56 @@ button {border-radius: 10px; font-weight: bold; height: 40px; margin: 2px; paddi
 .InstrumentGroupDevice {background-color: #819BAF}
 .DrumGroupDevice       {background-color: #7C7098}
 .views                 {background-color: #3BA9E0;}
-.views-container       {#3BA9E0; height: 750px; width: 1630px; overflow-y: scroll}
+.views-container       {#3BA9E0; height: 1000px; width: 1630px; overflow-y: scroll}
 .dev-image             {height: 250px;}
+.bank-image-container  {background-color: #333333; position: absolute; top: 130px; left: 5px; width: 2035px; height: 260px; display: flex; justify-content: center; align-items: center;}
+.bank-image            {height: 260px; max-width: 1270px;}
 </style>
 <script type="text/javascript">
-function on_view(_nGroup) {
+function on_view(pnGroup) {
   for (var i = 0; i < 14; i++) {
     var oEl = document.getElementById('group-' + i)
-    oEl.style.display = (i == _nGroup) ? 'block' : 'none';
+    oEl.style.display = (i == pnGroup) ? 'block' : 'none';
+  }
+
+  var oMainEl = document.getElementById('main-group')
+  oMainEl.setAttribute('data-group', pnGroup)
+}
+
+function on_bank(pnGroup, pnBank) {
+  for (var i = 0; i < 6; i++) {
+    var oEl = document.getElementById('bank-' + pnGroup + '-' + i)
+    if (oEl == null) continue;
+
+    oEl.style.display = (i == pnBank) ? 'block' : 'none';
+    if (i != pnBank) continue;
+
+    var oHeaderEl = document.getElementById('header-group-' + pnGroup)
+    var newHeader = oHeaderEl.innerText.replace(/ \/ \d+$/, ` / ${pnBank}`)
+    oHeaderEl.innerHTML = newHeader
+    oHeaderEl.setAttribute('data-bank', pnBank)
+
+    var oFooterEl = document.getElementById('footer-group-' + pnGroup)
+    oFooterEl.innerHTML = newHeader
   }
 }
-function on_bank(_nGroup, _nBank) {
-  for (var i = 0; i < 6; i++) {
-    var oEl = document.getElementById('bank-' + _nGroup + '-' + i)
-    if (oEl == null) continue;
-    oEl.style.display = (i == _nBank) ? 'block' : 'none';
-  }
+
+function on_bank_image() {
+  var oMainEl = document.getElementById('main-group')
+  var sGroup  = oMainEl.getAttribute('data-group')
+
+  var oHeaderEl = document.getElementById('header-group-' + sGroup)
+  var sBank     = oHeaderEl.getAttribute('data-bank')
+
+  var oBankImgEl = document.getElementById(`bank-img-${sGroup}-${sBank}`)
+  var sDisplay   = oBankImgEl.style.display
+  oBankImgEl.style.display = (sDisplay == 'none') ? 'flex' : 'none';
 }
 
 </script>
 </head>
 <body>
-<button class='Effects' onclick='on_view(0)'>EFFECTS</button>
+<button class='Effects' onclick='on_view(0)' id='main-group' data-group='0'>EFFECTS</button>
 <button class='UltraAnalog' onclick='on_view(1)'>Analog</button>
 <button class='Collision' onclick='on_view(2)'>Collision</button>
 <button class='Drift' onclick='on_view(3)'>Drift</button>
@@ -79,20 +107,30 @@ function on_bank(_nGroup, _nBank) {
 <button class='MultiSampler' onclick='on_view(7)'>Sampler</button>
 <button class='OriginalSimpler' onclick='on_view(8)'>Simpler</button>
 <button class='StringStudio' onclick='on_view(9)'>Tension</button>
-<button class='InstrumentVector' onclick='on_view(10)'>Wavetable</button>
-<button class='InstrumentGroupDevice' onclick='on_view(11)'>InstGroup</button>
-<button class='DrumGroupDevice' onclick='on_view(12)'>DrumGroup</button>
+<button class='InstrumentVector' onclick='on_view(10)'>Wavetabl</button>
+<button class='InstrumentGroupDevice' onclick='on_view(11)'>InstGrp</button>
+<button class='DrumGroupDevice' onclick='on_view(12)'>DrumGrp</button>
 <button class='views' onclick='on_view(13)'>Views</button>
 <br/>
 <div id='group-0' style='display: block'>
-<button class='Effects header'>EFFECTS</button>
+<button class='Effects header' id='header-group-0' data-bank='0'>EFFECTS / 0</button>
 <button onclick='on_bank(0, 0)'>BANK 0</button>
 <button onclick='on_bank(0, 1)'>BANK 1</button>
 <button onclick='on_bank(0, 2)'>BANK 2</button>
 <button onclick='on_bank(0, 3)'>BANK 3</button>
 <button onclick='on_bank(0, 4)'>BANK 4</button>
 <button onclick='on_bank(0, 5)'>BANK 5</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-0-0' style='display: block'>
+<div id='bank-img-0-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='Vocoder.png' class='bank-image'/>
+<img width='100px'/>
+<img src='Overdrive.png' class='bank-image'/>
+<img width='100px'/>
+<img src='Eq8.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -241,6 +279,13 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-0-1' style='display: none'>
+<div id='bank-img-0-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='BeatRepeat.png' class='bank-image'/>
+<img width='100px'/>
+<img src='Resonator.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -389,6 +434,13 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-0-2' style='display: none'>
+<div id='bank-img-0-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='AutoPan.png' class='bank-image'/>
+<img width='100px'/>
+<img src='Echo.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -537,6 +589,15 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-0-3' style='display: none'>
+<div id='bank-img-0-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='Delay.png' class='bank-image'/>
+<img width='100px'/>
+<img src='FilterDelay.png' class='bank-image'/>
+<img width='100px'/>
+<img src='Chorus2.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -685,6 +746,13 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-0-4' style='display: none'>
+<div id='bank-img-0-4' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='PhaserNew.png' class='bank-image'/>
+<img width='100px'/>
+<img src='Transmute.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -833,6 +901,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-0-5' style='display: none'>
+<div id='bank-img-0-5' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='Reverb.png' class='bank-image'/>
+<img width='100px'/>
+<img src='Compressor2.png' class='bank-image'/>
+<img width='100px'/>
+<img src='FilterEQ3.png' class='bank-image'/>
+<img width='100px'/>
+<img src='Redux2.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -980,21 +1059,34 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='Effects header'>EFFECTS</button>
+<button class='Effects header' id='footer-group-0'>EFFECTS / 0</button>
 <button onclick='on_bank(0, 0)'>BANK 0</button>
 <button onclick='on_bank(0, 1)'>BANK 1</button>
 <button onclick='on_bank(0, 2)'>BANK 2</button>
 <button onclick='on_bank(0, 3)'>BANK 3</button>
 <button onclick='on_bank(0, 4)'>BANK 4</button>
 <button onclick='on_bank(0, 5)'>BANK 5</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-1' style='display: none'>
-<button class='UltraAnalog header'>Analog</button>
+<button class='UltraAnalog header' id='header-group-1' data-bank='0'>Analog / 0</button>
 <button onclick='on_bank(1, 0)'>BANK 0</button>
 <button onclick='on_bank(1, 1)'>BANK 1</button>
 <button onclick='on_bank(1, 2)'>BANK 2</button>
 <button onclick='on_bank(1, 3)'>BANK 3</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-1-0' style='display: block'>
+<div id='bank-img-1-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='UltraAnalog.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -1143,6 +1235,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-1-1' style='display: none'>
+<div id='bank-img-1-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='UltraAnalog.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -1291,6 +1394,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-1-2' style='display: none'>
+<div id='bank-img-1-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='UltraAnalog.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -1439,6 +1553,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-1-3' style='display: none'>
+<div id='bank-img-1-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='UltraAnalog.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -1586,20 +1711,33 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='UltraAnalog header'>Analog</button>
+<button class='UltraAnalog header' id='footer-group-1'>Analog / 0</button>
 <button onclick='on_bank(1, 0)'>BANK 0</button>
 <button onclick='on_bank(1, 1)'>BANK 1</button>
 <button onclick='on_bank(1, 2)'>BANK 2</button>
 <button onclick='on_bank(1, 3)'>BANK 3</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-2' style='display: none'>
-<button class='Collision header'>Collision</button>
+<button class='Collision header' id='header-group-2' data-bank='0'>Collision / 0</button>
 <button onclick='on_bank(2, 0)'>BANK 0</button>
 <button onclick='on_bank(2, 1)'>BANK 1</button>
 <button onclick='on_bank(2, 2)'>BANK 2</button>
 <button onclick='on_bank(2, 3)'>BANK 3</button>
 <button onclick='on_bank(2, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-2-0' style='display: block'>
+<div id='bank-img-2-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Collision.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -1748,6 +1886,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-2-1' style='display: none'>
+<div id='bank-img-2-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Collision.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -1896,6 +2045,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-2-2' style='display: none'>
+<div id='bank-img-2-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Collision.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -2044,6 +2204,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-2-3' style='display: none'>
+<div id='bank-img-2-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Collision.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -2192,6 +2363,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-2-4' style='display: none'>
+<div id='bank-img-2-4' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Collision.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -2339,20 +2521,33 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='Collision header'>Collision</button>
+<button class='Collision header' id='footer-group-2'>Collision / 0</button>
 <button onclick='on_bank(2, 0)'>BANK 0</button>
 <button onclick='on_bank(2, 1)'>BANK 1</button>
 <button onclick='on_bank(2, 2)'>BANK 2</button>
 <button onclick='on_bank(2, 3)'>BANK 3</button>
 <button onclick='on_bank(2, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-3' style='display: none'>
-<button class='Drift header'>Drift</button>
+<button class='Drift header' id='header-group-3' data-bank='0'>Drift / 0</button>
 <button onclick='on_bank(3, 0)'>BANK 0</button>
 <button onclick='on_bank(3, 1)'>BANK 1</button>
 <button onclick='on_bank(3, 2)'>BANK 2</button>
 <button onclick='on_bank(3, 3)'>BANK 3</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-3-0' style='display: block'>
+<div id='bank-img-3-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Drift.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -2501,6 +2696,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-3-1' style='display: none'>
+<div id='bank-img-3-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Drift.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -2649,6 +2855,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-3-2' style='display: none'>
+<div id='bank-img-3-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Drift.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -2797,6 +3014,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-3-3' style='display: none'>
+<div id='bank-img-3-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Drift.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -2944,17 +3172,30 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='Drift header'>Drift</button>
+<button class='Drift header' id='footer-group-3'>Drift / 0</button>
 <button onclick='on_bank(3, 0)'>BANK 0</button>
 <button onclick='on_bank(3, 1)'>BANK 1</button>
 <button onclick='on_bank(3, 2)'>BANK 2</button>
 <button onclick='on_bank(3, 3)'>BANK 3</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-4' style='display: none'>
-<button class='LoungeLizard header'>Electric</button>
+<button class='LoungeLizard header' id='header-group-4' data-bank='0'>Electric / 0</button>
 <button onclick='on_bank(4, 0)'>BANK 0</button>
 <button onclick='on_bank(4, 1)'>BANK 1</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-4-0' style='display: block'>
+<div id='bank-img-4-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='LoungeLizard.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -3103,6 +3344,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-4-1' style='display: none'>
+<div id='bank-img-4-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='LoungeLizard.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -3250,18 +3502,31 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='LoungeLizard header'>Electric</button>
+<button class='LoungeLizard header' id='footer-group-4'>Electric / 0</button>
 <button onclick='on_bank(4, 0)'>BANK 0</button>
 <button onclick='on_bank(4, 1)'>BANK 1</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-5' style='display: none'>
-<button class='InstrumentMeld header'>Meld</button>
+<button class='InstrumentMeld header' id='header-group-5' data-bank='0'>Meld / 0</button>
 <button onclick='on_bank(5, 0)'>BANK 0</button>
 <button onclick='on_bank(5, 1)'>BANK 1</button>
 <button onclick='on_bank(5, 2)'>BANK 2</button>
 <button onclick='on_bank(5, 3)'>BANK 3</button>
 <button onclick='on_bank(5, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-5-0' style='display: block'>
+<div id='bank-img-5-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentMeld.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -3410,6 +3675,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-5-1' style='display: none'>
+<div id='bank-img-5-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentMeld.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -3558,6 +3834,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-5-2' style='display: none'>
+<div id='bank-img-5-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentMeld.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -3706,6 +3993,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-5-3' style='display: none'>
+<div id='bank-img-5-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentMeld.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -3854,6 +4152,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-5-4' style='display: none'>
+<div id='bank-img-5-4' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentMeld.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -4001,22 +4310,35 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='InstrumentMeld header'>Meld</button>
+<button class='InstrumentMeld header' id='footer-group-5'>Meld / 0</button>
 <button onclick='on_bank(5, 0)'>BANK 0</button>
 <button onclick='on_bank(5, 1)'>BANK 1</button>
 <button onclick='on_bank(5, 2)'>BANK 2</button>
 <button onclick='on_bank(5, 3)'>BANK 3</button>
 <button onclick='on_bank(5, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-6' style='display: none'>
-<button class='Operator header'>Operator</button>
+<button class='Operator header' id='header-group-6' data-bank='0'>Operator / 0</button>
 <button onclick='on_bank(6, 0)'>BANK 0</button>
 <button onclick='on_bank(6, 1)'>BANK 1</button>
 <button onclick='on_bank(6, 2)'>BANK 2</button>
 <button onclick='on_bank(6, 3)'>BANK 3</button>
 <button onclick='on_bank(6, 4)'>BANK 4</button>
 <button onclick='on_bank(6, 5)'>BANK 5</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-6-0' style='display: block'>
+<div id='bank-img-6-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Operator.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -4165,6 +4487,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-6-1' style='display: none'>
+<div id='bank-img-6-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Operator.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -4313,6 +4646,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-6-2' style='display: none'>
+<div id='bank-img-6-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Operator.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -4461,6 +4805,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-6-3' style='display: none'>
+<div id='bank-img-6-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Operator.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -4609,6 +4964,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-6-4' style='display: none'>
+<div id='bank-img-6-4' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Operator.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -4757,6 +5123,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-6-5' style='display: none'>
+<div id='bank-img-6-5' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='Operator.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -4904,22 +5281,35 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='Operator header'>Operator</button>
+<button class='Operator header' id='footer-group-6'>Operator / 0</button>
 <button onclick='on_bank(6, 0)'>BANK 0</button>
 <button onclick='on_bank(6, 1)'>BANK 1</button>
 <button onclick='on_bank(6, 2)'>BANK 2</button>
 <button onclick='on_bank(6, 3)'>BANK 3</button>
 <button onclick='on_bank(6, 4)'>BANK 4</button>
 <button onclick='on_bank(6, 5)'>BANK 5</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-7' style='display: none'>
-<button class='MultiSampler header'>Sampler</button>
+<button class='MultiSampler header' id='header-group-7' data-bank='0'>Sampler / 0</button>
 <button onclick='on_bank(7, 0)'>BANK 0</button>
 <button onclick='on_bank(7, 1)'>BANK 1</button>
 <button onclick='on_bank(7, 2)'>BANK 2</button>
 <button onclick='on_bank(7, 3)'>BANK 3</button>
 <button onclick='on_bank(7, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-7-0' style='display: block'>
+<div id='bank-img-7-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MultiSampler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -5068,6 +5458,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-7-1' style='display: none'>
+<div id='bank-img-7-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MultiSampler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -5216,6 +5617,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-7-2' style='display: none'>
+<div id='bank-img-7-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MultiSampler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -5364,6 +5776,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-7-3' style='display: none'>
+<div id='bank-img-7-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MultiSampler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -5512,6 +5935,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-7-4' style='display: none'>
+<div id='bank-img-7-4' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MultiSampler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -5659,21 +6093,34 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='MultiSampler header'>Sampler</button>
+<button class='MultiSampler header' id='footer-group-7'>Sampler / 0</button>
 <button onclick='on_bank(7, 0)'>BANK 0</button>
 <button onclick='on_bank(7, 1)'>BANK 1</button>
 <button onclick='on_bank(7, 2)'>BANK 2</button>
 <button onclick='on_bank(7, 3)'>BANK 3</button>
 <button onclick='on_bank(7, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-8' style='display: none'>
-<button class='OriginalSimpler header'>Simpler</button>
+<button class='OriginalSimpler header' id='header-group-8' data-bank='0'>Simpler / 0</button>
 <button onclick='on_bank(8, 0)'>BANK 0</button>
 <button onclick='on_bank(8, 1)'>BANK 1</button>
 <button onclick='on_bank(8, 2)'>BANK 2</button>
 <button onclick='on_bank(8, 3)'>BANK 3</button>
 <button onclick='on_bank(8, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-8-0' style='display: block'>
+<div id='bank-img-8-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='OriginalSimpler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -5822,6 +6269,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-8-1' style='display: none'>
+<div id='bank-img-8-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='OriginalSimpler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -5970,6 +6428,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-8-2' style='display: none'>
+<div id='bank-img-8-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='OriginalSimpler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -6118,6 +6587,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-8-3' style='display: none'>
+<div id='bank-img-8-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='OriginalSimpler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -6266,6 +6746,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-8-4' style='display: none'>
+<div id='bank-img-8-4' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='OriginalSimpler.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -6413,20 +6904,34 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='OriginalSimpler header'>Simpler</button>
+<button class='OriginalSimpler header' id='footer-group-8'>Simpler / 0</button>
 <button onclick='on_bank(8, 0)'>BANK 0</button>
 <button onclick='on_bank(8, 1)'>BANK 1</button>
 <button onclick='on_bank(8, 2)'>BANK 2</button>
 <button onclick='on_bank(8, 3)'>BANK 3</button>
 <button onclick='on_bank(8, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-9' style='display: none'>
-<button class='StringStudio header'>Tension</button>
+<button class='StringStudio header' id='header-group-9' data-bank='0'>Tension / 0</button>
 <button onclick='on_bank(9, 0)'>BANK 0</button>
 <button onclick='on_bank(9, 1)'>BANK 1</button>
 <button onclick='on_bank(9, 2)'>BANK 2</button>
 <button onclick='on_bank(9, 3)'>BANK 3</button>
+<button onclick='on_bank(9, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-9-0' style='display: block'>
+<div id='bank-img-9-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='StringStudio.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -6575,6 +7080,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-9-1' style='display: none'>
+<div id='bank-img-9-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='StringStudio.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -6723,6 +7239,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-9-2' style='display: none'>
+<div id='bank-img-9-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='StringStudio.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -6778,7 +7305,7 @@ function on_bank(_nGroup, _nBank) {
 <td class='StringStudio'>D Pos < Vel</td>
 <td class="empty"></td>
 <td class="empty"></td>
-<td class='StringStudio'>Filter Type</td>
+<td class="empty"></td>
 </tr>
 <tr>
 <td class="empty"></td>
@@ -6823,9 +7350,7 @@ function on_bank(_nGroup, _nBank) {
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
-<td class='StringStudio'>Filter On/Off</td>
-<td class='StringStudio'>FEG On/Off</td>
-<td class='StringStudio'>LFO On/Off</td>
+<td class="empty"></td>
 </tr>
 <tr>
 <td class='StringStudio'>Damper Gated</td>
@@ -6835,9 +7360,7 @@ function on_bank(_nGroup, _nBank) {
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
-<td class='StringStudio empty'>&nbsp;</td>
-<td class='StringStudio empty'>&nbsp;</td>
-<td class='StringStudio'>LFO Sync On</td>
+<td class="empty"></td>
 </tr>
 <tr>
 <td colspan='8' class='Main-header'></td>
@@ -6850,6 +7373,158 @@ function on_bank(_nGroup, _nBank) {
 <td class='StringStudio'>D Damping</td>
 <td class="empty"></td>
 <td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class='StringStudio'>Vib Delay</td>
+<td class='StringStudio'>Vib Fade-In</td>
+<td class='StringStudio'>Vib Speed</td>
+<td class='StringStudio'>Vib Amount</td>
+<td class='StringStudio'>Vib < ModWh</td>
+<td class='StringStudio'>Vib Error</td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class='StringStudio'>Body Type</td>
+<td class='StringStudio'>Body Size</td>
+<td class='StringStudio'>Body Decay</td>
+<td class='StringStudio'>Body Mix</td>
+<td class='StringStudio'>Body Low-Cut</td>
+<td class='StringStudio'>Body High-Cut</td>
+<td class='StringStudio'>Volume</td>
+<td class='StringStudio empty'>&nbsp;</td>
+</tr>
+</table>
+</div>
+<div id='bank-9-3' style='display: none'>
+<div id='bank-img-9-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='StringStudio.png' class='bank-image'/>
+</div>
+</div>
+<table>
+<tr>
+<td colspan='8' class='Group-header'></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td colspan='8' class='Group-header'></td>
+</tr>
+<tr>
+<td class='StringStudio'>Filter Type</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td colspan='8' class='Main-header'></td>
+</tr>
+<tr>
+<td class='StringStudio'>Filter On/Off</td>
+<td class='StringStudio'>FEG On/Off</td>
+<td class='StringStudio'>LFO On/Off</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio'>LFO Sync On</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td colspan='8' class='Main-header'></td>
+</tr>
+<tr>
 <td class='StringStudio'>Filter Freq</td>
 <td class='StringStudio'>Filter Reso</td>
 <td class='StringStudio'>Freq < Env</td>
@@ -6860,37 +7535,39 @@ function on_bank(_nGroup, _nBank) {
 <td class='StringStudio'>Reso < Key</td>
 </tr>
 <tr>
-<td class='StringStudio'>Vib Delay</td>
-<td class='StringStudio'>Vib Fade-In</td>
-<td class='StringStudio'>Vib Speed</td>
-<td class='StringStudio'>Vib Amount</td>
-<td class='StringStudio'>Vib < ModWh</td>
-<td class='StringStudio'>Vib Error</td>
-<td class="empty"></td>
 <td class='StringStudio'>FEG Attack</td>
 <td class='StringStudio'>FEG Att < Vel</td>
 <td class='StringStudio'>FEG Decay</td>
 <td class='StringStudio'>FEG Sustain</td>
 <td class='StringStudio'>FEG < Vel</td>
 <td class='StringStudio'>FEG Release</td>
+<td class="empty"></td>
+<td class="empty"></td>
 </tr>
 <tr>
-<td class='StringStudio'>Body Type</td>
-<td class='StringStudio'>Body Size</td>
-<td class='StringStudio'>Body Decay</td>
-<td class='StringStudio'>Body Mix</td>
-<td class='StringStudio'>Body Low-Cut</td>
-<td class='StringStudio'>Body High-Cut</td>
-<td class='StringStudio'>Volume</td>
 <td class='StringStudio'>LFO Shape</td>
 <td class='StringStudio'>LFO Speed</td>
 <td class='StringStudio'>LFO SyncRate</td>
 <td class='StringStudio'>LFO Delay</td>
 <td class='StringStudio'>LFO Fade In</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
 </tr>
 </table>
 </div>
-<div id='bank-9-3' style='display: none'>
+<div id='bank-9-4' style='display: none'>
+<div id='bank-img-9-4' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='StringStudio.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -7038,20 +7715,34 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='StringStudio header'>Tension</button>
+<button class='StringStudio header' id='footer-group-9'>Tension / 0</button>
 <button onclick='on_bank(9, 0)'>BANK 0</button>
 <button onclick='on_bank(9, 1)'>BANK 1</button>
 <button onclick='on_bank(9, 2)'>BANK 2</button>
 <button onclick='on_bank(9, 3)'>BANK 3</button>
+<button onclick='on_bank(9, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-10' style='display: none'>
-<button class='InstrumentVector header'>Wavetable</button>
+<button class='InstrumentVector header' id='header-group-10' data-bank='0'>Wavetabl / 0</button>
 <button onclick='on_bank(10, 0)'>BANK 0</button>
 <button onclick='on_bank(10, 1)'>BANK 1</button>
 <button onclick='on_bank(10, 2)'>BANK 2</button>
 <button onclick='on_bank(10, 3)'>BANK 3</button>
 <button onclick='on_bank(10, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-10-0' style='display: block'>
+<div id='bank-img-10-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentVector.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -7200,6 +7891,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-10-1' style='display: none'>
+<div id='bank-img-10-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentVector.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -7348,6 +8050,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-10-2' style='display: none'>
+<div id='bank-img-10-2' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentVector.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -7496,6 +8209,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-10-3' style='display: none'>
+<div id='bank-img-10-3' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentVector.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -7644,6 +8368,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-10-4' style='display: none'>
+<div id='bank-img-10-4' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentVector.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -7791,18 +8526,31 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='InstrumentVector header'>Wavetable</button>
+<button class='InstrumentVector header' id='footer-group-10'>Wavetabl / 0</button>
 <button onclick='on_bank(10, 0)'>BANK 0</button>
 <button onclick='on_bank(10, 1)'>BANK 1</button>
 <button onclick='on_bank(10, 2)'>BANK 2</button>
 <button onclick='on_bank(10, 3)'>BANK 3</button>
 <button onclick='on_bank(10, 4)'>BANK 4</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-11' style='display: none'>
-<button class='InstrumentGroupDevice header'>InstGroup</button>
+<button class='InstrumentGroupDevice header' id='header-group-11' data-bank='0'>InstGrp / 0</button>
 <button onclick='on_bank(11, 0)'>BANK 0</button>
 <button onclick='on_bank(11, 1)'>BANK 1</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-11-0' style='display: block'>
+<div id='bank-img-11-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentGroupDevice.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -7951,6 +8699,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-11-1' style='display: none'>
+<div id='bank-img-11-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentGroupDevice.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -8098,15 +8857,28 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='InstrumentGroupDevice header'>InstGroup</button>
+<button class='InstrumentGroupDevice header' id='footer-group-11'>InstGrp / 0</button>
 <button onclick='on_bank(11, 0)'>BANK 0</button>
 <button onclick='on_bank(11, 1)'>BANK 1</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-12' style='display: none'>
-<button class='DrumGroupDevice header'>DrumGroup</button>
+<button class='DrumGroupDevice header' id='header-group-12' data-bank='0'>DrumGrp / 0</button>
 <button onclick='on_bank(12, 0)'>BANK 0</button>
 <button onclick='on_bank(12, 1)'>BANK 1</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-12-0' style='display: block'>
+<div id='bank-img-12-0' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='DrumGroupDevice.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -8255,6 +9027,17 @@ function on_bank(_nGroup, _nBank) {
 </table>
 </div>
 <div id='bank-12-1' style='display: none'>
+<div id='bank-img-12-1' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='DrumGroupDevice.png' class='bank-image'/>
+</div>
+</div>
 <table>
 <tr>
 <td colspan='8' class='Group-header'></td>
@@ -8402,9 +9185,10 @@ function on_bank(_nGroup, _nBank) {
 </tr>
 </table>
 </div>
-<button class='DrumGroupDevice header'>DrumGroup</button>
+<button class='DrumGroupDevice header' id='footer-group-12'>DrumGrp / 0</button>
 <button onclick='on_bank(12, 0)'>BANK 0</button>
 <button onclick='on_bank(12, 1)'>BANK 1</button>
+<button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-13' style='display: none'>
 <div class='views views-container'>
@@ -8461,7 +9245,7 @@ function on_bank(_nGroup, _nBank) {
 <br/>
 </div>
 </div>
-<button class='Effects' onclick='on_view(0)'>EFFECTS</button>
+<button class='Effects' onclick='on_view(0)' id='main-group' data-group='0'>EFFECTS</button>
 <button class='UltraAnalog' onclick='on_view(1)'>Analog</button>
 <button class='Collision' onclick='on_view(2)'>Collision</button>
 <button class='Drift' onclick='on_view(3)'>Drift</button>
@@ -8471,9 +9255,9 @@ function on_bank(_nGroup, _nBank) {
 <button class='MultiSampler' onclick='on_view(7)'>Sampler</button>
 <button class='OriginalSimpler' onclick='on_view(8)'>Simpler</button>
 <button class='StringStudio' onclick='on_view(9)'>Tension</button>
-<button class='InstrumentVector' onclick='on_view(10)'>Wavetable</button>
-<button class='InstrumentGroupDevice' onclick='on_view(11)'>InstGroup</button>
-<button class='DrumGroupDevice' onclick='on_view(12)'>DrumGroup</button>
+<button class='InstrumentVector' onclick='on_view(10)'>Wavetabl</button>
+<button class='InstrumentGroupDevice' onclick='on_view(11)'>InstGrp</button>
+<button class='DrumGroupDevice' onclick='on_view(12)'>DrumGrp</button>
 <button class='views' onclick='on_view(13)'>Views</button>
 </body>
 </html>

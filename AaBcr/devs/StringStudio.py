@@ -13,14 +13,14 @@ class StringStudio(Dev):
       'Bank0 | nMR1Off | String Decay    | S Decay < Key   | S Decay Ratio   | Str Inharmon    | Str Damping     | S Damp < Key'                                   ,
       'Bank0 | nMR2Off | T Mass < Vel    | T Mass < Key    | Term Mass       | Term Fng Stiff  | Term Fret Stiff | Pickup Pos'                                     ,
       #=============================================================================================================================================================
-      'Bank1 | nGR0Off | D Mass < Key    | D Stiff < Key   | D Velo < Key    | D Pos < Key     | D Pos < Vel'                                                       ,
+      'Bank1 | nGR0Off | D Mass < Key    | D Stiff < Key   | D Velo < Key    | D Pos < Key     | D Pos < Vel'                                                      ,
       #-------------------------------------------------------------------------------------------------------------------------------------------------------------
       'Bank1 | nMB0Off | Damper On       | D Pos Abs       | Vibrato On/Off'                                                                                       ,
       'Bank1 | nMB1Off | Damper Gated    | -               | Body On/Off'                                                                                          ,
       #-------------------------------------------------------------------------------------------------------------------------------------------------------------
       'Bank1 | nMR0Off | Damper Mass     | D Stiffness     | D Velocity      | Damp Pos        | D Damping'                                                        ,
       'Bank1 | nMR1Off | Vib Delay       | Vib Fade-In     | Vib Speed       | Vib Amount      | Vib < ModWh     | Vib Error'                                      ,
-      'Bank1 | nMR2Off | Body Type       | Body Size       | Body Decay      | Body Mix        | Body Low-Cut    | Body High-Cut   | Volume'                       ,
+      'Bank1 | nMR2Off | Body Type       | Body Size       | Body Decay      | Body Mix        | Body Low-Cut    | Body High-Cut   | Volume          | -'          ,
       #=============================================================================================================================================================
       'Bank2 | nGR0Off | Filter Type'                                                                                                                              ,
       #-------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ class StringStudio(Dev):
       #-------------------------------------------------------------------------------------------------------------------------------------------------------------
       'Bank2 | nMR0Off | Filter Freq     | Filter Reso     | Freq < Env      | Reso < Env      | Freq < LFO      | Reso < LFO      | Freq < Key      | Reso < Key' ,
       'Bank2 | nMR1Off | FEG Attack      | FEG Att < Vel   | FEG Decay       | FEG Sustain     | FEG < Vel       | FEG Release'                                    ,
-      'Bank2 | nMR2Off | LFO Shape       | LFO Speed       | LFO SyncRate    | LFO Delay       | LFO Fade In'                                                        ,
+      'Bank2 | nMR2Off | LFO Shape       | LFO Speed       | LFO SyncRate    | LFO Delay       | LFO Fade In'                                                      ,
       #=============================================================================================================================================================
       'Bank3 | nMB0Off | Porta On/Off    | Porta Legato    | Unison On/Off'                                                                                        ,
       'Bank3 | nMB1Off | -               | Porta Prop      | Unison Voices'                                                                                        ,

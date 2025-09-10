@@ -86,7 +86,7 @@ def parse_line(psLine, psDev)
   sBank = aCfg[0][-1]
   sGrp  = aCfg[1][1..3]
   aPrms = aCfg[2..-1]
-  
+
   # parse sGrp
   sType = sGrp[0] == 'G' ? 'Group'  : 'Main'
   sCtrl = sGrp[1] == 'B' ? 'Button' : 'Rotary'
@@ -147,7 +147,7 @@ Dir.glob("*.py").
 }
 
 # util methods *********************************************
-    
+
 def new_empty_bank
   sDefault = '<td class="empty"></td>'
   {
@@ -244,9 +244,9 @@ hInstruments = {
   'MultiSampler'         => 'Sampler',
   'OriginalSimpler'      => 'Simpler',
   'StringStudio'         => 'Tension',
-  'InstrumentVector'     => 'Wavetable',
-  'InstrumentGroupDevice'=> 'InstGroup',
-  'DrumGroupDevice'      => 'DrumGroup',
+  'InstrumentVector'     => 'Wavetabl',
+  'InstrumentGroupDevice'=> 'InstGrp',
+  'DrumGroupDevice'      => 'DrumGrp',
 }
 
 # instruments banks ****************************************
@@ -287,7 +287,7 @@ hInstruments.each { |sInstrument, sDisplayName|
       nOffset = 0
     end
   }
-  
+
   # add the instrument banks in the following banks
   aSrcInstr.each { |hSrcBank|
     nStrips  = hSrcBank.delete(:nStrips) # extract number of strips
@@ -313,23 +313,75 @@ hInstruments.each { |sInstrument, sDisplayName|
 }
 #puts(hInsBanks.to_yaml)
 
+aAudioFxViews = [
+  %w(Vocoder Overdrive Eq8),
+  %w(BeatRepeat Resonator),
+  %w(AutoPan Echo),
+  %w(Delay FilterDelay Chorus2),
+  %w(PhaserNew Transmute),
+  %w(Reverb Compressor2 FilterEQ3 Redux2),
+]
+
+aMidiFxViews = [
+  %w(MidiPitcher MidiVelocity MidiArpeggiator),
+]
+
+aInstrViews = [
+  %w(UltraAnalog),
+  %w(Collision),
+  %w(Drift),
+  %w(LoungeLizard),
+  %w(InstrumentMeld),
+  %w(Operator),
+  %w(MultiSampler),
+  %w(OriginalSimpler),
+  %w(StringStudio),
+  %w(InstrumentVector),
+]
+
 # rendering html *******************************************
 
 puts('> Rendering html')
 
 sScript = <<__FUN__
-function on_view(_nGroup) {
+function on_view(pnGroup) {
   for (var i = 0; i < 14; i++) {
     var oEl = document.getElementById('group-' + i)
-    oEl.style.display = (i == _nGroup) ? 'block' : 'none';
+    oEl.style.display = (i == pnGroup) ? 'block' : 'none';
+  }
+
+  var oMainEl = document.getElementById('main-group')
+  oMainEl.setAttribute('data-group', pnGroup)
+}
+
+function on_bank(pnGroup, pnBank) {
+  for (var i = 0; i < 6; i++) {
+    var oEl = document.getElementById('bank-' + pnGroup + '-' + i)
+    if (oEl == null) continue;
+
+    oEl.style.display = (i == pnBank) ? 'block' : 'none';
+    if (i != pnBank) continue;
+
+    var oHeaderEl = document.getElementById('header-group-' + pnGroup)
+    var newHeader = oHeaderEl.innerText.replace(/ \\/ \\d+$/, ` / ${pnBank}`)
+    oHeaderEl.innerHTML = newHeader
+    oHeaderEl.setAttribute('data-bank', pnBank)
+
+    var oFooterEl = document.getElementById('footer-group-' + pnGroup)
+    oFooterEl.innerHTML = newHeader
   }
 }
-function on_bank(_nGroup, _nBank) {
-  for (var i = 0; i < 6; i++) {
-    var oEl = document.getElementById('bank-' + _nGroup + '-' + i)
-    if (oEl == null) continue;
-    oEl.style.display = (i == _nBank) ? 'block' : 'none';
-  }
+
+function on_bank_image() {
+  var oMainEl = document.getElementById('main-group')
+  var sGroup  = oMainEl.getAttribute('data-group')
+
+  var oHeaderEl = document.getElementById('header-group-' + sGroup)
+  var sBank     = oHeaderEl.getAttribute('data-bank')
+
+  var oBankImgEl = document.getElementById(`bank-img-${sGroup}-${sBank}`)
+  var sDisplay   = oBankImgEl.style.display
+  oBankImgEl.style.display = (sDisplay == 'none') ? 'flex' : 'none';
 }
 __FUN__
 
@@ -338,8 +390,8 @@ aHtml << '<head>';
 aHtml << '<style>';
 aHtml << 'body   {font-family: monospace; font-size: 12px; background-color: #333366}';
 aHtml << 'table  {border-spacing: 0px}';
-aHtml << 'td     {border-radius: 10px; font-weight: bold; height: 48px; width: 200px; border: solid 1px; font-size: 18px; text-align: center;}';
-aHtml << 'button {border-radius: 10px; font-weight: bold; height: 40px; margin: 2px; padding: 1px 20px;}';
+aHtml << 'td     {border-radius: 10px; font-weight: bold; font-size: 22px; height: 60px; width: 250px; border: solid 1px; text-align: center;}';
+aHtml << 'button {border-radius: 10px; font-weight: bold; font-size: 22px; height: 60px; width: 130px;}';
 
 aHtml << '.Effects               {background-color: #666666; color: white;}';
 aHtml << '.Group-header          {background-color: #cccccc; height: 10px;}';
@@ -351,7 +403,7 @@ aHtml << '.preset-save           {background-color: #db7093 !important; color: #
 aHtml << '.preset-prev           {background-color: #db7093 !important; color: #00ccff !important;}';
 aHtml << '.preset-next           {background-color: #db7093 !important; color: #00ffcc !important;}';
 aHtml << '.extra                 {                                      color: #ffffff !important; font-style: italic; text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;}';
-aHtml << '.dry-wet               {background-color: #99ff99 !important; color: #990000 !important;}';
+aHtml << '.dry-wet               {background-color: #99ff99 !important; color: #339933 !important; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 2px 0 #000, 1px 1px 0 #000;}';
 aHtml << '.empty                 {background-color: #999999 !important; color: #ffffff !important;}';
 
 aHtml << '.Vocoder               {background-color: #cc9999}';
@@ -389,8 +441,11 @@ aHtml << '.InstrumentGroupDevice {background-color: #819BAF}';
 aHtml << '.DrumGroupDevice       {background-color: #7C7098}';
 
 aHtml << '.views                 {background-color: #3BA9E0;}';
-aHtml << '.views-container       {#3BA9E0; height: 750px; width: 1630px; overflow-y: scroll}';
+aHtml << '.views-container       {#3BA9E0; height: 1000px; width: 1630px; overflow-y: scroll}';
 aHtml << '.dev-image             {height: 250px;}';
+
+aHtml << '.bank-image-container  {background-color: #333333; position: absolute; top: 130px; left: 5px; width: 2035px; height: 260px; display: flex; justify-content: center; align-items: center;}';
+aHtml << '.bank-image            {height: 260px; max-width: 1270px;}';
 
 aHtml << '</style>';
 aHtml << '<script type="text/javascript">';
@@ -400,7 +455,7 @@ aHtml << '</head>';
 aHtml << '<body>';
 
 # bank group buttons ***************************************
-aMenu = ["<button class='Effects' onclick='on_view(0)'>EFFECTS</button>"];
+aMenu = ["<button class='Effects' onclick='on_view(0)' id='main-group' data-group='0'>EFFECTS</button>"];
 nIdx = 1
 hInstruments.each { |sInstrument, sDisplayName|
   aMenu << "<button class='#{sInstrument}' onclick='on_view(#{nIdx})'>#{sDisplayName}</button>"
@@ -410,16 +465,29 @@ aMenu << "<button class='views' onclick='on_view(13)'>Views</button>";
 aHtml << aMenu.join("\n");
 aHtml << "<br/>";
 
+def get_bank_image(pnGroup, pnBank, paViews, pnSpace)
+  aDiv = ["<div id='bank-img-#{pnGroup}-#{pnBank}' class='bank-image-container' style='display: none;'>"]
+  aDiv << "<div style='margin: 0 auto;'>"
+  aDiv << paViews.collect { |sView|
+    "<img src='#{sView}.png' class='bank-image'/>"
+  }.join("\n<img width='#{pnSpace}px'/>\n")
+  aDiv << '</div>'
+  aDiv << '</div>'
+  return aDiv.join("\n")
+end
+
 # effects group buttons ************************************
 aHtml << "<div id='group-0' style='display: block'>";
-aHtml << "<button class='Effects header'>EFFECTS</button>";
+aHtml << "<button class='Effects header' id='header-group-0' data-bank='0'>EFFECTS / 0</button>";
 sBanks = hFxBanks.keys.collect { |nBank|
   "<button onclick='on_bank(0, #{nBank})'>BANK #{nBank}</button>"
 }.join("\n")
+sBanks += "\n<button class='views' onclick='on_bank_image()'>VIEWS</button>"
 aHtml << sBanks;
 hFxBanks.each { |nBank, hBank|
   sDisplay = (nBank == 0) ? 'block' : 'none';
   aHtml << "<div id='bank-0-#{nBank}' style='display: #{sDisplay}'>";
+  aHtml << get_bank_image(0, nBank, aAudioFxViews[nBank], 100);
   hBank.each { |sType, hType|
     aHtml << '<table>';
     hType.each { |sCtrl, hCtrl|
@@ -442,7 +510,7 @@ hFxBanks.each { |nBank, hBank|
   }
   aHtml << '</div>';
 }
-aHtml << "<button class='Effects header'>EFFECTS</button>";
+aHtml << "<button class='Effects header' id='footer-group-0'>EFFECTS / 0</button>";
 aHtml << sBanks;
 aHtml << '</div>';
 
@@ -450,15 +518,17 @@ aHtml << '</div>';
 nInst = 1;
 hInsBanks.each { |sInstrument, aBanks|
   aHtml << "<div id='group-#{nInst}' style='display: none'>";
-  aHtml << "<button class='#{sInstrument} header'>#{hInstruments[sInstrument]}</button>";
+  aHtml << "<button class='#{sInstrument} header' id='header-group-#{nInst}' data-bank='0'>#{hInstruments[sInstrument]} / 0</button>";
   sBanks = Range.new(0, aBanks.length - 1).collect { |nIdx|
     "<button onclick='on_bank(#{nInst}, #{nIdx})'>BANK #{nIdx}</button>";
   }.join("\n")
+  sBanks += "\n<button class='views' onclick='on_bank_image()'>VIEWS</button>"
   aHtml << sBanks;
   nBank = 0
   aBanks.each { |hBank|
     sDisplay = (nBank == 0) ? 'block' : 'none';
     aHtml << "<div id='bank-#{nInst}-#{nBank}' style='display: #{sDisplay}'>";
+    aHtml << get_bank_image(nInst, nBank, aMidiFx + [sInstrument], 0);
     hBank.each { |sType, hType|
       aHtml << '<table>';
       hType.each { |sCtrl, hCtrl|
@@ -482,37 +552,11 @@ hInsBanks.each { |sInstrument, aBanks|
     nBank += 1;
     aHtml << '</div>';
   }
-  aHtml << "<button class='#{sInstrument} header'>#{hInstruments[sInstrument]}</button>";
+  aHtml << "<button class='#{sInstrument} header' id='footer-group-#{nInst}'>#{hInstruments[sInstrument]} / 0</button>";
   aHtml << sBanks;
   aHtml << '</div>';
   nInst += 1;
 }
-
-aAudioFxViews = [
-  %w(Vocoder Overdrive Eq8),
-  %w(BeatRepeat Resonator),
-  %w(AutoPan Echo),
-  %w(Delay FilterDelay Chorus2),
-  %w(PhaserNew Transmute),
-  %w(Reverb Compressor2 FilterEQ3 Redux2),
-]
-
-aMidiFxViews = [
-  %w(MidiPitcher MidiVelocity MidiArpeggiator),
-]
-
-aInstrViews = [
-  %w(UltraAnalog),
-  %w(Collision),
-  %w(Drift),
-  %w(LoungeLizard),
-  %w(InstrumentMeld),
-  %w(Operator),
-  %w(MultiSampler),
-  %w(OriginalSimpler),
-  %w(StringStudio),
-  %w(InstrumentVector),
-]
 
 aHtml << "<div id='group-13' style='display: none'>";
 aHtml << "<div class='views views-container'>"
@@ -554,3 +598,4 @@ oFile = File.new("doc/banks.html", "wt");
 oFile.puts(aHtml.join("\n"))
 
 puts('> Done!')
+
