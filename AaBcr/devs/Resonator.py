@@ -4,16 +4,17 @@ class Resonator(Dev):
   def __init__(self, phCfg, phObj):
     Dev.__init__(self, phCfg, phObj)
     self.m_lCfg = [
-      'Bank0 | nGB0Off | Mode        | I On        | II On     | III On      | IV On    | V On'   ,
-      #--------------------------------------------------------------------------------------------
-      'Bank0 | nGR0Off | Decay       | Color       | Width     | Global Gain'                     ,
-      #--------------------------------------------------------------------------------------------
-      'Bank0 | nMB0Off | Device On   | Preset Prev | Filter On'                                   ,
-      'Bank0 | nMB1Off | Preset Save | Preset Next | Const'                                       ,
-      #--------------------------------------------------------------------------------------------
-      'Bank0 | nMR0Off | Frequency   | I Note      | II Pitch  | III Pitch   | IV Pitch | V Pitch',
-      'Bank0 | nMR1Off | Filter Type | I Tune      | II Tune   | III Tune    | IV Tune  | V Tune' ,
-      'Bank0 | nMR2Off | Dry/Wet     | I Gain      | II Gain   | III Gain    | IV Gain  | V Gain' ,
+      'Bank0 | nGB0Off | Mode              | I On                 | II On                  | III On                  | IV On                  | V On'                 ,
+      #----------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank0 | nGR0Off | Decay             | Color                | Width                  | Global Gain'                                                             ,
+      'Bank0 | nGR1Off | Use Current Scale | I Note Scale Degrees | II Pitch Scale Degrees | III Pitch Scale Degrees | IV Pitch Scale Degrees | V Pitch Scale Degrees',
+      #----------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank0 | nMB0Off | Device On         | Preset Prev          | Filter On'                                                                                        ,
+      'Bank0 | nMB1Off | Preset Save       | Preset Next          | Const'                                                                                            ,
+      #----------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank0 | nMR0Off | Frequency         | I Note               | II Pitch               | III Pitch               | IV Pitch               | V Pitch'              ,
+      'Bank0 | nMR1Off | Filter Type       | I Tune               | II Tune                | III Tune                | IV Tune                | V Tune'               ,
+      'Bank0 | nMR2Off | Dry/Wet           | I Gain               | II Gain                | III Gain                | IV Gain                | V Gain'               ,
     ]
     self.reg('Resonator')
     self.parse_cfg()

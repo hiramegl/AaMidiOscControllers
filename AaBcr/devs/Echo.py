@@ -7,7 +7,7 @@ class Echo(Dev):
       'Bank0 | nGB0Off | L Sync      | R Sync'                                                                  ,
       'Bank0 | nGB1Off | Mod Sync    | Mod 4x'                                                                  ,
       'Bank0 | nGB2Off | Gate On     | -            | Duck On      | -            | Noise On'                   ,
-      'Bank0 | nGB3Off | Wobble On   | Repitch'                                                                 ,
+      'Bank0 | nGB3Off | Wobble On   | Repitch      | Repitch Smoothing Time'                                   ,
       #----------------------------------------------------------------------------------------------------------
       'Bank0 | nGR0Off | L Time      | R Time       | L 16th       | R 16th       | LP Res'                     ,
       'Bank0 | nGR1Off | Mod Wave    | Mod Rate     | Mod Freq     | Mod Phase    | Dly < Mod    | Flt < Mod'   ,

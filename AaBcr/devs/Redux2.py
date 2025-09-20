@@ -12,8 +12,8 @@ class Redux2(Dev):
       'Bank0 | nGR1Off | Bit Depth'      ,
       'Bank0 | nGR2Off | Quantizer Shape',
       #-----------------------------------
-      'Bank0 | nMB0Off | Device On  '    ,
-      'Bank0 | nMB1Off | Preset Save'    ,
+      'Bank0 | nMB0Off | Device On'      ,
+      'Bank0 | nMB1Off | Preset Next'    ,
       #-----------------------------------
       'Bank0 | nMR0Off | Sample Rate'    ,
       'Bank0 | nMR1Off | Jitter'         ,

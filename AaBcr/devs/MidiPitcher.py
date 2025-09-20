@@ -4,7 +4,7 @@ class MidiPitcher(Dev):
   def __init__(self, phCfg, phObj):
     Dev.__init__(self, phCfg, phObj)
     self.m_lCfg = [
-      'Bank0 | nGB0Off | Use Song Scale'                               ,
+      'Bank0 | nGB0Off | Use Current Scale'                            ,
       'Bank0 | nGB1Off | +Pitch Reset     | +Pitch Scale Degrees Reset', # + = extra
       'Bank0 | nGB2Off | +Step Down       | +Step Up'                  , # + = extra
       'Bank0 | nGB3Off | +Step Down Scale | +Step Up Scale'            , # + = extra

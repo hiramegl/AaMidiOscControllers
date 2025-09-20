@@ -237,7 +237,7 @@ function on_bank_image() {
 <td class='Vocoder preset-save'>Preset 💾</td>
 <td class='Vocoder preset-next'>Preset ⬇︎</td>
 <td class='Vocoder'>Unvoiced Speed</td>
-<td class="empty"></td>
+<td class='Overdrive preset-next'>Preset ⬇︎</td>
 <td class='Eq8 preset-save'>Preset 💾</td>
 <td class='Eq8 preset-next'>Preset ⬇︎</td>
 <td class='Eq8 extra'>1 Auto Dec</td>
@@ -346,12 +346,12 @@ function on_bank_image() {
 <tr>
 <td class='BeatRepeat'>Filter Freq</td>
 <td class='BeatRepeat'>Filter Width</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='Resonator'>Use Current Scale</td>
+<td class='Resonator'>I Note Scale Degrees</td>
+<td class='Resonator'>II Pitch Scale Degrees</td>
+<td class='Resonator'>III Pitch Scale Degrees</td>
+<td class='Resonator'>IV Pitch Scale Degrees</td>
+<td class='Resonator'>V Pitch Scale Degrees</td>
 </tr>
 <tr>
 <td class='BeatRepeat'>Pitch</td>
@@ -480,7 +480,7 @@ function on_bank_image() {
 <td class="empty"></td>
 <td class='Echo'>Wobble On</td>
 <td class='Echo'>Repitch</td>
-<td class="empty"></td>
+<td class='Echo'>Repitch Smoothing Time</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -772,8 +772,8 @@ function on_bank_image() {
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='Transmute'>Quantize</td>
+<td class='Transmute'>Use Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 </tr>
@@ -815,7 +815,7 @@ function on_bank_image() {
 <td class='PhaserNew'>Duty Cycle</td>
 <td class='PhaserNew'>Mod Phase</td>
 <td class='PhaserNew'>Spin</td>
-<td class="empty"></td>
+<td class='Transmute'>Transp Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -1021,8 +1021,8 @@ function on_bank_image() {
 <td class='Reverb'>Chorus On</td>
 <td class='Compressor2 preset-save'>Preset 💾</td>
 <td class='Compressor2 preset-next'>Preset ⬇︎</td>
-<td class="empty"></td>
-<td class='Redux2 preset-save'>Preset 💾</td>
+<td class='FilterEQ3 preset-next'>Preset ⬇︎</td>
+<td class='Redux2 preset-next'>Preset ⬇︎</td>
 </tr>
 <tr>
 <td colspan='8' class='Main-header'></td>
@@ -1092,7 +1092,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -1743,7 +1743,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -2553,7 +2553,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -3201,7 +3201,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -3532,7 +3532,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -3691,12 +3691,12 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentMeld'>A Reset</td>
+<td class='InstrumentMeld'>A Reset To Voice Offset</td>
+<td class='InstrumentMeld'>A Filter Drive</td>
+<td class='InstrumentMeld'>B Reset</td>
+<td class='InstrumentMeld'>B Reset To Voice Offset</td>
+<td class='InstrumentMeld'>B Filter Drive</td>
 <td class="empty"></td>
 <td class="empty"></td>
 </tr>
@@ -4344,7 +4344,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -5315,7 +5315,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -6126,7 +6126,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -6937,7 +6937,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -7139,14 +7139,14 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='StringStudio'>Exc Prot < Vel</td>
-<td class='StringStudio'>Exc Prot < Key</td>
-<td class='StringStudio'>Exc Stiff < Vel</td>
-<td class='StringStudio'>Exc Stiff < Key</td>
-<td class='StringStudio'>Exc Vel < Vel</td>
-<td class='StringStudio'>Exc Vel < Key</td>
-<td class='StringStudio'>E Pos < Vel</td>
-<td class='StringStudio'>E Pos < Key</td>
+<td class='StringStudio'>String Decay</td>
+<td class='StringStudio'>S Decay < Key</td>
+<td class='StringStudio'>S Decay Ratio</td>
+<td class='StringStudio'>Str Inharmon</td>
+<td class='StringStudio'>Str Damping</td>
+<td class='StringStudio'>S Damp < Key</td>
+<td class="empty"></td>
+<td class="empty"></td>
 </tr>
 <tr>
 <td class="empty"></td>
@@ -7208,33 +7208,33 @@ function on_bank_image() {
 </tr>
 <tr>
 <td class='StringStudio'>Exciter Type</td>
-<td class='StringStudio'>Exc Protrusion</td>
+<td class='StringStudio'>Exc Mass</td>
 <td class='StringStudio'>Exc Stiffness</td>
 <td class='StringStudio'>Exc Velocity</td>
 <td class='StringStudio'>E Pos</td>
 <td class='StringStudio'>Exc Damping</td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-<tr>
-<td class='StringStudio'>String Decay</td>
-<td class='StringStudio'>S Decay < Key</td>
-<td class='StringStudio'>S Decay Ratio</td>
-<td class='StringStudio'>Str Inharmon</td>
-<td class='StringStudio'>Str Damping</td>
-<td class='StringStudio'>S Damp < Key</td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-<tr>
 <td class='StringStudio'>T Mass < Vel</td>
 <td class='StringStudio'>T Mass < Key</td>
+</tr>
+<tr>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio'>Exc Mass < Key</td>
+<td class='StringStudio'>Exc Stiff < Vel</td>
+<td class='StringStudio'>Exc Vel < Vel</td>
+<td class='StringStudio'>E Pos < Vel</td>
+<td class='StringStudio empty'>&nbsp;</td>
 <td class='StringStudio'>Term Mass</td>
 <td class='StringStudio'>Term Fng Stiff</td>
+</tr>
+<tr>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio'>Exc Mass < Vel</td>
+<td class='StringStudio'>Exc Stiff < Key</td>
+<td class='StringStudio'>Exc Vel < Key</td>
+<td class='StringStudio'>E Pos < Key</td>
+<td class='StringStudio empty'>&nbsp;</td>
 <td class='StringStudio'>Term Fret Stiff</td>
 <td class='StringStudio'>Pickup Pos</td>
-<td class="empty"></td>
-<td class="empty"></td>
 </tr>
 </table>
 </div>
@@ -7298,12 +7298,12 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='StringStudio'>D Mass < Key</td>
-<td class='StringStudio'>D Stiff < Key</td>
-<td class='StringStudio'>D Velo < Key</td>
-<td class='StringStudio'>D Pos < Key</td>
-<td class='StringStudio'>D Pos < Vel</td>
-<td class="empty"></td>
+<td class='StringStudio'>Vib Delay</td>
+<td class='StringStudio'>Vib Fade-In</td>
+<td class='StringStudio'>Vib Speed</td>
+<td class='StringStudio'>Vib Amount</td>
+<td class='StringStudio'>Vib < ModWh</td>
+<td class='StringStudio'>Vib Error</td>
 <td class="empty"></td>
 <td class="empty"></td>
 </tr>
@@ -7344,8 +7344,8 @@ function on_bank_image() {
 </tr>
 <tr>
 <td class='StringStudio'>Damper On</td>
-<td class='StringStudio'>D Pos Abs</td>
 <td class='StringStudio'>Vibrato On/Off</td>
+<td class='StringStudio'>D Pos Abs</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -7354,8 +7354,8 @@ function on_bank_image() {
 </tr>
 <tr>
 <td class='StringStudio'>Damper Gated</td>
-<td class='StringStudio empty'>&nbsp;</td>
 <td class='StringStudio'>Body On/Off</td>
+<td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -7376,12 +7376,12 @@ function on_bank_image() {
 <td class="empty"></td>
 </tr>
 <tr>
-<td class='StringStudio'>Vib Delay</td>
-<td class='StringStudio'>Vib Fade-In</td>
-<td class='StringStudio'>Vib Speed</td>
-<td class='StringStudio'>Vib Amount</td>
-<td class='StringStudio'>Vib < ModWh</td>
-<td class='StringStudio'>Vib Error</td>
+<td class='StringStudio'>D Mass < Key</td>
+<td class='StringStudio'>D Stiff < Key</td>
+<td class='StringStudio'>D Velo < Key</td>
+<td class='StringStudio'>D Pos < Key</td>
+<td class='StringStudio'>D Pos < Vel</td>
+<td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
 </tr>
@@ -7458,9 +7458,9 @@ function on_bank_image() {
 </tr>
 <tr>
 <td class='StringStudio'>Filter Type</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='StringStudio'>Freq < Key</td>
+<td class='StringStudio'>Reso < Key</td>
+<td class='StringStudio'>FEG Release</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -7525,32 +7525,32 @@ function on_bank_image() {
 <td colspan='8' class='Main-header'></td>
 </tr>
 <tr>
+<td class='StringStudio empty'>&nbsp;</td>
 <td class='StringStudio'>Filter Freq</td>
 <td class='StringStudio'>Filter Reso</td>
-<td class='StringStudio'>Freq < Env</td>
-<td class='StringStudio'>Reso < Env</td>
-<td class='StringStudio'>Freq < LFO</td>
-<td class='StringStudio'>Reso < LFO</td>
-<td class='StringStudio'>Freq < Key</td>
-<td class='StringStudio'>Reso < Key</td>
-</tr>
-<tr>
 <td class='StringStudio'>FEG Attack</td>
 <td class='StringStudio'>FEG Att < Vel</td>
+<td class='StringStudio'>LFO Shape</td>
+<td class='StringStudio'>LFO Fade In</td>
+<td class='StringStudio empty'>&nbsp;</td>
+</tr>
+<tr>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio'>Freq < Env</td>
+<td class='StringStudio'>Reso < Env</td>
 <td class='StringStudio'>FEG Decay</td>
-<td class='StringStudio'>FEG Sustain</td>
-<td class='StringStudio'>FEG < Vel</td>
-<td class='StringStudio'>FEG Release</td>
-<td class="empty"></td>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio'>LFO Speed</td>
+<td class='StringStudio'>LFO Delay</td>
 <td class="empty"></td>
 </tr>
 <tr>
-<td class='StringStudio'>LFO Shape</td>
-<td class='StringStudio'>LFO Speed</td>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio'>Freq < LFO</td>
+<td class='StringStudio'>Reso < LFO</td>
+<td class='StringStudio'>FEG Sustain</td>
+<td class='StringStudio'>FEG < Vel</td>
 <td class='StringStudio'>LFO SyncRate</td>
-<td class='StringStudio'>LFO Delay</td>
-<td class='StringStudio'>LFO Fade In</td>
-<td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
 </tr>
@@ -7616,11 +7616,11 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='StringStudio'>Slide Amt A</td>
+<td class='StringStudio'>Slide Amt B</td>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio'>Key Priority</td>
+<td class='StringStudio'>Porta Time</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -7685,33 +7685,33 @@ function on_bank_image() {
 </tr>
 <tr>
 <td class='StringStudio'>Press Dest A</td>
-<td class='StringStudio'>Press Amt A</td>
 <td class='StringStudio'>Press Dest B</td>
-<td class='StringStudio'>Press Amt B</td>
-<td class='StringStudio'>Slide Dest A</td>
-<td class='StringStudio'>Slide Amt A</td>
-<td class='StringStudio'>Slide Dest B</td>
-<td class='StringStudio'>Slide Amt B</td>
+<td class='StringStudio'>PB Range</td>
+<td class='StringStudio'>Octave</td>
+<td class='StringStudio'>Semitone</td>
+<td class='StringStudio'>Uni Detune</td>
+<td class='StringStudio empty'>&nbsp;</td>
+<td class='StringStudio empty'>&nbsp;</td>
 </tr>
 <tr>
-<td class='StringStudio'>PB Range</td>
+<td class='StringStudio'>Press Amt A</td>
+<td class='StringStudio'>Press Amt B</td>
 <td class='StringStudio'>Note PB Range</td>
-<td class='StringStudio'>Uni Detune</td>
+<td class='StringStudio'>Fine Tune</td>
+<td class='StringStudio'>Voices</td>
 <td class='StringStudio'>Uni Delay</td>
 <td class="empty"></td>
 <td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
 </tr>
 <tr>
-<td class='StringStudio'>Octave</td>
-<td class='StringStudio'>Semitone</td>
-<td class='StringStudio'>Fine Tune</td>
-<td class='StringStudio'>Voices</td>
+<td class='StringStudio'>Slide Dest A</td>
+<td class='StringStudio'>Slide Dest B</td>
+<td class='StringStudio empty'>&nbsp;</td>
 <td class='StringStudio'>Stretch</td>
 <td class='StringStudio'>Error</td>
-<td class='StringStudio'>Key Priority</td>
-<td class='StringStudio'>Porta Time</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
 </tr>
 </table>
 </div>
@@ -7748,7 +7748,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -7950,10 +7950,10 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector'>Transpose</td>
+<td class='InstrumentVector'>Osc 1 Pos</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector'>Osc 2 Pos</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -8020,31 +8020,31 @@ function on_bank_image() {
 <tr>
 <td class='InstrumentVector'>Sub Gain</td>
 <td class='InstrumentVector'>Osc 1 Pan</td>
-<td class='InstrumentVector'>Osc 1 Gain</td>
-<td class='InstrumentVector'>Osc 1 Effect 1</td>
-<td class='InstrumentVector'>Osc 1 Effect 2</td>
 <td class='InstrumentVector'>Osc 1 Transp</td>
-<td class='InstrumentVector'>Osc 1 Detune</td>
-<td class='InstrumentVector'>Osc 1 Pos</td>
-</tr>
-<tr>
-<td class='InstrumentVector'>Sub Tone</td>
 <td class='InstrumentVector'>Osc 2 Pan</td>
-<td class='InstrumentVector'>Osc 2 Gain</td>
-<td class='InstrumentVector'>Osc 2 Effect 1</td>
-<td class='InstrumentVector'>Osc 2 Effect 2</td>
 <td class='InstrumentVector'>Osc 2 Transp</td>
-<td class='InstrumentVector'>Osc 2 Detune</td>
-<td class='InstrumentVector'>Osc 2 Pos</td>
-</tr>
-<tr>
-<td class='InstrumentVector'>Sub Transpose</td>
-<td class='InstrumentVector'>Transpose</td>
 <td class='InstrumentVector'>Volume</td>
 <td class='InstrumentVector'>Glide</td>
 <td class='InstrumentVector'>Unison Amount</td>
+</tr>
+<tr>
+<td class='InstrumentVector'>Sub Tone</td>
+<td class='InstrumentVector'>Osc 1 Gain</td>
+<td class='InstrumentVector'>Osc 1 Detune</td>
+<td class='InstrumentVector'>Osc 2 Gain</td>
+<td class='InstrumentVector'>Osc 2 Detune</td>
 <td class='InstrumentVector'>Time</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
 <td class='InstrumentVector'>Global Mod Amount</td>
+</tr>
+<tr>
+<td class='InstrumentVector'>Sub Transpose</td>
+<td class='InstrumentVector'>Osc 1 Effect 1</td>
+<td class='InstrumentVector'>Osc 1 Effect 2</td>
+<td class='InstrumentVector'>Osc 2 Effect 1</td>
+<td class='InstrumentVector'>Osc 2 Effect 2</td>
+<td class="empty"></td>
+<td class="empty"></td>
 <td class="empty"></td>
 </tr>
 </table>
@@ -8178,33 +8178,33 @@ function on_bank_image() {
 </tr>
 <tr>
 <td class='InstrumentVector'>Filter 1 Type</td>
-<td class='InstrumentVector'>Filter 1 LP/HP</td>
-<td class='InstrumentVector'>Filter 1 Freq</td>
 <td class='InstrumentVector'>Filter 1 Res</td>
-<td class='InstrumentVector'>Filter 1 Drive</td>
-<td class='InstrumentVector'>Filter 1 Morph</td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-<tr>
 <td class='InstrumentVector'>Filter 2 Type</td>
-<td class='InstrumentVector'>Filter 2 LP/HP</td>
-<td class='InstrumentVector'>Filter 2 Freq</td>
 <td class='InstrumentVector'>Filter 2 Res</td>
-<td class='InstrumentVector'>Filter 2 Drive</td>
-<td class='InstrumentVector'>Filter 2 Morph</td>
-<td class="empty"></td>
-<td class="empty"></td>
-</tr>
-<tr>
 <td class='InstrumentVector'>Amp Attack</td>
 <td class='InstrumentVector'>Amp Decay</td>
 <td class='InstrumentVector'>Amp Sustain</td>
 <td class='InstrumentVector'>Amp Release</td>
+</tr>
+<tr>
+<td class='InstrumentVector'>Filter 1 LP/HP</td>
+<td class='InstrumentVector'>Filter 1 Drive</td>
+<td class='InstrumentVector'>Filter 2 LP/HP</td>
+<td class='InstrumentVector'>Filter 2 Drive</td>
 <td class='InstrumentVector'>Amp A Slope</td>
 <td class='InstrumentVector'>Amp D Slope</td>
 <td class='InstrumentVector'>Amp R Slope</td>
 <td class='InstrumentVector'>Amp Loop Mode</td>
+</tr>
+<tr>
+<td class='InstrumentVector'>Filter 1 Freq</td>
+<td class='InstrumentVector'>Filter 1 Morph</td>
+<td class='InstrumentVector'>Filter 2 Freq</td>
+<td class='InstrumentVector'>Filter 2 Morph</td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
 </tr>
 </table>
 </div>
@@ -8499,20 +8499,20 @@ function on_bank_image() {
 <td class='InstrumentVector'>LFO 1 Attack Time</td>
 <td class='InstrumentVector'>LFO 1 Rate</td>
 <td class='InstrumentVector'>LFO 1 S. Rate</td>
-<td class='InstrumentVector'>LFO 1 Amount</td>
-<td class='InstrumentVector'>LFO 1 Shaping</td>
-<td class='InstrumentVector'>LFO 1 Phase Offset</td>
-<td class="empty"></td>
-</tr>
-<tr>
 <td class='InstrumentVector'>LFO 2 Shape</td>
 <td class='InstrumentVector'>LFO 2 Attack Time</td>
 <td class='InstrumentVector'>LFO 2 Rate</td>
 <td class='InstrumentVector'>LFO 2 S. Rate</td>
+</tr>
+<tr>
+<td class='InstrumentVector'>LFO 1 Amount</td>
+<td class='InstrumentVector'>LFO 1 Shaping</td>
+<td class='InstrumentVector'>LFO 1 Phase Offset</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
 <td class='InstrumentVector'>LFO 2 Amount</td>
 <td class='InstrumentVector'>LFO 2 Shaping</td>
 <td class='InstrumentVector'>LFO 2 Phase Offset</td>
-<td class="empty"></td>
+<td class='InstrumentVector empty'>&nbsp;</td>
 </tr>
 <tr>
 <td class="empty"></td>
@@ -8556,7 +8556,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -8884,7 +8884,7 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class='MidiPitcher'>Use Song Scale</td>
+<td class='MidiPitcher'>Use Current Scale</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>

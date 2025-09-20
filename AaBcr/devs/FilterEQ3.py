@@ -3,21 +3,21 @@ from .Dev import Dev
 class FilterEQ3(Dev):
   def __init__(self, phCfg, phObj):
     Dev.__init__(self, phCfg, phObj)
-    self.m_bAddPanel = False # Do not add panel commands (Preset Save, etc.)
     self.m_lCfg = [
-      'Bank0 | nGB0Off | LowOn'    ,
-      'Bank0 | nGB1Off | HighOn'   ,
-      'Bank0 | nGB2Off | MidOn'    ,
-      'Bank0 | nGB3Off | Slope'    ,
-      #-----------------------------
-      'Bank0 | nGR0Off | FreqLo'   ,
-      'Bank0 | nGR1Off | FreqHi'   ,
-      #-----------------------------
-      'Bank0 | nMB0Off | Device On',
-      #-----------------------------
-      'Bank0 | nMR0Off | GainHi'   ,
-      'Bank0 | nMR1Off | GainMid'  ,
-      'Bank0 | nMR2Off | GainLo'   ,
+      'Bank0 | nGB0Off | LowOn'      ,
+      'Bank0 | nGB1Off | HighOn'     ,
+      'Bank0 | nGB2Off | MidOn'      ,
+      'Bank0 | nGB3Off | Slope'      ,
+      #-------------------------------
+      'Bank0 | nGR0Off | FreqLo'     ,
+      'Bank0 | nGR1Off | FreqHi'     ,
+      #-------------------------------
+      'Bank0 | nMB0Off | Device On'  ,
+      'Bank0 | nMB1Off | Preset Next',
+      #-------------------------------
+      'Bank0 | nMR0Off | GainHi'     ,
+      'Bank0 | nMR1Off | GainMid'    ,
+      'Bank0 | nMR2Off | GainLo'     ,
     ]
     self.reg('FilterEQ3')
     self.parse_cfg()

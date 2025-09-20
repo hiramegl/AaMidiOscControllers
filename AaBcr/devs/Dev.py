@@ -28,6 +28,11 @@ class Dev():
     self.m_nBankOff   = 0
     self.m_nStripOff  = 0
 
+    # preset (static vars)
+    self.m_nPresetIdx = None
+    self.m_lPresets   = None
+    self.m_lLineup    = None
+
   # ********************************************************
 
   def reg(self, psClass, psName = 'x'):
@@ -103,11 +108,11 @@ class Dev():
           self.dlog('-> Dev: Adding value listener for "%s"' % (sParam))
           self.add_param_listener(oParam, tAddr, sParam)
       else:
-        self.dlog('-> PARAM NOT MAPPED: "%s"' % (sParam))
+        self.log('-> PARAM NOT MAPPED: "%s"' % (sParam))
 
     if self.m_bAddPanel:
-      self.add_panel_params()
-    self.add_extra_params()
+      self.add_panel_params(psTrack, psDevName)
+    self.add_extra_params(psTrack, psDevName)
 
   def customize_param(self, phParamCfg):
     pass # should be overriden by subclasses
@@ -123,26 +128,28 @@ class Dev():
     self.dlog('-> Value updated for "%s" -> %s' % (hParamCfg['sName'], str(hParamCfg['oParam'].value)))
     self.send_msg(self.get_param_tx_msg(hParamCfg))
 
-  def add_panel_params(self):
+  def add_panel_params(self, psTrack, psDevName):
     lPanelParams = ['Preset Save', 'Preset Prev', 'Preset Next']
     for sParam in lPanelParams:
       if sParam in self.m_hParamMap:
-        self.map_special_param(sParam, 'panel')
+        self.map_special_param(sParam, 'panel', psTrack, psDevName)
       else:
         self.log('-> PARAM "%s" NOT MAPPED FOR DEVICE "%s"' % (sParam, self.get_qual_name()))
 
-  def add_extra_params(self):
+  def add_extra_params(self, psTrack, psDevName):
     for sParam in self.m_lExtra:
-      self.map_special_param(sParam, 'extra')
+      self.map_special_param(sParam, 'extra', psTrack, psDevName)
       self.customize_param(self.get_param_config(sParam))
 
-  def map_special_param(self, psParam, psType):
+  def map_special_param(self, psParam, psType, psTrack, psDevName):
     tAddr = self.m_hParamMap[psParam]
     self.dlog('-> Dev: Logic route [0x%02X %3d] -> "%s" [%s]' % (tAddr[0], tAddr[1], psParam, psType))
     self.m_hBankIdMap[tAddr] = {
-      'tAddr': tAddr,
-      'sType': psType,
-      'sName': psParam,
+      'tAddr' : tAddr,
+      'sType' : psType,
+      'sName' : psParam,
+      'sTrack': psTrack,
+      'sDev'  : psDevName,
     }
 
   def set_offsets(self, pnBankOff, pnStripOff):
@@ -194,11 +201,9 @@ class Dev():
     sType = phParamCfg['sType']
 
     if sType == 'panel': # is a panel function
-      self.dlog('-> Handling panel function %s' % (phParamCfg['sName']))
+      self.dlog('-> Handling panel function "%s"' % (phParamCfg['sName']))
       self.tx_msg(phParamCfg['tAddr'], 127) # panel functions always ON!
-      self.handle_panel_cmd(phParamCfg['sName'])
-      self.alert('Track: %s, Dev: %s, Panel function %s' %
-        (phParamCfg['sTrack'], phParamCfg['sDev'], phParamCfg['sName']))
+      self.handle_panel_cmd(phParamCfg['sName'], phParamCfg)
 
     elif sType == 'extra':
       self.handle_rx_msg_extra_cmd(phParamCfg, pnValue)
@@ -233,43 +238,124 @@ class Dev():
 
   # ********************************************************
 
-  def handle_panel_cmd(self, psCmd):
+  def handle_panel_cmd(self, psCmd, phParamCfg):
     if psCmd == 'Preset Save':
-      sTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
-      sName = '%s_%s' % (sTime, self.get_qual_name()) # Preset Name
-      self.alert('> STORING "%s"' % (sName))
-
       sHome       = os.getenv('HOME')
       sPresetsDir = 'Music/Ableton/User Library/Remote Scripts/AaBcr/presets'
       sFilePath   = '%s/%s/%s_presets.txt' % (sHome, sPresetsDir, self.get_qual_name())
       bFileExists = os.path.isfile(sFilePath)
-
-      # Lineup is the first row in the presets file which
-      # specifies the order in which the parameters are stored
       if bFileExists:
-        with open(sFilePath) as oFile:
-          sLineup = oFile.readline().strip('\n')
-        aLineup = sLineup.split(':')[1].split('|')
+        # Lineup is the first row in the presets file which
+        # specifies the order in which the parameters are stored
+        if self.m_lLineup == None:
+          # load lineup
+          with open(sFilePath) as oFile:
+            sLineup = oFile.readline().strip('\n')
+          self.m_lLineup = sLineup.split(':')[1].split('|')
         oFile = open(sFilePath, 'a')
+
       else:
-        oFile   = open(sFilePath, 'w')
-        aLineup = []
+        oFile          = open(sFilePath, 'w')
+        self.m_lLineup = []
         for oParam in self.m_oDev.parameters:
-          if oParam.original_name == 'Device On': continue
-          aLineup.append(oParam.original_name)
-        aLineup.sort()
-        sLineup = '|'.join(aLineup)
+          sParam = oParam.original_name if self.m_bUseOrig else oParam.name
+          if sParam == 'Device On': continue
+          self.m_lLineup.append(sParam)
+        self.m_lLineup.sort()
+        sLineup = '|'.join(self.m_lLineup)
         oFile.write('@params:%s\n' % (sLineup))
 
-      # write the values in the presets file
-      aStrValues = []
-      for sParam in aLineup:
-        hParamCfg = self.get_param_config(sParam)
-        oValue    = hParamCfg['oParam'].value
-        aStrValues.append(str(oValue))
-      sStrValues = '|'.join(aStrValues)
-      oFile.write('%s:%s\n' % (sName, sStrValues))
-      oFile.close()
+      try:
+        # write the values in the presets file
+        lStrValues = []
+        for sParam in self.m_lLineup:
+          oValue = self.get_param_value(sParam)
+          lStrValues.append(str(oValue))
+        sStrValues = '|'.join(lStrValues)
+
+        sTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
+        sName = '%s_%s' % (sTime, self.get_qual_name()) # Preset Name
+        oFile.write('%s:%s\n' % (sName, sStrValues))
+        oFile.close()
+
+        # refresh presets list after saving
+        self.load_presets()
+        self.alert('Track: "%s", Dev: "%s", stored preset "%s", total presets: %d' %
+          (phParamCfg['sTrack'], phParamCfg['sDev'], sName, len(self.m_lPresets)))
+
+      except Exception as e:
+        self.log(">! Preset '%s' could not be saved: %s" %
+          (sName, str(e)))
+        self.alert('Could not save preset: "%s"' % (sName))
+
+    elif psCmd == 'Preset Prev':
+      self.apply_preset(True, phParamCfg)
+
+    elif psCmd == 'Preset Next':
+      self.apply_preset(False, phParamCfg)
+
+  def apply_preset(self, pbPrev, phParamCfg):
+    if self.m_lPresets == None:
+      bParsed = self.load_presets()
+      if bParsed == False:
+        return # nothing else to do here!
+
+    nPresets = len(self.m_lPresets)
+    if self.m_nPresetIdx == None:
+      self.m_nPresetIdx = 0
+    else:
+      if pbPrev:
+        self.m_nPresetIdx -= 1 # could be -1
+      else:
+        self.m_nPresetIdx += 1 # could be > num presets
+    self.m_nPresetIdx = (self.m_nPresetIdx % nPresets)
+
+    lPreset = self.m_lPresets[self.m_nPresetIdx]
+    sPreset = lPreset[0]
+    lParams = lPreset[1:]
+    for nIdx in range(len(self.m_lLineup)):
+      sParam = self.m_lLineup[nIdx]
+      nParam = lParams[nIdx]
+      try:
+        self.set_param_value(sParam, nParam)
+      except Exception as e:
+        self.log(">! Preset '%s' could not update param [%d] '%s' with value %s: %s" %
+          (sPreset, nIdx, sParam, str(nParam), str(e)))
+    self.alert('Track: %s, Dev: %s, loaded preset [%d] "%s"' %
+      (phParamCfg['sTrack'], phParamCfg['sDev'], self.m_nPresetIdx, sPreset))
+
+  def load_presets(self):
+    sHome       = os.getenv('HOME')
+    sPresetsDir = 'Music/Ableton/User Library/Remote Scripts/AaBcr/presets'
+    sFilePath   = '%s/%s/%s_presets.txt' % (sHome, sPresetsDir, self.get_qual_name())
+    bFileExists = os.path.isfile(sFilePath)
+    if bFileExists == False:
+      self.alert("No presets for device '%s'" % (self.get_qual_name()))
+      return False # presets were not loaded!
+
+    self.m_lPresets = []
+    # parse presets file, line by line
+    self.log('Reading: "%s"' % (sFilePath))
+    oFile = open(sFilePath, 'r')
+    for sLine in oFile:
+      sLine = sLine.strip()
+      if (len(sLine) == 0): continue
+      if (sLine[0] == '#'): continue
+      if (sLine[0] == '@'):
+        lLine          = sLine.split(':')
+        self.m_lLineup = lLine[1].split('|')
+        continue # lineup parsed, nothing else to do in this iteration
+
+      lLine   = sLine.split('#')      # used to separate values from end-of-line comment
+      lTokens = lLine[0].split(':')   # used to separate name of the preset from values
+      sName   = lTokens[0].strip()    # the first token is the name of the preset
+      lValues = lTokens[1].split('|') # used to separate values
+      lPreset = [sName]
+      for sValue in lValues:
+        lPreset.append(float(sValue.strip()))
+
+      self.m_lPresets.append(lPreset)
+    return True # presets loaded!
 
   def handle_rx_msg_extra_cmd(self, phParamCfg, pnValue):
     pass # should be overriden by subclasses
@@ -278,7 +364,13 @@ class Dev():
     return self.m_hBankIdMap[self.m_hParamMap[psParam]]
 
   def get_param_value(self, psParam):
-    return self.get_param_config(psParam)['oParam'].value
+    nValue = 0.0
+    try:
+      nValue = self.get_param_config(psParam)['oParam'].value
+    except Exception as e:
+      self.dlog(">! Error while getting value of param %s" % psParam)
+      self.dlog("> available params: %s" % ('|'.join(list(self.m_hParamMap.keys()))))
+    return nValue
 
   def set_param_value(self, psParam, poValue):
     self.get_param_config(psParam)['oParam'].value = poValue

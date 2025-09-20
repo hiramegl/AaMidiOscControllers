@@ -4,6 +4,8 @@ class InstrumentMeld(Dev):
   def __init__(self, phCfg, phObj):
     Dev.__init__(self, phCfg, phObj)
     self.m_lCfg = [
+      'Bank0 | nGB0Off | A Reset     | A Reset To Voice Offset | A Filter Drive     | B Reset    | B Reset To Voice Offset | B Filter Drive'                                        ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       'Bank0 | nGR0Off | Engine B Delay    | Voice Spread      | Drive              | Volume            | A Mod A Slope    | A Mod D Slope | A Mod R Slope   | -'                   ,
       #------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       'Bank0 | nMB0Off | Device On         | Preset Prev       | Link Envelopes     | Limiter On        | Scale Aware      | Mono Legato   | -               | -'                   ,

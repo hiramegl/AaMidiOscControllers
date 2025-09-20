@@ -4,29 +4,31 @@ class InstrumentVector(Dev):
   def __init__(self, phCfg, phObj):
     Dev.__init__(self, phCfg, phObj)
     self.m_lCfg = [
-      'Bank0 | nMB0Off | Device On       | Preset Prev          | Sub On        | Osc 1 On        | Osc 2 On'                                                             ,
-      'Bank0 | nMB1Off | Preset Save     | Preset Next'                                                                                                                   ,
-      #--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank0 | nMR0Off | Sub Gain        | Osc 1 Pan            | Osc 1 Gain    | Osc 1 Effect 1  | Osc 1 Effect 2 | Osc 1 Transp   | Osc 1 Detune      | Osc 1 Pos'      ,
-      'Bank0 | nMR1Off | Sub Tone        | Osc 2 Pan            | Osc 2 Gain    | Osc 2 Effect 1  | Osc 2 Effect 2 | Osc 2 Transp   | Osc 2 Detune      | Osc 2 Pos'      ,
-      'Bank0 | nMR2Off | Sub Transpose   | Transpose            | Volume        | Glide           | Unison Amount  | Time           | Global Mod Amount'                  ,
-      ##===================================================================================================================================================================
-      'Bank1 | nMB0Off | Filter 1 On     | Filter 1 BP/NO/Morph | Filter 2 On   | Filter 2 BP/NO/Morph'                                                                   ,
-      'Bank1 | nMB1Off | -               | Filter 1 Slope       | -             | Filter 2 Slope'                                                                         ,
-      #--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank1 | nMR0Off | Filter 1 Type   | Filter 1 LP/HP       | Filter 1 Freq | Filter 1 Res    | Filter 1 Drive | Filter 1 Morph'                                      ,
-      'Bank1 | nMR1Off | Filter 2 Type   | Filter 2 LP/HP       | Filter 2 Freq | Filter 2 Res    | Filter 2 Drive | Filter 2 Morph'                                      ,
-      'Bank1 | nMR2Off | Amp Attack      | Amp Decay            | Amp Sustain   | Amp Release     | Amp A Slope    | Amp D Slope    | Amp R Slope       | Amp Loop Mode'  ,
-      #====================================================================================================================================================================
-      'Bank2 | nMR0Off | Env 2 Attack    | Env 2 Decay          | Env 2 Sustain | Env 2 Release   | Env 3 Attack   | Env 3 Decay    | Env 3 Sustain     | Env 3 Release'  ,
-      'Bank2 | nMR1Off | Env 2 A Slope   | Env 2 D Slope        | Env 2 R Slope | Env 2 Loop Mode | Env 3 A Slope  | Env 3 D Slope  | Env 3 R Slope     | Env 3 Loop Mode',
-      'Bank2 | nMR2Off | Env 2 Initial   | Env 2 Peak           | Env 2 Final   | -               | Env 3 Initial  | Env 3 Peak     | Env 3 Final'                        ,
-      #====================================================================================================================================================================
-      'Bank3 | nMB0Off | LFO 1 Sync      | LFO 2 Sync'                                                                                                                    ,
-      'Bank3 | nMB1Off | LFO 1 Retrigger | LFO 2 Retrigger'                                                                                                               ,
-      #--------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank3 | nMR0Off | LFO 1 Shape     | LFO 1 Attack Time    | LFO 1 Rate    | LFO 1 S. Rate   | LFO 1 Amount   | LFO 1 Shaping  | LFO 1 Phase Offset'                 ,
-      'Bank3 | nMR1Off | LFO 2 Shape     | LFO 2 Attack Time    | LFO 2 Rate    | LFO 2 S. Rate   | LFO 2 Amount   | LFO 2 Shaping  | LFO 2 Phase Offset'                 ,
+      'Bank0 | nGR0Off | Transpose       | Osc 1 Pos            | -                  | Osc 2 Pos'                                                                                    ,
+      #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank0 | nMB0Off | Device On       | Preset Prev          | Sub On             | Osc 1 On        | Osc 2 On'                                                                   ,
+      'Bank0 | nMB1Off | Preset Save     | Preset Next'                                                                                                                              ,
+      #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank0 | nMR0Off | Sub Gain        | Osc 1 Pan            | Osc 1 Transp       | Osc 2 Pan       | Osc 2 Transp   | Volume            | Glide              | Unison Amount'    ,
+      'Bank0 | nMR1Off | Sub Tone        | Osc 1 Gain           | Osc 1 Detune       | Osc 2 Gain      | Osc 2 Detune   | Time              | -                  | Global Mod Amount',
+      'Bank0 | nMR2Off | Sub Transpose   | Osc 1 Effect 1       | Osc 1 Effect 2     | Osc 2 Effect 1  | Osc 2 Effect 2'                                                             ,
+      ##==============================================================================================================================================================================
+      'Bank1 | nMB0Off | Filter 1 On     | Filter 1 BP/NO/Morph | Filter 2 On        | Filter 2 BP/NO/Morph'                                                                         ,
+      'Bank1 | nMB1Off | -               | Filter 1 Slope       | -                  | Filter 2 Slope'                                                                               ,
+      #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank1 | nMR0Off | Filter 1 Type   | Filter 1 Res         | Filter 2 Type      | Filter 2 Res    | Amp Attack     | Amp Decay         | Amp Sustain        | Amp Release'      ,
+      'Bank1 | nMR1Off | Filter 1 LP/HP  | Filter 1 Drive       | Filter 2 LP/HP     | Filter 2 Drive  | Amp A Slope    | Amp D Slope       | Amp R Slope        | Amp Loop Mode'    ,
+      'Bank1 | nMR2Off | Filter 1 Freq   | Filter 1 Morph       | Filter 2 Freq      | Filter 2 Morph'                                                                               ,
+      #===============================================================================================================================================================================
+      'Bank2 | nMR0Off | Env 2 Attack    | Env 2 Decay          | Env 2 Sustain      | Env 2 Release   | Env 3 Attack   | Env 3 Decay       | Env 3 Sustain      | Env 3 Release'    ,
+      'Bank2 | nMR1Off | Env 2 A Slope   | Env 2 D Slope        | Env 2 R Slope      | Env 2 Loop Mode | Env 3 A Slope  | Env 3 D Slope     | Env 3 R Slope      | Env 3 Loop Mode'  ,
+      'Bank2 | nMR2Off | Env 2 Initial   | Env 2 Peak           | Env 2 Final        | -               | Env 3 Initial  | Env 3 Peak        | Env 3 Final'                           ,
+      #===============================================================================================================================================================================
+      'Bank3 | nMB0Off | LFO 1 Sync      | LFO 2 Sync'                                                                                                                               ,
+      'Bank3 | nMB1Off | LFO 1 Retrigger | LFO 2 Retrigger'                                                                                                                          ,
+      #-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank3 | nMR0Off | LFO 1 Shape     | LFO 1 Attack Time    | LFO 1 Rate         | LFO 1 S. Rate   | LFO 2 Shape    | LFO 2 Attack Time | LFO 2 Rate         | LFO 2 S. Rate'    ,
+      'Bank3 | nMR1Off | LFO 1 Amount    | LFO 1 Shaping        | LFO 1 Phase Offset | -               | LFO 2 Amount   | LFO 2 Shaping     | LFO 2 Phase Offset | -            '    ,
     ]
     self.reg('InstrumentVector')
     self.parse_cfg()

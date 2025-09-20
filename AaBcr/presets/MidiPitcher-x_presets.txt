@@ -1,0 +1,4 @@
+@params:Lowest|Mode|Pitch|Pitch Scale Degrees|Range|Step Width|Step Width Scale Degrees|Use Current Scale
++12:0.0|0.0|12.0|0.0|127.0|12.0|7.0|0.0
++24:0.0|0.0|24.0|0.0|127.0|12.0|7.0|0.0
+-12:0.0|0.0|-12.0|0.0|127.0|12.0|7.0|0.0

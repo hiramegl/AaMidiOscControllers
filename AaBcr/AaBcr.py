@@ -47,7 +47,8 @@ class AaBcr:
 
       # MIDI
       'nBank0Chn' : 15, # MIDI-CHANNEL 16
-      'nSessLeft' : 1, 'nSessRight': 2,
+      'nSessLeft' : 1,
+      'nSessRight': 2,
       'nGoToSel'  : 3,
 
       'nBank1Sync': 4,  # midi channel 16
@@ -59,20 +60,30 @@ class AaBcr:
 
       'nBanks'    : 6,
 
-      'nBank1Chn' : 0, 'nBank2Chn' : 1,
-      'nBank3Chn' : 2, 'nBank4Chn' : 3,
-      'nBank5Chn' : 4, 'nBank6Chn' : 5,
+      'nBank1Chn' : 0,
+      'nBank2Chn' : 1,
+      'nBank3Chn' : 2,
+      'nBank4Chn' : 3,
+      'nBank5Chn' : 4,
+      'nBank6Chn' : 5,
 
       # Rotary group
-      'nGB0Off'   : 33, 'nGB1Off'   : 41,
-      'nGB2Off'   : 1,  'nGB3Off'   : 57,
+      'nGB0Off'   : 33,
+      'nGB1Off'   : 41,
+      'nGB2Off'   : 1,
+      'nGB3Off'   : 57,
 
-      'nGR0Off'   : 49, 'nGR1Off'   : 9,
-      'nGR2Off'   : 17, 'nGR3Off'   : 25,
+      'nGR0Off'   : 49,
+      'nGR1Off'   : 9,
+      'nGR2Off'   : 17,
+      'nGR3Off'   : 25,
 
       # Main panel
-      'nMB0Off'   : 65, 'nMB1Off'   : 73,
-      'nMR0Off'   : 81, 'nMR1Off'   : 89,
+      'nMB0Off'   : 65,
+      'nMB1Off'   : 73,
+
+      'nMR0Off'   : 81,
+      'nMR1Off'   : 89,
       'nMR2Off'   : 97,
 
       # Multi Eq3 Mode

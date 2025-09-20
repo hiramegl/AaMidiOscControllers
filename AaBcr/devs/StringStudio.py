@@ -4,47 +4,50 @@ class StringStudio(Dev):
   def __init__(self, phCfg, phObj):
     Dev.__init__(self, phCfg, phObj)
     self.m_lCfg = [
-      'Bank0 | nGR0Off | Exc Prot < Vel  | Exc Prot < Key  | Exc Stiff < Vel | Exc Stiff < Key | Exc Vel < Vel   | Exc Vel < Key   | E Pos < Vel     | E Pos < Key',
-      #-------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank0 | nMB0Off | Device On       | Preset Prev     | Exc On/Off      | E Pos Abs'                                                                          ,
-      'Bank0 | nMB1Off | Preset Save     | Preset Next     | Term On/Off     | Pickup On/Off'                                                                      ,
-      #-------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank0 | nMR0Off | Exciter Type    | Exc Protrusion  | Exc Stiffness   | Exc Velocity    | E Pos           | Exc Damping'                                    ,
-      'Bank0 | nMR1Off | String Decay    | S Decay < Key   | S Decay Ratio   | Str Inharmon    | Str Damping     | S Damp < Key'                                   ,
-      'Bank0 | nMR2Off | T Mass < Vel    | T Mass < Key    | Term Mass       | Term Fng Stiff  | Term Fret Stiff | Pickup Pos'                                     ,
-      #=============================================================================================================================================================
-      'Bank1 | nGR0Off | D Mass < Key    | D Stiff < Key   | D Velo < Key    | D Pos < Key     | D Pos < Vel'                                                      ,
-      #-------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank1 | nMB0Off | Damper On       | D Pos Abs       | Vibrato On/Off'                                                                                       ,
-      'Bank1 | nMB1Off | Damper Gated    | -               | Body On/Off'                                                                                          ,
-      #-------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank1 | nMR0Off | Damper Mass     | D Stiffness     | D Velocity      | Damp Pos        | D Damping'                                                        ,
-      'Bank1 | nMR1Off | Vib Delay       | Vib Fade-In     | Vib Speed       | Vib Amount      | Vib < ModWh     | Vib Error'                                      ,
-      'Bank1 | nMR2Off | Body Type       | Body Size       | Body Decay      | Body Mix        | Body Low-Cut    | Body High-Cut   | Volume          | -'          ,
-      #=============================================================================================================================================================
-      'Bank2 | nGR0Off | Filter Type'                                                                                                                              ,
-      #-------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank2 | nMB0Off | Filter On/Off   | FEG On/Off      | LFO On/Off'                                                                                           ,
-      'Bank2 | nMB1Off | -               | -               | LFO Sync On'                                                                                          ,
-      #-------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank2 | nMR0Off | Filter Freq     | Filter Reso     | Freq < Env      | Reso < Env      | Freq < LFO      | Reso < LFO      | Freq < Key      | Reso < Key' ,
-      'Bank2 | nMR1Off | FEG Attack      | FEG Att < Vel   | FEG Decay       | FEG Sustain     | FEG < Vel       | FEG Release'                                    ,
-      'Bank2 | nMR2Off | LFO Shape       | LFO Speed       | LFO SyncRate    | LFO Delay       | LFO Fade In'                                                      ,
-      #=============================================================================================================================================================
-      'Bank3 | nMB0Off | Porta On/Off    | Porta Legato    | Unison On/Off'                                                                                        ,
-      'Bank3 | nMB1Off | -               | Porta Prop      | Unison Voices'                                                                                        ,
-      #-------------------------------------------------------------------------------------------------------------------------------------------------------------
-      'Bank3 | nMR0Off | Press Dest A    | Press Amt A     | Press Dest B    | Press Amt B     | Slide Dest A    | Slide Amt A     | Slide Dest B    | Slide Amt B',
-      'Bank3 | nMR1Off | PB Range        | Note PB Range   | Uni Detune      | Uni Delay'                                                                          ,
-      'Bank3 | nMR2Off | Octave          | Semitone        | Fine Tune       | Voices          | Stretch         | Error           | Key Priority    | Porta Time' ,
+      'Bank0 | nGR0Off |  String Decay   | S Decay < Key   | S Decay Ratio   | Str Inharmon    | Str Damping  | S Damp < Key'                    ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank0 | nMB0Off | Device On       | Preset Prev     | Exc On/Off      | E Pos Abs'                                                                         ,
+      'Bank0 | nMB1Off | Preset Save     | Preset Next     | Term On/Off     | Pickup On/Off'                                                                     ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank0 | nMR0Off | Exciter Type    | Exc Mass        | Exc Stiffness   | Exc Velocity    | E Pos         | Exc Damping   | T Mass < Vel    | T Mass < Key'  ,
+      'Bank0 | nMR1Off | -               | Exc Mass < Key  | Exc Stiff < Vel | Exc Vel < Vel   | E Pos < Vel   | -             | Term Mass       | Term Fng Stiff',
+      'Bank0 | nMR2Off | -               | Exc Mass < Vel  | Exc Stiff < Key | Exc Vel < Key   | E Pos < Key   | -             | Term Fret Stiff | Pickup Pos'    ,
+      #============================================================================================================================================================
+      'Bank1 | nGR0Off | Vib Delay       | Vib Fade-In     | Vib Speed       | Vib Amount      | Vib < ModWh   | Vib Error'                                       ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank1 | nMB0Off | Damper On       | Vibrato On/Off  | D Pos Abs'                                                                                           ,
+      'Bank1 | nMB1Off | Damper Gated    | Body On/Off'                                                                                                           ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank1 | nMR0Off | Damper Mass     | D Stiffness     | D Velocity      | Damp Pos        | D Damping'                                                       ,
+      'Bank1 | nMR1Off | D Mass < Key    | D Stiff < Key   | D Velo < Key    | D Pos < Key     | D Pos < Vel'                                                     ,
+      'Bank1 | nMR2Off | Body Type       | Body Size       | Body Decay      | Body Mix        | Body Low-Cut  | Body High-Cut | Volume          | -'             ,
+      #============================================================================================================================================================
+      'Bank2 | nGR0Off | Filter Type     | Freq < Key      | Reso < Key      | FEG Release'                                                                       ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank2 | nMB0Off | Filter On/Off   | FEG On/Off      | LFO On/Off'                                                                                          ,
+      'Bank2 | nMB1Off | -               | -               | LFO Sync On'                                                                                         ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank2 | nMR0Off | -               | Filter Freq     | Filter Reso     | FEG Attack      | FEG Att < Vel | LFO Shape     | LFO Fade In     | -'             ,
+      'Bank2 | nMR1Off | -               | Freq < Env      | Reso < Env      | FEG Decay       | -             | LFO Speed     | LFO Delay'                       ,
+      'Bank2 | nMR2Off | -               | Freq < LFO      | Reso < LFO      | FEG Sustain     | FEG < Vel     | LFO SyncRate'                                    ,
+      #============================================================================================================================================================
+      'Bank3 | nGR0Off | Slide Amt A     | Slide Amt B     | -               | Key Priority    | Porta Time'                                                      ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank3 | nMB0Off | Porta On/Off    | Porta Legato    | Unison On/Off'                                                                                       ,
+      'Bank3 | nMB1Off | -               | Porta Prop      | Unison Voices'                                                                                       ,
+      #------------------------------------------------------------------------------------------------------------------------------------------------------------
+      'Bank3 | nMR0Off | Press Dest A    | Press Dest B    | PB Range        | Octave          | Semitone      | Uni Detune    | -               | -'             ,
+      'Bank3 | nMR1Off | Press Amt A     | Press Amt B     | Note PB Range   | Fine Tune       | Voices        | Uni Delay'                                       ,
+      'Bank3 | nMR2Off | Slide Dest A    | Slide Dest B    | -               | Stretch         | Error'                                                           ,
     ]
     self.reg('StringStudio')
     self.parse_cfg()
 
 #=======================================================================
 # Class: StringStudio, Device: Tension, Display: Tension
-#   param: "Exc Prot < Vel", orig: "Exc ForceMassProt < Vel", value: 0.000000, min: -1.000000, max: 1.000000
-#   param: "Exc Prot < Key", orig: "Exc ForceMassProt < Key", value: 0.000000, min: -1.000000, max: 1.000000
+#   param: "Exc Mass", orig: "Exc ForceMassProt", value: 0.500000, min: 0.000000, max: 1.000000
+#   param: "Exc Mass < Vel", orig: "Exc ForceMassProt < Vel", value: 0.000000, min: -1.000000, max: 1.000000
+#   param: "Exc Mass < Key", orig: "Exc ForceMassProt < Key", value: 0.000000, min: -1.000000, max: 1.000000
 #   param: "Exc Stiff < Vel", orig: "Exc FricStiff < Vel", value: 0.000000, min: -1.000000, max: 1.000000
 #   param: "Exc Stiff < Key", orig: "Exc FricStiff < Key", value: 0.000000, min: -1.000000, max: 1.000000
 #   param: "Exc Vel < Vel", orig: "Exc Vel < Vel", value: 0.000000, min: -1.000000, max: 1.000000
@@ -57,7 +60,6 @@ class StringStudio(Dev):
 # Q param: "E Pos Abs", orig: "E Pos Abs" => [Off, On]
 # Q param: "Pickup On/Off", orig: "Pickup On/Off" => [Off, On]
 # Q param: "Exciter Type", orig: "Exciter Type" => [Bow, Hammer, Hammer (bouncing), Plectrum]
-#   param: "Exc Protrusion", orig: "Exc ForceMassProt", value: 0.500000, min: 0.000000, max: 1.000000
 #   param: "Exc Stiffness", orig: "Exc FricStiff", value: 0.500000, min: 0.000000, max: 1.000000
 #   param: "Exc Velocity", orig: "Exc Velocity", value: 0.500000, min: 0.000000, max: 1.000000
 #   param: "E Pos", orig: "E Pos", value: 0.500000, min: 0.000000, max: 1.000000

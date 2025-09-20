@@ -4,14 +4,17 @@ class Transmute(Dev):
   def __init__(self, phCfg, phObj):
     Dev.__init__(self, phCfg, phObj)
     self.m_lCfg = [
-      'Bank0 | nGR0Off | Freq. Hz    | Transpose     | Glide     | Unison Amount'   ,
-      #------------------------------------------------------------------------------
-      'Bank0 | nMB0Off | Device On   | Preset Prev'                                 ,
-      'Bank0 | nMB1Off | Preset Save | Preset Next'                                 ,
-      #------------------------------------------------------------------------------
-      'Bank0 | nMR0Off | Note        | Decay         | Mod Rate  | Input Send Gain' ,
-      'Bank0 | nMR1Off | Stretch     | HF Damp       | Pitch Mod | Unison'          ,
-      'Bank0 | nMR2Off | Shift       | LF Damp       | Harmonics | Dry Wet'         ,
+      'Bank0 | nGB1Off | Quantize    | Use Scale'                                  ,
+      #-----------------------------------------------------------------------------
+      'Bank0 | nGR0Off | Freq. Hz    | Transpose     | Glide     | Unison Amount'  ,
+      'Bank0 | nGR1Off | Transp Scale'                                             ,
+      #-----------------------------------------------------------------------------
+      'Bank0 | nMB0Off | Device On   | Preset Prev'                                ,
+      'Bank0 | nMB1Off | Preset Save | Preset Next'                                ,
+      #-----------------------------------------------------------------------------
+      'Bank0 | nMR0Off | Note        | Decay         | Mod Rate  | Input Send Gain',
+      'Bank0 | nMR1Off | Stretch     | HF Damp       | Pitch Mod | Unison'         ,
+      'Bank0 | nMR2Off | Shift       | LF Damp       | Harmonics | Dry Wet'        ,
     ]
     self.reg('Transmute')
     self.parse_cfg()
