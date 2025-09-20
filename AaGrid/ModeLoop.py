@@ -34,10 +34,6 @@ class ModeLoop():
       'DefaultButton',
     ]
     self.m_lBottomSkin = [
-      'DefaultButton',
-      'DefaultButton',
-      'DefaultButton',
-      'DefaultButton',
       'Bottom', # Loop Mode
       'DefaultButton',
       'DefaultButton',
@@ -71,8 +67,8 @@ class ModeLoop():
         else:
           oBut.turn_on()
 
-    for nCol in range(self.cfg('nCols')):
-      oBut = self.m_lBottom[nCol]
+    for nCol in range(4):
+      oBut  = self.m_lBottom[nCol]
       sSkin = self.m_lBottomSkin[nCol] if pbActive else 'DefaultButton'
       oBut.set_on_off_values(sSkin)
       oBut.turn_on()
@@ -330,13 +326,14 @@ class ModeLoop():
       self.m_bLpEnvToggle = not self.m_bLpEnvToggle
 
     elif pnCol == 2: # clip duplicate
-      nSelSceneIdxAbs = self.sel_scene_idx_abs()
-      oScene          = self.get_scene(nSelSceneIdxAbs + 1)
-      oSelTrack       = self.sel_track()
-      oSelTrack.duplicate_clip_slot(nSelSceneIdxAbs)
+      nSceneIdxAbs = self.scene_idx_abs()
+      oScene       = self.get_scene(nSceneIdxAbs + 1)
+      oTrack       = self.track()
+      oTrack.duplicate_clip_slot(nSceneIdxAbs)
+      self.sel_track(oTrack)
       self.sel_scene(oScene)
       self.alert('Clip duplicated at track "%s", scene: %d' %
-        (oSelTrack.name, nSelSceneIdxAbs))
+        (oTrack.name, nSceneIdxAbs))
 
     elif pnCol == 3: # device chain / clip toggle
       oView = Live.Application.get_application().view
@@ -428,13 +425,14 @@ class ModeLoop():
 
   # ********************************************************
 
-  def sel_clip_slot(self):
-    return self.song().view.highlighted_clip_slot
+  def clip_slot(self):
+    return self.obj('oSelector').clip_slot()
 
   def get_clip_or_none(self):
-    oClipSlot = self.sel_clip_slot()
+    oClipSlot = self.clip_slot()
     if oClipSlot == None:
       return None
+
     if oClipSlot.has_clip:
       return oClipSlot.clip
     return None
@@ -455,10 +453,11 @@ class ModeLoop():
       return oClip
     return None
 
-  def sel_scene(self, poScene = None):
-    if poScene != None:
-      self.song().view.selected_scene = poScene
-    return self.song().view.selected_scene
+  def sel_track(self, poTrack):
+    self.song().view.selected_track = poTrack
+
+  def sel_scene(self, poScene):
+    self.song().view.selected_scene = poScene
 
   def scenes(self):
     return self.song().scenes
@@ -466,15 +465,11 @@ class ModeLoop():
   def get_scene(self, pnSceneIdxAbs):
     return self.scenes()[pnSceneIdxAbs]
 
-  def sel_scene_idx_abs(self):
-    lAllScenes = self.scenes()
-    oSelScene  = self.sel_scene()
-    return list(lAllScenes).index(oSelScene)
+  def scene_idx_abs(self):
+    return self.obj('oSelector').scene_offset()
 
-  def sel_track(self, poTrack = None):
-    if poTrack != None:
-      self.song().view.selected_track = poTrack
-    return self.song().view.selected_track
+  def track(self):
+    return self.obj('oSelector').track()
 
   # ********************************************************
 

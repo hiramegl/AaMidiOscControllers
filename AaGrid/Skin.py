@@ -21,6 +21,10 @@ class Colors:
     Off      = BLACK
     Disabled = BLACK
 
+  class Nav:
+    On  = BOTTOM_ON
+    Off = BOTTOM_OFF
+
   class Bottom:
     On  = BOTTOM_ON
     Off = BOTTOM_OFF

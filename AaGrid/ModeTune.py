@@ -34,10 +34,6 @@ class ModeTune():
     ]
     self.m_lBottomSkin = [
       'DefaultButton',
-      'DefaultButton',
-      'DefaultButton',
-      'DefaultButton',
-      'DefaultButton',
       'Bottom', # Tune Mode
       'DefaultButton',
       'DefaultButton',
@@ -67,7 +63,7 @@ class ModeTune():
         oBut.set_on_off_values(sSkin)
         oBut.turn_on()
 
-    for nCol in range(self.cfg('nCols')):
+    for nCol in range(4):
       oBut = self.m_lBottom[nCol]
       sSkin = self.m_lBottomSkin[nCol] if pbActive else 'DefaultButton'
       oBut.set_on_off_values(sSkin)
@@ -163,11 +159,11 @@ class ModeTune():
 
   # ****************************************************************
 
-  def sel_clip_slot(self):
-    return self.song().view.highlighted_clip_slot
+  def clip_slot(self):
+    return self.obj('oSelector').clip_slot()
 
   def get_audio_clip_or_none(self):
-    oClipSlot = self.sel_clip_slot()
+    oClipSlot = self.clip_slot()
     if oClipSlot == None:
       return None
 
@@ -184,21 +180,16 @@ class ModeTune():
   def tracks(self):
     return self.song().visible_tracks
 
-  def sel_track(self, poTrack = None):
-    if poTrack != None:
-      self.song().view.selected_track = poTrack
-    return self.song().view.selected_track
-
   def get_midi_track_or_none(self):
-    oSelTrack = self.sel_track()
-    if oSelTrack == None:
+    oTrack = self.obj('oSelector').track()
+    if oTrack == None:
       return None
-    if oSelTrack == self.master():
+    if oTrack == self.master():
       return None
-    if (oSelTrack in self.tracks()) == False:
+    if (oTrack in self.tracks()) == False:
       return None
-    if oSelTrack.has_midi_input:
-      return oSelTrack
+    if oTrack.has_midi_input:
+      return oTrack
     return None
 
   # ********************************************************

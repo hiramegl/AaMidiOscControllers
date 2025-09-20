@@ -45,17 +45,17 @@ class ModeSession():
       for oBut in self.m_lNav:
         oBut.set_on_off_values('Session.Nav')
         oBut.turn_on()
-      self.session().set_page_up_button(self.m_lNav[0])
-      self.session().set_page_down_button(self.m_lNav[1])
-      self.session().set_page_left_button(self.m_lNav[2])
+      self.session().set_page_up_button   (self.m_lNav[0])
+      self.session().set_page_down_button (self.m_lNav[1])
+      self.session().set_page_left_button (self.m_lNav[2])
       self.session().set_page_right_button(self.m_lNav[3])
 
     else:
       for oBut in self.m_lNav:
         oBut.set_on_off_values('DefaultButton.Disabled', 'DefaultButton.Disabled')
-      self.session().set_page_up_button(None)
-      self.session().set_page_down_button(None)
-      self.session().set_page_left_button(None)
+      self.session().set_page_up_button   (None)
+      self.session().set_page_down_button (None)
+      self.session().set_page_left_button (None)
       self.session().set_page_right_button(None)
 
   def setup_nav_buttons(self, pbActive):
