@@ -13,6 +13,7 @@ from .devs.Compressor2           import Compressor2
 from .devs.Resonator             import Resonator
 from .devs.AutoPan               import AutoPan
 from .devs.Echo                  import Echo
+from .devs.EchoOut               import EchoOut
 from .devs.Delay                 import Delay
 from .devs.FilterDelay           import FilterDelay
 from .devs.GrainDelay            import GrainDelay
@@ -66,6 +67,7 @@ class Router():
     Resonator            (phCfg, phObj)
     AutoPan              (phCfg, phObj)
     Echo                 (phCfg, phObj)
+    EchoOut              (phCfg, phObj)
     Delay                (phCfg, phObj)
     FilterDelay          (phCfg, phObj)
     GrainDelay           (phCfg, phObj)

@@ -17,9 +17,9 @@ class Delay(Dev):
       'Bank0 | nMB0Off | Device On   | Preset Prev' ,
       'Bank0 | nMB1Off | Preset Save | Preset Next' ,
       #----------------------------------------------
-      'Bank0 | nMR0Off |  L 16th     | R 16th'      ,
-      'Bank0 | nMR1Off |  L Offset   | R Offset'    ,
-      'Bank0 | nMR2Off |  Feedback   | Dry/Wet'     ,
+      'Bank0 | nMR0Off | L 16th      | R 16th'      ,
+      'Bank0 | nMR1Off | L Offset    | R Offset'    ,
+      'Bank0 | nMR2Off | Feedback    | Dry/Wet'     ,
     ]
     self.reg('Delay')
     self.parse_cfg()
