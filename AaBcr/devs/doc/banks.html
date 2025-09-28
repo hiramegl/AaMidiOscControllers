@@ -7730,6 +7730,7 @@ function on_bank_image() {
 <button onclick='on_bank(10, 2)'>BANK 2</button>
 <button onclick='on_bank(10, 3)'>BANK 3</button>
 <button onclick='on_bank(10, 4)'>BANK 4</button>
+<button onclick='on_bank(10, 5)'>BANK 5</button>
 <button class='views' onclick='on_bank_image()'>VIEWS</button>
 <div id='bank-10-0' style='display: block'>
 <div id='bank-img-10-0' class='bank-image-container' style='display: none;'>
@@ -7953,21 +7954,21 @@ function on_bank_image() {
 <td class='InstrumentVector'>Transpose</td>
 <td class='InstrumentVector'>Osc 1 Pos</td>
 <td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
 <td class='InstrumentVector'>Osc 2 Pos</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>UnisonMode</td>
+<td class='InstrumentVector extra'>UnisonVoices</td>
+<td class='InstrumentVector'>Unison Amount</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector extra'>XyzParamMatrix</td>
+<td class='InstrumentVector'>Time</td>
+<td class='InstrumentVector'>Global Mod Amount</td>
 </tr>
 <tr>
 <td class="empty"></td>
@@ -8000,7 +8001,7 @@ function on_bank_image() {
 <td class='InstrumentVector'>Sub On</td>
 <td class='InstrumentVector'>Osc 1 On</td>
 <td class='InstrumentVector'>Osc 2 On</td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>MonoPoly</td>
 <td class="empty"></td>
 <td class="empty"></td>
 </tr>
@@ -8019,33 +8020,33 @@ function on_bank_image() {
 </tr>
 <tr>
 <td class='InstrumentVector'>Sub Gain</td>
+<td class='InstrumentVector extra'>Osc1Class</td>
 <td class='InstrumentVector'>Osc 1 Pan</td>
 <td class='InstrumentVector'>Osc 1 Transp</td>
+<td class='InstrumentVector extra'>Osc2Class</td>
 <td class='InstrumentVector'>Osc 2 Pan</td>
 <td class='InstrumentVector'>Osc 2 Transp</td>
 <td class='InstrumentVector'>Volume</td>
-<td class='InstrumentVector'>Glide</td>
-<td class='InstrumentVector'>Unison Amount</td>
 </tr>
 <tr>
 <td class='InstrumentVector'>Sub Tone</td>
+<td class='InstrumentVector extra'>Osc1Index</td>
 <td class='InstrumentVector'>Osc 1 Gain</td>
 <td class='InstrumentVector'>Osc 1 Detune</td>
+<td class='InstrumentVector extra'>Osc2Index</td>
 <td class='InstrumentVector'>Osc 2 Gain</td>
 <td class='InstrumentVector'>Osc 2 Detune</td>
-<td class='InstrumentVector'>Time</td>
-<td class='InstrumentVector empty'>&nbsp;</td>
-<td class='InstrumentVector'>Global Mod Amount</td>
+<td class='InstrumentVector extra'>PolyVoices</td>
 </tr>
 <tr>
 <td class='InstrumentVector'>Sub Transpose</td>
+<td class='InstrumentVector extra'>Osc1Effect</td>
 <td class='InstrumentVector'>Osc 1 Effect 1</td>
 <td class='InstrumentVector'>Osc 1 Effect 2</td>
+<td class='InstrumentVector extra'>Osc2Effect</td>
 <td class='InstrumentVector'>Osc 2 Effect 1</td>
 <td class='InstrumentVector'>Osc 2 Effect 2</td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector'>Glide</td>
 </tr>
 </table>
 </div>
@@ -8109,33 +8110,33 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector'>Env 2 Attack</td>
+<td class='InstrumentVector'>Env 2 Decay</td>
+<td class='InstrumentVector'>Env 2 Sustain</td>
+<td class='InstrumentVector'>Env 2 Release</td>
+<td class='InstrumentVector'>Env 3 Attack</td>
+<td class='InstrumentVector'>Env 3 Decay</td>
+<td class='InstrumentVector'>Env 3 Sustain</td>
+<td class='InstrumentVector'>Env 3 Release</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector'>Env 2 A Slope</td>
+<td class='InstrumentVector'>Env 2 D Slope</td>
+<td class='InstrumentVector'>Env 2 R Slope</td>
+<td class='InstrumentVector'>Env 2 Loop Mode</td>
+<td class='InstrumentVector'>Env 3 A Slope</td>
+<td class='InstrumentVector'>Env 3 D Slope</td>
+<td class='InstrumentVector'>Env 3 R Slope</td>
+<td class='InstrumentVector'>Env 3 Loop Mode</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector'>Env 2 Initial</td>
+<td class='InstrumentVector'>Env 2 Peak</td>
+<td class='InstrumentVector'>Env 2 Final</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector'>Env 3 Initial</td>
+<td class='InstrumentVector'>Env 3 Peak</td>
+<td class='InstrumentVector'>Env 3 Final</td>
 <td class="empty"></td>
 </tr>
 <tr>
@@ -8201,7 +8202,7 @@ function on_bank_image() {
 <td class='InstrumentVector'>Filter 1 Morph</td>
 <td class='InstrumentVector'>Filter 2 Freq</td>
 <td class='InstrumentVector'>Filter 2 Morph</td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>FilterRouting</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -8268,44 +8269,44 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>Tgt01AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt01Env2</td>
+<td class='InstrumentVector extra'>Tgt01Env3</td>
+<td class='InstrumentVector extra'>Tgt01Lfo1</td>
+<td class='InstrumentVector extra'>Tgt01Lfo2</td>
+<td class='InstrumentVector extra'>Tgt01MidiVel</td>
+<td class='InstrumentVector extra'>Tgt01MidiNote</td>
+<td class='InstrumentVector extra'>Tgt01MidiRand</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>Tgt02AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt02Env2</td>
+<td class='InstrumentVector extra'>Tgt02Env3</td>
+<td class='InstrumentVector extra'>Tgt02Lfo1</td>
+<td class='InstrumentVector extra'>Tgt02Lfo2</td>
+<td class='InstrumentVector extra'>Tgt02MidiVel</td>
+<td class='InstrumentVector extra'>Tgt02MidiNote</td>
+<td class='InstrumentVector extra'>Tgt02MidiRand</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>Tgt03AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt03Env2</td>
+<td class='InstrumentVector extra'>Tgt03Env3</td>
+<td class='InstrumentVector extra'>Tgt03Lfo1</td>
+<td class='InstrumentVector extra'>Tgt03Lfo2</td>
+<td class='InstrumentVector extra'>Tgt03MidiVel</td>
+<td class='InstrumentVector extra'>Tgt03MidiNote</td>
+<td class='InstrumentVector extra'>Tgt03MidiRand</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>Tgt04AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt04Env2</td>
+<td class='InstrumentVector extra'>Tgt04Env3</td>
+<td class='InstrumentVector extra'>Tgt04Lfo1</td>
+<td class='InstrumentVector extra'>Tgt04Lfo2</td>
+<td class='InstrumentVector extra'>Tgt04MidiVel</td>
+<td class='InstrumentVector extra'>Tgt04MidiNote</td>
+<td class='InstrumentVector extra'>Tgt04MidiRand</td>
 </tr>
 </table>
 <table>
@@ -8313,8 +8314,8 @@ function on_bank_image() {
 <td colspan='8' class='Main-header'></td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector'>LFO 1 Sync</td>
+<td class='InstrumentVector'>LFO 2 Sync</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -8323,8 +8324,8 @@ function on_bank_image() {
 <td class="empty"></td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector'>LFO 1 Retrigger</td>
+<td class='InstrumentVector'>LFO 2 Retrigger</td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -8336,34 +8337,34 @@ function on_bank_image() {
 <td colspan='8' class='Main-header'></td>
 </tr>
 <tr>
-<td class='InstrumentVector'>Env 2 Attack</td>
-<td class='InstrumentVector'>Env 2 Decay</td>
-<td class='InstrumentVector'>Env 2 Sustain</td>
-<td class='InstrumentVector'>Env 2 Release</td>
-<td class='InstrumentVector'>Env 3 Attack</td>
-<td class='InstrumentVector'>Env 3 Decay</td>
-<td class='InstrumentVector'>Env 3 Sustain</td>
-<td class='InstrumentVector'>Env 3 Release</td>
+<td class='InstrumentVector'>LFO 1 Shape</td>
+<td class='InstrumentVector'>LFO 1 Attack Time</td>
+<td class='InstrumentVector'>LFO 1 Rate</td>
+<td class='InstrumentVector'>LFO 1 S. Rate</td>
+<td class='InstrumentVector'>LFO 2 Shape</td>
+<td class='InstrumentVector'>LFO 2 Attack Time</td>
+<td class='InstrumentVector'>LFO 2 Rate</td>
+<td class='InstrumentVector'>LFO 2 S. Rate</td>
 </tr>
 <tr>
-<td class='InstrumentVector'>Env 2 A Slope</td>
-<td class='InstrumentVector'>Env 2 D Slope</td>
-<td class='InstrumentVector'>Env 2 R Slope</td>
-<td class='InstrumentVector'>Env 2 Loop Mode</td>
-<td class='InstrumentVector'>Env 3 A Slope</td>
-<td class='InstrumentVector'>Env 3 D Slope</td>
-<td class='InstrumentVector'>Env 3 R Slope</td>
-<td class='InstrumentVector'>Env 3 Loop Mode</td>
-</tr>
-<tr>
-<td class='InstrumentVector'>Env 2 Initial</td>
-<td class='InstrumentVector'>Env 2 Peak</td>
-<td class='InstrumentVector'>Env 2 Final</td>
+<td class='InstrumentVector'>LFO 1 Amount</td>
+<td class='InstrumentVector'>LFO 1 Shaping</td>
+<td class='InstrumentVector'>LFO 1 Phase Offset</td>
 <td class='InstrumentVector empty'>&nbsp;</td>
-<td class='InstrumentVector'>Env 3 Initial</td>
-<td class='InstrumentVector'>Env 3 Peak</td>
-<td class='InstrumentVector'>Env 3 Final</td>
-<td class="empty"></td>
+<td class='InstrumentVector'>LFO 2 Amount</td>
+<td class='InstrumentVector'>LFO 2 Shaping</td>
+<td class='InstrumentVector'>LFO 2 Phase Offset</td>
+<td class='InstrumentVector empty'>&nbsp;</td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt00AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt00Env2</td>
+<td class='InstrumentVector extra'>Tgt00Env3</td>
+<td class='InstrumentVector extra'>Tgt00Lfo1</td>
+<td class='InstrumentVector extra'>Tgt00Lfo2</td>
+<td class='InstrumentVector extra'>Tgt00MidiVel</td>
+<td class='InstrumentVector extra'>Tgt00MidiNote</td>
+<td class='InstrumentVector extra'>Tgt00MidiRand</td>
 </tr>
 </table>
 </div>
@@ -8427,44 +8428,44 @@ function on_bank_image() {
 <td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>Tgt08AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt08Env2</td>
+<td class='InstrumentVector extra'>Tgt08Env3</td>
+<td class='InstrumentVector extra'>Tgt08Lfo1</td>
+<td class='InstrumentVector extra'>Tgt08Lfo2</td>
+<td class='InstrumentVector extra'>Tgt08MidiVel</td>
+<td class='InstrumentVector extra'>Tgt08MidiNote</td>
+<td class='InstrumentVector extra'>Tgt08MidiRand</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>Tgt09AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt09Env2</td>
+<td class='InstrumentVector extra'>Tgt09Env3</td>
+<td class='InstrumentVector extra'>Tgt09Lfo1</td>
+<td class='InstrumentVector extra'>Tgt09Lfo2</td>
+<td class='InstrumentVector extra'>Tgt09MidiVel</td>
+<td class='InstrumentVector extra'>Tgt09MidiNote</td>
+<td class='InstrumentVector extra'>Tgt09MidiRand</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>Tgt10AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt10Env2</td>
+<td class='InstrumentVector extra'>Tgt10Env3</td>
+<td class='InstrumentVector extra'>Tgt10Lfo1</td>
+<td class='InstrumentVector extra'>Tgt10Lfo2</td>
+<td class='InstrumentVector extra'>Tgt10MidiVel</td>
+<td class='InstrumentVector extra'>Tgt10MidiNote</td>
+<td class='InstrumentVector extra'>Tgt10MidiRand</td>
 </tr>
 <tr>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
-<td class="empty"></td>
+<td class='InstrumentVector extra'>Tgt11AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt11Env2</td>
+<td class='InstrumentVector extra'>Tgt11Env3</td>
+<td class='InstrumentVector extra'>Tgt11Lfo1</td>
+<td class='InstrumentVector extra'>Tgt11Lfo2</td>
+<td class='InstrumentVector extra'>Tgt11MidiVel</td>
+<td class='InstrumentVector extra'>Tgt11MidiNote</td>
+<td class='InstrumentVector extra'>Tgt11MidiRand</td>
 </tr>
 </table>
 <table>
@@ -8472,8 +8473,8 @@ function on_bank_image() {
 <td colspan='8' class='Main-header'></td>
 </tr>
 <tr>
-<td class='InstrumentVector'>LFO 1 Sync</td>
-<td class='InstrumentVector'>LFO 2 Sync</td>
+<td class="empty"></td>
+<td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -8482,8 +8483,8 @@ function on_bank_image() {
 <td class="empty"></td>
 </tr>
 <tr>
-<td class='InstrumentVector'>LFO 1 Retrigger</td>
-<td class='InstrumentVector'>LFO 2 Retrigger</td>
+<td class="empty"></td>
+<td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
@@ -8495,24 +8496,52 @@ function on_bank_image() {
 <td colspan='8' class='Main-header'></td>
 </tr>
 <tr>
-<td class='InstrumentVector'>LFO 1 Shape</td>
-<td class='InstrumentVector'>LFO 1 Attack Time</td>
-<td class='InstrumentVector'>LFO 1 Rate</td>
-<td class='InstrumentVector'>LFO 1 S. Rate</td>
-<td class='InstrumentVector'>LFO 2 Shape</td>
-<td class='InstrumentVector'>LFO 2 Attack Time</td>
-<td class='InstrumentVector'>LFO 2 Rate</td>
-<td class='InstrumentVector'>LFO 2 S. Rate</td>
+<td class='InstrumentVector extra'>Tgt05AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt05Env2</td>
+<td class='InstrumentVector extra'>Tgt05Env3</td>
+<td class='InstrumentVector extra'>Tgt05Lfo1</td>
+<td class='InstrumentVector extra'>Tgt05Lfo2</td>
+<td class='InstrumentVector extra'>Tgt05MidiVel</td>
+<td class='InstrumentVector extra'>Tgt05MidiNote</td>
+<td class='InstrumentVector extra'>Tgt05MidiRand</td>
 </tr>
 <tr>
-<td class='InstrumentVector'>LFO 1 Amount</td>
-<td class='InstrumentVector'>LFO 1 Shaping</td>
-<td class='InstrumentVector'>LFO 1 Phase Offset</td>
-<td class='InstrumentVector empty'>&nbsp;</td>
-<td class='InstrumentVector'>LFO 2 Amount</td>
-<td class='InstrumentVector'>LFO 2 Shaping</td>
-<td class='InstrumentVector'>LFO 2 Phase Offset</td>
-<td class='InstrumentVector empty'>&nbsp;</td>
+<td class='InstrumentVector extra'>Tgt06AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt06Env2</td>
+<td class='InstrumentVector extra'>Tgt06Env3</td>
+<td class='InstrumentVector extra'>Tgt06Lfo1</td>
+<td class='InstrumentVector extra'>Tgt06Lfo2</td>
+<td class='InstrumentVector extra'>Tgt06MidiVel</td>
+<td class='InstrumentVector extra'>Tgt06MidiNote</td>
+<td class='InstrumentVector extra'>Tgt06MidiRand</td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt07AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt07Env2</td>
+<td class='InstrumentVector extra'>Tgt07Env3</td>
+<td class='InstrumentVector extra'>Tgt07Lfo1</td>
+<td class='InstrumentVector extra'>Tgt07Lfo2</td>
+<td class='InstrumentVector extra'>Tgt07MidiVel</td>
+<td class='InstrumentVector extra'>Tgt07MidiNote</td>
+<td class='InstrumentVector extra'>Tgt07MidiRand</td>
+</tr>
+</table>
+</div>
+<div id='bank-10-5' style='display: none'>
+<div id='bank-img-10-5' class='bank-image-container' style='display: none;'>
+<div style='margin: 0 auto;'>
+<img src='MidiPitcher.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiVelocity.png' class='bank-image'/>
+<img width='0px'/>
+<img src='MidiArpeggiator.png' class='bank-image'/>
+<img width='0px'/>
+<img src='InstrumentVector.png' class='bank-image'/>
+</div>
+</div>
+<table>
+<tr>
+<td colspan='8' class='Group-header'></td>
 </tr>
 <tr>
 <td class="empty"></td>
@@ -8523,6 +8552,137 @@ function on_bank_image() {
 <td class="empty"></td>
 <td class="empty"></td>
 <td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td colspan='8' class='Group-header'></td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt15AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt15Env2</td>
+<td class='InstrumentVector extra'>Tgt15Env3</td>
+<td class='InstrumentVector extra'>Tgt15Lfo1</td>
+<td class='InstrumentVector extra'>Tgt15Lfo2</td>
+<td class='InstrumentVector extra'>Tgt15MidiVel</td>
+<td class='InstrumentVector extra'>Tgt15MidiNote</td>
+<td class='InstrumentVector extra'>Tgt15MidiRand</td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt16AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt16Env2</td>
+<td class='InstrumentVector extra'>Tgt16Env3</td>
+<td class='InstrumentVector extra'>Tgt16Lfo1</td>
+<td class='InstrumentVector extra'>Tgt16Lfo2</td>
+<td class='InstrumentVector extra'>Tgt16MidiVel</td>
+<td class='InstrumentVector extra'>Tgt16MidiNote</td>
+<td class='InstrumentVector extra'>Tgt16MidiRand</td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt17AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt17Env2</td>
+<td class='InstrumentVector extra'>Tgt17Env3</td>
+<td class='InstrumentVector extra'>Tgt17Lfo1</td>
+<td class='InstrumentVector extra'>Tgt17Lfo2</td>
+<td class='InstrumentVector extra'>Tgt17MidiVel</td>
+<td class='InstrumentVector extra'>Tgt17MidiNote</td>
+<td class='InstrumentVector extra'>Tgt17MidiRand</td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt18AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt18Env2</td>
+<td class='InstrumentVector extra'>Tgt18Env3</td>
+<td class='InstrumentVector extra'>Tgt18Lfo1</td>
+<td class='InstrumentVector extra'>Tgt18Lfo2</td>
+<td class='InstrumentVector extra'>Tgt18MidiVel</td>
+<td class='InstrumentVector extra'>Tgt18MidiNote</td>
+<td class='InstrumentVector extra'>Tgt18MidiRand</td>
+</tr>
+</table>
+<table>
+<tr>
+<td colspan='8' class='Main-header'></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+<td class="empty"></td>
+</tr>
+<tr>
+<td colspan='8' class='Main-header'></td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt12AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt12Env2</td>
+<td class='InstrumentVector extra'>Tgt12Env3</td>
+<td class='InstrumentVector extra'>Tgt12Lfo1</td>
+<td class='InstrumentVector extra'>Tgt12Lfo2</td>
+<td class='InstrumentVector extra'>Tgt12MidiVel</td>
+<td class='InstrumentVector extra'>Tgt12MidiNote</td>
+<td class='InstrumentVector extra'>Tgt12MidiRand</td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt13AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt13Env2</td>
+<td class='InstrumentVector extra'>Tgt13Env3</td>
+<td class='InstrumentVector extra'>Tgt13Lfo1</td>
+<td class='InstrumentVector extra'>Tgt13Lfo2</td>
+<td class='InstrumentVector extra'>Tgt13MidiVel</td>
+<td class='InstrumentVector extra'>Tgt13MidiNote</td>
+<td class='InstrumentVector extra'>Tgt13MidiRand</td>
+</tr>
+<tr>
+<td class='InstrumentVector extra'>Tgt14AmpEnv</td>
+<td class='InstrumentVector extra'>Tgt14Env2</td>
+<td class='InstrumentVector extra'>Tgt14Env3</td>
+<td class='InstrumentVector extra'>Tgt14Lfo1</td>
+<td class='InstrumentVector extra'>Tgt14Lfo2</td>
+<td class='InstrumentVector extra'>Tgt14MidiVel</td>
+<td class='InstrumentVector extra'>Tgt14MidiNote</td>
+<td class='InstrumentVector extra'>Tgt14MidiRand</td>
 </tr>
 </table>
 </div>
@@ -8532,6 +8692,7 @@ function on_bank_image() {
 <button onclick='on_bank(10, 2)'>BANK 2</button>
 <button onclick='on_bank(10, 3)'>BANK 3</button>
 <button onclick='on_bank(10, 4)'>BANK 4</button>
+<button onclick='on_bank(10, 5)'>BANK 5</button>
 <button class='views' onclick='on_bank_image()'>VIEWS</button>
 </div>
 <div id='group-11' style='display: none'>

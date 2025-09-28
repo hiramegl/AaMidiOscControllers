@@ -16,6 +16,7 @@ class Dev():
     self.m_sName     = ''
     self.m_bAddPanel = True
     self.m_bUseOrig  = False
+    self.m_lSaveXtra = None
     self.m_nBanks    = 0
     self.m_nStrips   = 0
     self.m_lCfg      = []
@@ -261,6 +262,9 @@ class Dev():
           sParam = oParam.original_name if self.m_bUseOrig else oParam.name
           if sParam == 'Device On': continue
           self.m_lLineup.append(sParam)
+        if self.m_lSaveXtra != None:
+          for sParam in self.m_lSaveXtra:
+            self.m_lLineup.append(sParam)
         self.m_lLineup.sort()
         sLineup = '|'.join(self.m_lLineup)
         oFile.write('@params:%s\n' % (sLineup))
@@ -312,16 +316,18 @@ class Dev():
 
     lPreset = self.m_lPresets[self.m_nPresetIdx]
     sPreset = lPreset[0]
-    lParams = lPreset[1:]
+    lValues = lPreset[1:]
     for nIdx in range(len(self.m_lLineup)):
       sParam = self.m_lLineup[nIdx]
-      nParam = lParams[nIdx]
+      sValue = lValues[nIdx] # always string
       try:
-        self.set_param_value(sParam, nParam)
+        self.set_param_value(sParam, sValue)
       except Exception as e:
         self.log(">! Preset '%s' could not update param [%d] '%s' with value %s: %s" %
-          (sPreset, nIdx, sParam, str(nParam), str(e)))
+          (sPreset, nIdx, sParam, sValue, str(e)))
     self.alert('Track: %s, Dev: %s, loaded preset [%d] "%s"' %
+      (phParamCfg['sTrack'], phParamCfg['sDev'], self.m_nPresetIdx, sPreset))
+    self.dlog('Track: %s, Dev: %s, loaded preset [%d] "%s"' %
       (phParamCfg['sTrack'], phParamCfg['sDev'], self.m_nPresetIdx, sPreset))
 
   def load_presets(self):
@@ -352,7 +358,7 @@ class Dev():
       lValues = lTokens[1].split('|') # used to separate values
       lPreset = [sName]
       for sValue in lValues:
-        lPreset.append(float(sValue.strip()))
+        lPreset.append(sValue.strip())
 
       self.m_lPresets.append(lPreset)
     return True # presets loaded!
@@ -364,16 +370,24 @@ class Dev():
     return self.m_hBankIdMap[self.m_hParamMap[psParam]]
 
   def get_param_value(self, psParam):
-    nValue = 0.0
+    oValue = 0.0
     try:
-      nValue = self.get_param_config(psParam)['oParam'].value
+      hParamCfg = self.get_param_config(psParam)
+      if hParamCfg['sType'] == 'param':
+        oValue = hParamCfg['oParam'].value # float
+      elif hParamCfg['sType'] == 'extra':
+        oValue = self.get_extra_param_value_for_save(psParam) # float or string
     except Exception as e:
       self.dlog(">! Error while getting value of param %s" % psParam)
       self.dlog("> available params: %s" % ('|'.join(list(self.m_hParamMap.keys()))))
-    return nValue
+    return oValue # float or a string
 
-  def set_param_value(self, psParam, poValue):
-    self.get_param_config(psParam)['oParam'].value = poValue
+  def set_param_value(self, psParam, psValue):
+    hParamCfg = self.get_param_config(psParam)
+    if hParamCfg['sType'] == 'param':
+      hParamCfg['oParam'].value = float(psValue)
+    elif hParamCfg['sType'] == 'extra':
+      self.set_extra_param_value_from_load(psParam, psValue)
 
   def reset_param_value(self, psParam):
     self.set_param_value(psParam, 0)
@@ -427,6 +441,12 @@ class Dev():
 
   def get_extra_param_tx_value(self, phParamCfg):
     return 0 # can be overriden by subclasses
+
+  def get_extra_param_value_for_save(self, psParam):
+    return 0 # can be overriden by subclasses
+
+  def set_extra_param_value_from_load(self, psParam, poValue):
+    pass # can be overriden by subclasses
 
   def get_scaled_tx_value(self, phParamCfg, pnValue):
     nMin   = phParamCfg['nMin']
