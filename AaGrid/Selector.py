@@ -6,6 +6,7 @@ from _Framework.MixerComponent    import MixerComponent
 
 from .ModeLoop                    import ModeLoop
 from .ModeTune                    import ModeTune
+from .ModeReturns                 import ModeReturns
 
 class Selector(CompoundComponent):
   def __init__(self, poCtrlInst, phCfg, phObj, poMatrix, plBottom, plSide, poShift):
@@ -38,6 +39,7 @@ class Selector(CompoundComponent):
 
     self.m_sOldMode = 'NONE'
     self.m_sNewMode = 'LOOP'
+    lBottom = plBottom[4:] # discard navigation buttons
 
     # Modes
     self.m_oModeLoop = ModeLoop(
@@ -45,14 +47,21 @@ class Selector(CompoundComponent):
       phCfg,
       phObj,
       poMatrix,
-      plBottom[4:], # discard navigation buttons
+      lBottom,
       plSide)
     self.m_oModeTune = ModeTune(
       poCtrlInst,
       phCfg,
       phObj,
       poMatrix,
-      plBottom[4:], # discard navigation buttons
+      lBottom,
+      plSide)
+    self.m_oModeReturns = ModeReturns(
+      poCtrlInst,
+      phCfg,
+      phObj,
+      poMatrix,
+      lBottom,
       plSide)
 
   def setup_paging_controls(self):
@@ -77,16 +86,20 @@ class Selector(CompoundComponent):
     # Clear the old mode
     if self.m_sOldMode == 'LOOP':
       self.m_oModeLoop.set_active(False)
-    else:
+    elif self.m_sOldMode == 'TUNE':
       self.m_oModeTune.set_active(False)
+    elif self.m_sOldMode == 'RETURNS':
+      self.m_oModeReturns.set_active(False)
 
     self.m_sOldMode = self.m_sNewMode
 
     # Set the new mode
     if self.m_sNewMode == 'LOOP':
       self.m_oModeLoop.set_active(True)
-    else:
+    elif self.m_sOldMode == 'TUNE':
       self.m_oModeTune.set_active(True)
+    elif self.m_sOldMode == 'RETURNS':
+      self.m_oModeReturns.set_active(True)
 
   # ********************************************************
 
@@ -106,18 +119,27 @@ class Selector(CompoundComponent):
         self.update()
         self.alert('MODE TUNE')
 
+      elif nIdx == 6:
+        self.m_sNewMode = 'RETURNS'
+        self.update()
+        self.alert('MODE RETURNS')
+
     elif sType == 'side':
       nIdx  = phAttr['nIdx']
       if self.m_sOldMode == 'LOOP':
         self.m_oModeLoop.on_side(nIdx)
-      else:
+      elif self.m_sOldMode == 'TUNE':
         self.m_oModeTune.on_side(nIdx)
+      elif self.m_sOldMode == 'RETURNS':
+        self.m_oModeReturns.on_side(nIdx)
 
     else: # sType = 'grid'
       if self.m_sOldMode == 'LOOP':
         self.m_oModeLoop.on_grid(phAttr['nCol'], phAttr['nRow'])
-      else:
+      elif self.m_sOldMode == 'TUNE':
         self.m_oModeTune.on_grid(phAttr['nCol'], phAttr['nRow'])
+      elif self.m_sOldMode == 'RETURNS':
+        self.m_oModeReturns.on_grid(phAttr['nCol'], phAttr['nRow'])
 
   def on_shift_value(self, pnValue):
     if pnValue == 0:
@@ -126,7 +148,7 @@ class Selector(CompoundComponent):
     nTrackOff = self.sel_track_idx_abs()
     nSceneOff = self.sel_scene_idx_abs()
     self.m_oSession.set_offsets(nTrackOff, nSceneOff)
-    self.alert('Focusing clip (%d, %d)' % (nTrackOff, nSceneOff))
+    self.alert('Focusing on selected clip (%d, %d)' % (nTrackOff, nSceneOff))
 
   # ********************************************************
 

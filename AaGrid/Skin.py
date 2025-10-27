@@ -121,6 +121,32 @@ class Colors:
       On  = RED
       Off = BLACK
 
+  class Returns:
+    class Eq3On:  # Row 1
+      On  = RED
+      Off = BLACK
+    class HighOn: # Row 2
+      On  = AMBER
+      Off = BLACK
+    class MidOn:  # Row 3
+      On  = AMBER
+      Off = BLACK
+    class LowOn:  # Row 4
+      On  = AMBER
+      Off = BLACK
+    class FxOff:  # Row 5
+      On  = RED
+      Off = BLACK
+    class Mute:   # Row 6
+      On  = AMBER
+      Off = AMBER_BLINK
+    class Solo:   # Row 7
+      On  = GREEN_BLINK
+      Off = GREEN
+    class Select: # Row 8
+      On  = RED
+      Off = BLACK
+
 def make_skin():
   return Skin(Colors)
 
