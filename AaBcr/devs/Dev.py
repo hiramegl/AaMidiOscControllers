@@ -171,8 +171,11 @@ class Dev():
       if 'fTxCb' in phParamCfg:
         fTxCb  = phParamCfg['fTxCb']
         self.dlog('-> Removing value listener for "%s"' % (phParamCfg['sName']))
-        if oParam.value_has_listener(fTxCb):
-          oParam.remove_value_listener(fTxCb)
+        try:
+          if oParam.value_has_listener(fTxCb):
+            oParam.remove_value_listener(fTxCb)
+        except Exception as e:
+          self.log('-> Cannot remove value listener: %s' % (str(e)))
     elif sType == 'extra':
       self.remove_extra_param_bindings(phParamCfg)
     elif sType == 'panel':
