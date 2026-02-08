@@ -24,8 +24,7 @@ class Session():
 
   def connect(self):
     self.connect_track_ctrls()
-    for fTrkTxCb in self.m_lTrackCbs:
-      fTrkTxCb()
+    self.sync_all_ctrls()
     for nTrackIdxRel in range(self.cfg('nTracks')):
       self.send_msg('nBank2Chn', 'nStopOff', 127, nTrackIdxRel)
       self.send_msg('nBank2Chn', 'nSelOff',  127, nTrackIdxRel)
