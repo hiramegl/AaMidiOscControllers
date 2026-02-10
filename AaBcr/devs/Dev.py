@@ -434,7 +434,7 @@ class Dev():
 
     sName = phParamCfg['sName']
     lMsg  = self.to_physical_msg(phParamCfg['tAddr'], nValue)
-    self.dlog('-> Tx [0x%02X %3d %3d] -> "%s"' % (lMsg[0], lMsg[1], lMsg[2], sName))
+    self.dlog('-> BCR Tx [0x%02X %3d %3d] -> "%s"' % (lMsg[0], lMsg[1], lMsg[2], sName))
     return lMsg
 
   def to_physical_msg(self, ptAddr, pnValue):

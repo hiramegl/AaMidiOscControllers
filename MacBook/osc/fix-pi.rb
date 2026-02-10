@@ -39,11 +39,14 @@ puts("\n> Writing address-files in raspberry pi ...")
 `cat #{sMacPath} | #{sSsh} 'cat >> #{sMacFile}'`
 `cat #{sPiPath } | #{sSsh} 'cat >> #{sPiFile}'`
 
-puts("\n> Starting bridge scripts ...")
-spawn("#{sSsh} './bcf.sh &' &")
-spawn("#{sSsh} './bcr.sh &' &")
-spawn("#{sSsh} './wfd.sh &' &")
-spawn("#{sSsh} 'pwd' &")
+# NOTE! Do not starting the bridge scripts from MacBook since they were not
+#       working correctly. The bridge scripts should be started in the
+#       Rasbperry PI device instead
+#puts("\n> Starting bridge scripts ...")
+#spawn("#{sSsh} './bcf.sh &' &")
+#spawn("#{sSsh} './bcr.sh &' &")
+#spawn("#{sSsh} './wfd.sh &' &")
+#spawn("#{sSsh} 'pwd' &")
 
 puts("\n> Done")
 

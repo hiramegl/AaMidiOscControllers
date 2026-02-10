@@ -24,6 +24,7 @@ from .devs.Reverb                import Reverb
 from .devs.Eq8                   import Eq8
 from .devs.FilterEQ3             import FilterEQ3
 from .devs.Redux2                import Redux2
+from .devs.VolumeStepper         import VolumeStepper
 
 # Instruments
 from .devs.DrumGroupDevice       import DrumGroupDevice
@@ -38,6 +39,9 @@ from .devs.StringStudio          import StringStudio
 from .devs.InstrumentVector      import InstrumentVector
 from .devs.Drift                 import Drift
 from .devs.InstrumentMeld        import InstrumentMeld
+
+# MAX Instruments
+from .devs.AaOsc                 import AaOsc
 
 # Stub
 from .devs.Stub                  import Stub
@@ -78,6 +82,7 @@ class Router():
     Eq8                  (phCfg, phObj)
     FilterEQ3            (phCfg, phObj)
     Redux2               (phCfg, phObj)
+    VolumeStepper        (phCfg, phObj)
     DrumGroupDevice      (phCfg, phObj)
     InstrumentGroupDevice(phCfg, phObj)
     UltraAnalog          (phCfg, phObj)
@@ -90,6 +95,7 @@ class Router():
     InstrumentVector     (phCfg, phObj)
     Drift                (phCfg, phObj)
     InstrumentMeld       (phCfg, phObj)
+    AaOsc                (phCfg, phObj)
     Stub                 (phCfg, phObj)
     self.log('-> Finished registering all devices')
 
